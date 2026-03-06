@@ -1,14 +1,12 @@
+<!DOCTYPE html>
+<html lang="es">
 
-<header class="logo-header">
+<head>
 
-<div class="logo">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-🍓🍫 <span>KrisFresas</span>
-
-</div>
-
-<p>Fresas con chocolate irresistibles</p>
-
+<title>KrisFresas</title>
 
 <style>
 
@@ -23,96 +21,98 @@ body{
 background:#fff0f3;
 }
 
-/* HEADER */
+/* LOGO */
 
-header{
+.logo-header{
 background:linear-gradient(90deg,#3a0f0f,#8b0000);
-color:white;
-padding:20px;
 text-align:center;
+padding:30px;
+color:white;
 }
 
-header h1{
-font-size:40px;
-letter-spacing:2px;
+.logo{
+font-size:45px;
+font-weight:bold;
+animation:flotar 3s infinite ease-in-out;
+}
+
+.logo span{
+color:#ffb3c6;
+text-shadow:0 0 10px rgba(255,0,0,0.6);
+}
+
+@keyframes flotar{
+
+0%{transform:translateY(0px);}
+50%{transform:translateY(-10px);}
+100%{transform:translateY(0px);}
+
 }
 
 /* HERO */
 
 .hero{
 text-align:center;
-padding:80px 20px;
-animation:fade 2s;
+padding:50px 20px;
 }
 
 .hero h2{
-font-size:36px;
 color:#8b0000;
-margin-bottom:15px;
+font-size:32px;
+margin-bottom:10px;
 }
 
 .hero p{
 font-size:18px;
-margin-bottom:25px;
-}
-
-.btn{
-background:#8b0000;
-color:white;
-padding:12px 25px;
-border-radius:25px;
-text-decoration:none;
-margin:10px;
-display:inline-block;
-transition:.3s;
-}
-
-.btn:hover{
-background:#5a0000;
-transform:scale(1.05);
 }
 
 /* PRODUCTOS */
 
 .productos{
-padding:60px 20px;
 text-align:center;
+padding:50px;
 }
 
-.productos h2{
-margin-bottom:40px;
-color:#3a0f0f;
-font-size:30px;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-gap:25px;
-}
-
-.card{
+.producto{
 background:white;
 padding:20px;
 border-radius:15px;
+width:320px;
+margin:auto;
 box-shadow:0 10px 20px rgba(0,0,0,0.1);
-transition:.3s;
 }
 
-.card:hover{
-transform:translateY(-8px);
-}
-
-.card img{
+.producto img{
 width:100%;
 border-radius:10px;
 }
 
+.producto h3{
+margin-top:10px;
+}
+
 .precio{
-color:#8b0000;
+color:#c4002f;
+font-size:30px;
 font-weight:bold;
-font-size:20px;
-margin:10px 0;
+margin:10px;
+}
+
+/* BOTONES */
+
+.boton{
+background:#c4002f;
+color:white;
+padding:12px 20px;
+border-radius:25px;
+text-decoration:none;
+display:inline-block;
+margin-top:10px;
+transition:.3s;
+}
+
+.boton:hover{
+background:#8b0022;
 }
 
 /* CONTACTO */
@@ -120,9 +120,12 @@ margin:10px 0;
 .contacto{
 background:#3a0f0f;
 color:white;
-padding:50px;
 text-align:center;
+padding:40px;
+margin-top:40px;
 }
+
+/* FOOTER */
 
 footer{
 background:#220808;
@@ -146,78 +149,52 @@ text-decoration:none;
 box-shadow:0 5px 15px rgba(0,0,0,.3);
 }
 
-/* ANIMACION */
-
-@keyframes fade{
-from{opacity:0; transform:translateY(30px);}
-to{opacity:1; transform:translateY(0);}
-}
-
 </style>
+
 </head>
 
 <body>
 
-<header>
+<header class="logo-header">
 
-<h1>🍓 KRISFRESAS 🍫</h1>
-<p>Fresas con chocolate y dulces irresistibles</p>
+<div class="logo">
+🍓🍫 <span>KrisFresas</span>
+</div>
+
+<p>Fresas con chocolate irresistibles</p>
 
 </header>
+
 
 <section class="hero">
 
 <h2>Las mejores fresas con chocolate</h2>
 
-<p>Endulza tu día con nuestros deliciosos productos</p>
-
-<a class="btn" href="https://wa.me/593982126368">Pedir Ahora</a>
-
-<a class="btn" href="#productos">Ver Productos</a>
+<p>Hechas con amor y chocolate delicioso</p>
 
 </section>
 
-<section class="productos" id="productos">
+
+<section class="productos">
 
 <h2>Nuestros Productos</h2>
 
-<div class="grid">
+<div class="producto">
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1562007908-8cc7f4a5c3c6">
-<h3>Fresas con Chocolate</h3>
-<p class="precio">$3</p>
-<p>Fresas frescas cubiertas con chocolate.</p>
-<a class="btn" href="https://wa.me/593982126368?text=Quiero pedir fresas con chocolate">Pedir</a>
-</div>
+<img src="fresas-blancas.jpg" alt="Fresas con chocolate">
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1606312619344-63c4d5f8e2e8">
-<h3>Brochetas de Fresa</h3>
-<p class="precio">$2</p>
-<p>Brochetas con fresas y chocolate.</p>
-<a class="btn" href="https://wa.me/593982126368?text=Quiero pedir brochetas de fresa">Pedir</a>
-</div>
+<h3>Fresas con Chocolate Blanco</h3>
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587">
-<h3>Caja Dulce</h3>
-<p class="precio">$10</p>
-<p>Caja especial para regalo.</p>
-<a class="btn" href="https://wa.me/593982126368?text=Quiero pedir caja dulce">Pedir</a>
-</div>
+<p class="precio">$2.99</p>
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1601972599720-36938d4ecd5c">
-<h3>Fresas Premium</h3>
-<p class="precio">$5</p>
-<p>Fresas con chocolate y toppings.</p>
-<a class="btn" href="https://wa.me/593982126368?text=Quiero pedir fresas premium">Pedir</a>
-</div>
+<a class="boton" href="https://wa.me/593982126368?text=Hola quiero pedir las fresas con chocolate de $2.99">
+Pedir por WhatsApp
+</a>
 
 </div>
 
 </section>
+
 
 <section class="contacto">
 
@@ -230,15 +207,18 @@ to{opacity:1; transform:translateY(0);}
 
 </section>
 
+
 <footer>
 
 <p>© 2026 KrisFresas</p>
 
 </footer>
 
-<a class="whatsapp" href="https://wa.me/593982126368">💬</a>
+
+<a class="whatsapp" href="https://wa.me/593982126368">
+💬
+</a>
 
 </body>
 
 </html>
-
