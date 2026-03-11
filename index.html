@@ -1,11 +1,10 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>KrisFresas</title>
 
 <style>
@@ -33,43 +32,20 @@ color:white;
 .logo{
 font-size:45px;
 font-weight:bold;
-animation:flotar 3s infinite ease-in-out;
-}
-
-.logo span{
-color:#ffb3c6;
-text-shadow:0 0 10px rgba(255,0,0,0.6);
-}
-
-@keyframes flotar{
-0%{transform:translateY(0);}
-50%{transform:translateY(-10px);}
-100%{transform:translateY(0);}
 }
 
 /* HERO */
 
 .hero{
 text-align:center;
-padding:50px 20px;
-animation:fade 2s;
-}
-
-.hero h2{
-color:#8b0000;
-font-size:32px;
-margin-bottom:10px;
-}
-
-.hero p{
-font-size:18px;
+padding:40px;
 }
 
 /* PRODUCTOS */
 
 .productos{
 text-align:center;
-padding:50px 20px;
+padding:40px;
 }
 
 .contenedor-productos{
@@ -77,7 +53,6 @@ display:flex;
 flex-wrap:wrap;
 justify-content:center;
 gap:25px;
-margin-top:30px;
 }
 
 .producto{
@@ -86,8 +61,7 @@ padding:20px;
 border-radius:15px;
 width:260px;
 box-shadow:0 10px 20px rgba(0,0,0,0.1);
-transition:transform .3s;
-animation:fadeUp 1s;
+transition:.3s;
 }
 
 .producto:hover{
@@ -99,117 +73,165 @@ width:100%;
 border-radius:10px;
 }
 
-.producto h3{
-margin-top:10px;
-}
-
 .precio{
 color:#c4002f;
-font-size:28px;
+font-size:26px;
 font-weight:bold;
-margin:10px;
+margin:10px 0;
 }
 
-/* BOTONES */
+.descripcion{
+font-size:14px;
+color:#555;
+}
+
+/* SELECTOR */
+
+.cantidad{
+display:flex;
+justify-content:center;
+align-items:center;
+margin-top:10px;
+gap:10px;
+}
+
+.cantidad button{
+width:30px;
+height:30px;
+border:none;
+background:#c4002f;
+color:white;
+font-size:18px;
+cursor:pointer;
+border-radius:5px;
+}
+
+.cantidad span{
+font-size:18px;
+}
+
+/* BOTON */
 
 .boton{
 background:#c4002f;
 color:white;
 padding:10px 18px;
 border-radius:25px;
-text-decoration:none;
-display:inline-block;
-margin-top:8px;
-transition:.3s;
+border:none;
+cursor:pointer;
+margin-top:10px;
 }
 
-.boton:hover{
-background:#8b0022;
-transform:scale(1.05);
+/* ANIMACION */
+
+@keyframes agregado{
+0%{transform:scale(1)}
+50%{transform:scale(1.2)}
+100%{transform:scale(1)}
 }
 
-/* CONTACTO */
-
-.contacto{
-background:#3a0f0f;
-color:white;
-text-align:center;
-padding:40px;
-margin-top:40px;
+.animar{
+animation:agregado .4s;
 }
 
-/* FOOTER */
+/* CARRITO */
 
-footer{
-background:#220808;
-color:white;
-text-align:center;
-padding:15px;
-}
-
-/* WHATSAPP */
-
-.whatsapp{
+.carrito-icono{
 position:fixed;
-bottom:20px;
+top:20px;
 right:20px;
-background:#25D366;
+background:#c4002f;
 color:white;
-font-size:30px;
 padding:15px;
 border-radius:50%;
-text-decoration:none;
-box-shadow:0 5px 15px rgba(0,0,0,.3);
-animation:pulse 2s infinite;
+font-size:22px;
+cursor:pointer;
 }
 
-/* ANIMACIONES */
-
-@keyframes fade{
-from{opacity:0;}
-to{opacity:1;}
+.contador{
+position:absolute;
+top:-5px;
+right:-5px;
+background:black;
+color:white;
+border-radius:50%;
+padding:3px 6px;
+font-size:12px;
 }
 
-@keyframes fadeUp{
-from{
-opacity:0;
-transform:translateY(30px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
+.carrito-panel{
+position:fixed;
+right:-400px;
+top:0;
+width:350px;
+height:100%;
+background:white;
+box-shadow:-5px 0 20px rgba(0,0,0,0.2);
+padding:20px;
+transition:.4s;
+overflow-y:auto;
 }
 
-@keyframes pulse{
-0%{transform:scale(1);}
-50%{transform:scale(1.1);}
-100%{transform:scale(1);}
+.carrito-panel.abierto{
+right:0;
+}
+
+.item-carrito{
+display:flex;
+justify-content:space-between;
+margin:10px 0;
+}
+
+.eliminar{
+color:red;
+cursor:pointer;
+}
+
+.whatsapp{
+background:#25D366;
+color:white;
+padding:12px;
+border:none;
+border-radius:25px;
+width:100%;
+margin-top:20px;
+font-size:16px;
+cursor:pointer;
 }
 
 </style>
-
 </head>
 
 <body>
 
 <header class="logo-header">
-
-<div class="logo">
-🍓🍫 <span>KrisFresas</span>
-</div>
-
+<div class="logo">🍓🍫 KrisFresas</div>
 <p>Fresas con chocolate irresistibles</p>
-
 </header>
 
 <section class="hero">
-
 <h2>Las mejores fresas con chocolate</h2>
-
 <p>Hechas con amor y chocolate delicioso</p>
-
 </section>
+
+<div class="carrito-icono" onclick="toggleCarrito()">
+🛒
+<span class="contador" id="contador">0</span>
+</div>
+
+<div class="carrito-panel" id="carritoPanel">
+
+<h2>Tu pedido</h2>
+
+<div id="carritoItems"></div>
+
+<h3 id="total"></h3>
+
+<button class="whatsapp" onclick="enviarPedido()">
+Enviar pedido por WhatsApp
+</button>
+
+</div>
 
 <section class="productos">
 
@@ -217,136 +239,249 @@ transform:translateY(0);
 
 <div class="contenedor-productos">
 
-<!-- FRESAS BLANCAS -->
+<!-- PRODUCTOS -->
 
 <div class="producto">
 <img src="fresas-blancas.jpg">
 <h3>Fresas con Chocolate Blanco</h3>
 <p class="precio">$2.99</p>
+<p class="descripcion">Fresas frescas cubiertas con chocolate blanco.</p>
 
-<a class="boton" href="producto-blanco.html">Ver detalles</a>
-
-<a class="boton"
-href="https://wa.me/593982126368?text=Hola quiero pedir Fresas con Chocolate Blanco $2.99">
-Pedir por WhatsApp
-</a>
+<div class="cantidad">
+<button onclick="cambiarCantidad('p1',-1)">-</button>
+<span id="p1">1</span>
+<button onclick="cambiarCantidad('p1',1)">+</button>
 </div>
 
-<!-- CORAZON -->
+<button class="boton" onclick="agregarProducto('Fresas con Chocolate Blanco',2.99,'p1',this)">Agregar</button>
+</div>
+
 
 <div class="producto">
 <img src="corazon.jpg">
 <h3>Corazón Elegante</h3>
 <p class="precio">$3.50</p>
+<p class="descripcion">Fresas con chocolate en forma de corazón elegante.</p>
 
-<a class="boton" href="producto-corazon.html">Ver detalles</a>
-
-<a class="boton"
-href="https://wa.me/593982126368?text=Hola quiero pedir Corazón Elegante $3.50">
-Pedir por WhatsApp
-</a>
+<div class="cantidad">
+<button onclick="cambiarCantidad('p2',-1)">-</button>
+<span id="p2">1</span>
+<button onclick="cambiarCantidad('p2',1)">+</button>
 </div>
 
-<!-- 7 OZ -->
+<button class="boton" onclick="agregarProducto('Corazón Elegante',3.50,'p2',this)">Agregar</button>
+</div>
+
 
 <div class="producto">
 <img src="fresas7oz.jpg">
-<h3>Fresas con Chocolate (7oz)</h3>
+<h3>Fresas con Chocolate 7oz</h3>
 <p class="precio">$1.50</p>
+<p class="descripcion">Porción pequeña de fresas con chocolate.</p>
 
-<a class="boton" href="producto-7oz.html">Ver detalles</a>
-
-<a class="boton"
-href="https://wa.me/593982126368?text=Hola quiero pedir Fresas 7oz $1.50">
-Pedir por WhatsApp
-</a>
+<div class="cantidad">
+<button onclick="cambiarCantidad('p3',-1)">-</button>
+<span id="p3">1</span>
+<button onclick="cambiarCantidad('p3',1)">+</button>
 </div>
 
-<!-- 12 OZ -->
+<button class="boton" onclick="agregarProducto('Fresas 7oz',1.50,'p3',this)">Agregar</button>
+</div>
+
 
 <div class="producto">
 <img src="fresas12oz.jpg">
-<h3>Fresas con Chocolate (12oz)</h3>
+<h3>Fresas con Chocolate 12oz</h3>
 <p class="precio">$3.00</p>
+<p class="descripcion">Porción grande de fresas con chocolate.</p>
 
-<a class="boton" href="producto-12oz.html">Ver detalles</a>
-
-<a class="boton"
-href="https://wa.me/593982126368?text=Hola quiero pedir Fresas 12oz $3.00">
-Pedir por WhatsApp
-</a>
+<div class="cantidad">
+<button onclick="cambiarCantidad('p4',-1)">-</button>
+<span id="p4">1</span>
+<button onclick="cambiarCantidad('p4',1)">+</button>
 </div>
 
-<!-- NAVIDAD -->
+<button class="boton" onclick="agregarProducto('Fresas 12oz',3.00,'p4',this)">Agregar</button>
+</div>
+
 
 <div class="producto">
 <img src="chocobomba-navidad.jpg">
-<h3>Chocobombas Navidad</h3>
+<h3>Chocobomba Navidad</h3>
 <p class="precio">$2.50</p>
+<p class="descripcion">Chocobomba especial edición navidad.</p>
 
-<a class="boton" href="producto-navidad.html">Ver detalles</a>
-
-<a class="boton"
-href="https://wa.me/593982126368?text=Hola quiero pedir Chocobomba Navidad $2.50">
-Pedir por WhatsApp
-</a>
+<div class="cantidad">
+<button onclick="cambiarCantidad('p5',-1)">-</button>
+<span id="p5">1</span>
+<button onclick="cambiarCantidad('p5',1)">+</button>
 </div>
 
-<!-- AÑO NUEVO -->
+<button class="boton" onclick="agregarProducto('Chocobomba Navidad',2.50,'p5',this)">Agregar</button>
+</div>
+
 
 <div class="producto">
 <img src="chocobomba-ano.jpg">
-<h3>Chocobombas Año Nuevo</h3>
+<h3>Chocobomba Año Nuevo</h3>
 <p class="precio">$2.50</p>
+<p class="descripcion">Chocobomba temática de año nuevo.</p>
 
-<a class="boton" href="producto-anonuevo.html">Ver detalles</a>
-
-<a class="boton"
-href="https://wa.me/593982126368?text=Hola quiero pedir Chocobomba Año Nuevo $2.50">
-Pedir por WhatsApp
-</a>
+<div class="cantidad">
+<button onclick="cambiarCantidad('p6',-1)">-</button>
+<span id="p6">1</span>
+<button onclick="cambiarCantidad('p6',1)">+</button>
 </div>
 
-<!-- INDIVIDUAL -->
+<button class="boton" onclick="agregarProducto('Chocobomba Año Nuevo',2.50,'p6',this)">Agregar</button>
+</div>
+
 
 <div class="producto">
 <img src="fresa-individual.jpg">
 <h3>Fresa Individual</h3>
 <p class="precio">$0.75</p>
+<p class="descripcion">Fresa individual cubierta con chocolate.</p>
 
-<a class="boton" href="producto-individual.html">Ver detalles</a>
-
-<a class="boton"
-href="https://wa.me/593982126368?text=Hola quiero pedir Fresa Individual $0.75">
-Pedir por WhatsApp
-</a>
+<div class="cantidad">
+<button onclick="cambiarCantidad('p7',-1)">-</button>
+<span id="p7">1</span>
+<button onclick="cambiarCantidad('p7',1)">+</button>
 </div>
 
+<button class="boton" onclick="agregarProducto('Fresa Individual',0.75,'p7',this)">Agregar</button>
 </div>
 
+
+<div class="producto">
+<img src="chocobomba-personalizada.jpg">
+<h3>Chocobomba Personalizada</h3>
+<p class="precio">$3.00</p>
+<p class="descripcion">Chocobomba con diseño personalizado.</p>
+
+<div class="cantidad">
+<button onclick="cambiarCantidad('p8',-1)">-</button>
+<span id="p8">1</span>
+<button onclick="cambiarCantidad('p8',1)">+</button>
+</div>
+
+<button class="boton" onclick="agregarProducto('Chocobomba Personalizada',3.00,'p8',this)">Agregar</button>
+</div>
+
+
+</div>
 </section>
 
-<section class="contacto">
+<script>
 
-<h2>Contacto</h2>
+let carrito = JSON.parse(localStorage.getItem("carrito")) || []
 
-<p>📱 0982126368</p>
-<p>📱 0962000142</p>
+function guardar(){
+localStorage.setItem("carrito",JSON.stringify(carrito))
+}
 
-<p>Pedidos por WhatsApp</p>
+function cambiarCantidad(id,valor){
 
-</section>
+let elemento=document.getElementById(id)
+let cantidad=parseInt(elemento.innerText)
 
-<footer>
+cantidad+=valor
 
-<p>© 2026 KrisFresas</p>
+if(cantidad<1) cantidad=1
 
-</footer>
+elemento.innerText=cantidad
 
-<a class="whatsapp" href="https://wa.me/593982126368">
-💬
-</a>
+}
+
+function agregarProducto(nombre,precio,id,boton){
+
+let cantidad=parseInt(document.getElementById(id).innerText)
+
+carrito.push({nombre,precio,cantidad})
+
+guardar()
+
+actualizarCarrito()
+
+boton.classList.add("animar")
+
+setTimeout(()=>{
+boton.classList.remove("animar")
+},400)
+
+}
+
+function eliminarProducto(index){
+
+carrito.splice(index,1)
+
+guardar()
+
+actualizarCarrito()
+
+}
+
+function actualizarCarrito(){
+
+let contenedor=document.getElementById("carritoItems")
+
+contenedor.innerHTML=""
+
+let total=0
+let contador=0
+
+carrito.forEach((p,i)=>{
+
+let subtotal=p.precio*p.cantidad
+
+total+=subtotal
+contador+=p.cantidad
+
+contenedor.innerHTML+=`
+<div class="item-carrito">
+${p.nombre} x${p.cantidad} - $${subtotal.toFixed(2)}
+<span class="eliminar" onclick="eliminarProducto(${i})">❌</span>
+</div>
+`
+
+})
+
+document.getElementById("total").innerText="Total: $"+total.toFixed(2)
+
+document.getElementById("contador").innerText=contador
+
+}
+
+function toggleCarrito(){
+document.getElementById("carritoPanel").classList.toggle("abierto")
+}
+
+function enviarPedido(){
+
+let mensaje="Hola quiero hacer el siguiente pedido:%0A%0A"
+
+let total=0
+
+carrito.forEach(p=>{
+
+let subtotal=p.precio*p.cantidad
+
+mensaje+=`- ${p.nombre} x${p.cantidad} ($${subtotal.toFixed(2)})%0A`
+
+total+=subtotal
+
+})
+
+mensaje+=`%0ATotal: $${total.toFixed(2)}`
+
+window.open("https://wa.me/593982126368?text="+mensaje)
+
+}
+
+actualizarCarrito()
+
+</script>
 
 </body>
-
 </html>
+```
