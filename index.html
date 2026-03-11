@@ -4,7 +4,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>KrisFresas</title>
 
 <style>
@@ -80,11 +79,6 @@ font-weight:bold;
 margin:10px 0;
 }
 
-.descripcion{
-font-size:14px;
-color:#555;
-}
-
 /* SELECTOR */
 
 .cantidad{
@@ -122,7 +116,7 @@ cursor:pointer;
 margin-top:10px;
 }
 
-/* ANIMACION */
+/* ANIMACION BOTON */
 
 @keyframes agregado{
 0%{transform:scale(1)}
@@ -132,6 +126,21 @@ margin-top:10px;
 
 .animar{
 animation:agregado .4s;
+}
+
+/* MENSAJE PRODUCTO AGREGADO */
+
+.toast{
+position:fixed;
+top:80px;
+left:50%;
+transform:translateX(-50%);
+background:#8b0000;
+color:white;
+padding:12px 20px;
+border-radius:20px;
+display:none;
+z-index:2000;
 }
 
 /* ICONO CARRITO */
@@ -213,17 +222,11 @@ cursor:pointer;
 
 /* MENSAJE PERSONALIZADO */
 
-.personalizado{
-margin-top:20px;
-}
-
 .personalizado textarea{
 width:100%;
 padding:10px;
 border-radius:10px;
-border:1px solid #ccc;
 margin-top:10px;
-resize:none;
 }
 
 /* BARRA MOVIL */
@@ -266,7 +269,6 @@ color:white;
 text-align:center;
 padding:40px;
 margin-top:40px;
-animation:aparecer 2s ease;
 }
 
 footer{
@@ -286,24 +288,16 @@ font-size:30px;
 padding:15px;
 border-radius:50%;
 text-decoration:none;
-box-shadow:0 5px 15px rgba(0,0,0,.3);
-}
-
-@keyframes aparecer{
-from{
-opacity:0;
-transform:translateY(30px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
 }
 
 </style>
 </head>
 
 <body>
+
+<div class="toast" id="toast">
+🍓 Producto agregado al carrito
+</div>
 
 <header class="logo-header">
 <div class="logo">🍓🍫 KrisFresas</div>
@@ -312,7 +306,6 @@ transform:translateY(0);
 
 <section class="hero">
 <h2>Las mejores fresas con chocolate</h2>
-<p>Hechas con amor y chocolate delicioso</p>
 </section>
 
 <div class="carrito-icono" onclick="toggleCarrito()">
@@ -332,9 +325,9 @@ transform:translateY(0);
 
 <div class="personalizado">
 
-<h4>Mensaje o pedido personalizado</h4>
+<h4>Pedido personalizado</h4>
 
-<textarea id="mensajePersonalizado" rows="3" placeholder="Ej: escribir 'Te amo', chocolate blanco, agregar sprinkles..."></textarea>
+<textarea id="mensajePersonalizado" rows="3"></textarea>
 
 </div>
 
@@ -354,7 +347,6 @@ Enviar pedido por WhatsApp
 <img src="fresas-blancas.jpg">
 <h3>Fresas Chocolate Blanco</h3>
 <p class="precio">$2.99</p>
-<p class="descripcion">Fresas frescas cubiertas con chocolate blanco.</p>
 
 <div class="cantidad">
 <button onclick="cambiarCantidad('p1',-1)">-</button>
@@ -466,9 +458,12 @@ Enviar pedido por WhatsApp
 </div>
 </section>
 
-<div class="barra-movil" id="barraMovil">
+<div class="barra-movil">
+
 <span id="barraTotal">0 productos</span>
-<button onclick="toggleCarrito()">Ver pedido</button>
+
+<button onclick="abrirCarrito()">Ver pedido</button>
+
 </div>
 
 <section class="contacto">
@@ -494,6 +489,18 @@ function guardar(){
 localStorage.setItem("carrito",JSON.stringify(carrito))
 }
 
+function mostrarToast(){
+
+let toast=document.getElementById("toast")
+
+toast.style.display="block"
+
+setTimeout(()=>{
+toast.style.display="none"
+},2000)
+
+}
+
 function cambiarCantidad(id,valor){
 
 let elemento=document.getElementById(id)
@@ -516,6 +523,8 @@ carrito.push({nombre,precio,cantidad})
 guardar()
 
 actualizarCarrito()
+
+mostrarToast()
 
 boton.classList.add("animar")
 
@@ -572,6 +581,10 @@ function toggleCarrito(){
 document.getElementById("carritoPanel").classList.toggle("abierto")
 }
 
+function abrirCarrito(){
+document.getElementById("carritoPanel").classList.add("abierto")
+}
+
 function enviarPedido(){
 
 let mensaje="Hola quiero hacer el siguiente pedido:%0A%0A"
@@ -617,4 +630,3 @@ actualizarCarrito()
 
 </body>
 </html>
-
