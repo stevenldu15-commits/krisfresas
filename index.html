@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 
@@ -77,6 +78,13 @@ color:#c4002f;
 font-size:26px;
 font-weight:bold;
 margin:10px 0;
+}
+
+.descripcion{
+font-size:14px;
+color:#555;
+margin-bottom:10px;
+padding:0 5px;
 }
 
 /* SELECTOR */
@@ -324,11 +332,8 @@ text-decoration:none;
 <h3 id="total"></h3>
 
 <div class="personalizado">
-
 <h4>Pedido personalizado</h4>
-
 <textarea id="mensajePersonalizado" rows="3" placeholder="Ej: escribir 'Te amo', nombre personalizado, agregar dedicatoria..."></textarea>
-
 </div>
 
 <button class="whatsapp" onclick="enviarPedido()">
@@ -347,6 +352,7 @@ Enviar pedido por WhatsApp
 <img src="fresas-blancas.jpg">
 <h3>Fresas Chocolate Blanco</h3>
 <p class="precio">$2.99</p>
+<p class="descripcion">Deliciosas fresas frescas cubiertas con chocolate blanco suave y cremoso.</p>
 
 <div class="cantidad">
 <button onclick="cambiarCantidad('p1',-1)">-</button>
@@ -361,6 +367,7 @@ Enviar pedido por WhatsApp
 <img src="corazon.jpg">
 <h3>Corazón Elegante</h3>
 <p class="precio">$3.50</p>
+<p class="descripcion">Hermosa presentación de fresas con chocolate en forma de corazón.</p>
 
 <div class="cantidad">
 <button onclick="cambiarCantidad('p2',-1)">-</button>
@@ -375,6 +382,7 @@ Enviar pedido por WhatsApp
 <img src="fresas7oz.jpg">
 <h3>Fresas vaso 7oz</h3>
 <p class="precio">$1.50</p>
+<p class="descripcion">Vaso de fresas frescas con chocolate derretido perfecto para un antojo dulce.</p>
 
 <div class="cantidad">
 <button onclick="cambiarCantidad('p3',-1)">-</button>
@@ -389,6 +397,7 @@ Enviar pedido por WhatsApp
 <img src="fresas12oz.jpg">
 <h3>Fresas vaso 12oz</h3>
 <p class="precio">$3.00</p>
+<p class="descripcion">Vaso grande de fresas con abundante chocolate delicioso.</p>
 
 <div class="cantidad">
 <button onclick="cambiarCantidad('p4',-1)">-</button>
@@ -403,6 +412,7 @@ Enviar pedido por WhatsApp
 <img src="fresa-individual.jpg">
 <h3>Fresa Individual</h3>
 <p class="precio">$0.75</p>
+<p class="descripcion">Fresa fresca cubierta con chocolate, ideal para un pequeño detalle.</p>
 
 <div class="cantidad">
 <button onclick="cambiarCantidad('p7',-1)">-</button>
@@ -412,11 +422,12 @@ Enviar pedido por WhatsApp
 
 <button class="boton" onclick="agregarProducto('Fresa Individual',0.75,'p7',this)">Agregar</button>
 </div>
-  
+
 <div class="producto">
 <img src="chocobomba-navidad.jpg">
-<h3>Chocobombas Navidadeñas</h3>
+<h3>Chocobombas Navideñas</h3>
 <p class="precio">$2.50</p>
+<p class="descripcion">Chocobombas perfectas para preparar chocolate caliente en época navideña.</p>
 
 <div class="cantidad">
 <button onclick="cambiarCantidad('p5',-1)">-</button>
@@ -424,13 +435,14 @@ Enviar pedido por WhatsApp
 <button onclick="cambiarCantidad('p5',1)">+</button>
 </div>
 
-<button class="boton" onclick="agregarProducto('Chocobombas Navidadeñas',2.50,'p5',this)">Agregar</button>
+<button class="boton" onclick="agregarProducto('Chocobombas Navideñas',2.50,'p5',this)">Agregar</button>
 </div>
 
 <div class="producto">
 <img src="chocobomba-ano.jpg">
 <h3>Chocobombas de Año Nuevo</h3>
 <p class="precio">$2.50</p>
+<p class="descripcion">Deliciosas chocobombas ideales para celebrar el inicio de un nuevo año.</p>
 
 <div class="cantidad">
 <button onclick="cambiarCantidad('p6',-1)">-</button>
@@ -445,6 +457,7 @@ Enviar pedido por WhatsApp
 <img src="chocobomba-personalizada.jpg">
 <h3>Chocobombas Personalizadas</h3>
 <p class="precio">$3.00</p>
+<p class="descripcion">Chocobomba especial con decoración personalizada para regalos únicos.</p>
 
 <div class="cantidad">
 <button onclick="cambiarCantidad('p8',-1)">-</button>
@@ -459,11 +472,8 @@ Enviar pedido por WhatsApp
 </section>
 
 <div class="barra-movil">
-
 <span id="barraTotal">0 productos</span>
-
 <button onclick="abrirCarrito()">Ver pedido</button>
-
 </div>
 
 <section class="contacto">
@@ -477,9 +487,7 @@ Enviar pedido por WhatsApp
 <p>© 2026 KrisFresas</p>
 </footer>
 
-<a class="whatsapp-float" href="https://wa.me/593982126368">
-💬
-</a>
+<a class="whatsapp-float" href="https://wa.me/593982126368">💬</a>
 
 <script>
 
@@ -490,64 +498,38 @@ localStorage.setItem("carrito",JSON.stringify(carrito))
 }
 
 function mostrarToast(){
-
 let toast=document.getElementById("toast")
-
 toast.style.display="block"
-
-setTimeout(()=>{
-toast.style.display="none"
-},2000)
-
+setTimeout(()=>{toast.style.display="none"},2000)
 }
 
 function cambiarCantidad(id,valor){
-
 let elemento=document.getElementById(id)
 let cantidad=parseInt(elemento.innerText)
-
 cantidad+=valor
-
 if(cantidad<1) cantidad=1
-
 elemento.innerText=cantidad
-
 }
 
 function agregarProducto(nombre,precio,id,boton){
-
 let cantidad=parseInt(document.getElementById(id).innerText)
-
 carrito.push({nombre,precio,cantidad})
-
 guardar()
-
 actualizarCarrito()
-
 mostrarToast()
-
 boton.classList.add("animar")
-
-setTimeout(()=>{
-boton.classList.remove("animar")
-},400)
-
+setTimeout(()=>{boton.classList.remove("animar")},400)
 }
 
 function eliminarProducto(index){
-
 carrito.splice(index,1)
-
 guardar()
-
 actualizarCarrito()
-
 }
 
 function actualizarCarrito(){
 
 let contenedor=document.getElementById("carritoItems")
-
 contenedor.innerHTML=""
 
 let total=0
@@ -570,9 +552,7 @@ ${p.nombre} x${p.cantidad} - $${subtotal.toFixed(2)}
 })
 
 document.getElementById("total").innerText="Total: $"+total.toFixed(2)
-
 document.getElementById("contador").innerText=contador
-
 document.getElementById("barraTotal").innerText=contador+" productos - $"+total.toFixed(2)
 
 }
@@ -588,17 +568,12 @@ document.getElementById("carritoPanel").classList.add("abierto")
 function enviarPedido(){
 
 let mensaje="Hola, quiero hacer el siguiente pedido:%0A%0A"
-
 let total=0
 
 carrito.forEach(p=>{
-
 let subtotal=p.precio*p.cantidad
-
 mensaje+=`- ${p.nombre} x${p.cantidad} ($${subtotal.toFixed(2)})%0A`
-
 total+=subtotal
-
 })
 
 let personalizado=document.getElementById("mensajePersonalizado").value
@@ -614,14 +589,12 @@ window.open("https://wa.me/593982126368?text="+mensaje)
 }
 
 document.addEventListener("click",function(e){
-
 let carritoPanel=document.getElementById("carritoPanel")
 let icono=document.querySelector(".carrito-icono")
 
 if(!carritoPanel.contains(e.target) && !icono.contains(e.target)){
 carritoPanel.classList.remove("abierto")
 }
-
 })
 
 actualizarCarrito()
@@ -630,5 +603,4 @@ actualizarCarrito()
 
 </body>
 </html>
-
-
+```
