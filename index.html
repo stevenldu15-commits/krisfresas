@@ -21,7 +21,7 @@ body{
 background:#fff0f3;
 }
 
-/* LOGO */
+/* HEADER */
 
 .logo-header{
 background:linear-gradient(90deg,#3a0f0f,#8b0000);
@@ -42,11 +42,9 @@ text-shadow:0 0 10px rgba(255,0,0,0.6);
 }
 
 @keyframes flotar{
-
-0%{transform:translateY(0px);}
+0%{transform:translateY(0);}
 50%{transform:translateY(-10px);}
-100%{transform:translateY(0px);}
-
+100%{transform:translateY(0);}
 }
 
 /* HERO */
@@ -54,6 +52,7 @@ text-shadow:0 0 10px rgba(255,0,0,0.6);
 .hero{
 text-align:center;
 padding:50px 20px;
+animation:fade 2s;
 }
 
 .hero h2{
@@ -70,16 +69,29 @@ font-size:18px;
 
 .productos{
 text-align:center;
-padding:50px;
+padding:50px 20px;
+}
+
+.contenedor-productos{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:25px;
+margin-top:30px;
 }
 
 .producto{
 background:white;
 padding:20px;
 border-radius:15px;
-width:320px;
-margin:auto;
+width:260px;
 box-shadow:0 10px 20px rgba(0,0,0,0.1);
+transition:transform .3s;
+animation:fadeUp 1s;
+}
+
+.producto:hover{
+transform:translateY(-8px);
 }
 
 .producto img{
@@ -93,7 +105,7 @@ margin-top:10px;
 
 .precio{
 color:#c4002f;
-font-size:30px;
+font-size:28px;
 font-weight:bold;
 margin:10px;
 }
@@ -103,16 +115,17 @@ margin:10px;
 .boton{
 background:#c4002f;
 color:white;
-padding:12px 20px;
+padding:10px 18px;
 border-radius:25px;
 text-decoration:none;
 display:inline-block;
-margin-top:10px;
+margin-top:8px;
 transition:.3s;
 }
 
 .boton:hover{
 background:#8b0022;
+transform:scale(1.05);
 }
 
 /* CONTACTO */
@@ -134,7 +147,7 @@ text-align:center;
 padding:15px;
 }
 
-/* BOTON WHATSAPP */
+/* WHATSAPP */
 
 .whatsapp{
 position:fixed;
@@ -147,6 +160,31 @@ padding:15px;
 border-radius:50%;
 text-decoration:none;
 box-shadow:0 5px 15px rgba(0,0,0,.3);
+animation:pulse 2s infinite;
+}
+
+/* ANIMACIONES */
+
+@keyframes fade{
+from{opacity:0;}
+to{opacity:1;}
+}
+
+@keyframes fadeUp{
+from{
+opacity:0;
+transform:translateY(30px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+@keyframes pulse{
+0%{transform:scale(1);}
+50%{transform:scale(1.1);}
+100%{transform:scale(1);}
 }
 
 </style>
@@ -165,7 +203,6 @@ box-shadow:0 5px 15px rgba(0,0,0,.3);
 
 </header>
 
-
 <section class="hero">
 
 <h2>Las mejores fresas con chocolate</h2>
@@ -174,27 +211,120 @@ box-shadow:0 5px 15px rgba(0,0,0,.3);
 
 </section>
 
-
 <section class="productos">
 
 <h2>Nuestros Productos</h2>
 
+<div class="contenedor-productos">
+
+<!-- FRESAS BLANCAS -->
+
 <div class="producto">
-
-<img src="fresas-blancas.jpg" alt="Fresas con chocolate">
-
+<img src="fresas-blancas.jpg">
 <h3>Fresas con Chocolate Blanco</h3>
-
 <p class="precio">$2.99</p>
 
-<a class="boton" href="https://wa.me/593982126368?text=Hola quiero pedir las fresas con chocolate de $2.99">
+<a class="boton" href="producto-blanco.html">Ver detalles</a>
+
+<a class="boton"
+href="https://wa.me/593982126368?text=Hola quiero pedir Fresas con Chocolate Blanco $2.99">
 Pedir por WhatsApp
 </a>
+</div>
+
+<!-- CORAZON -->
+
+<div class="producto">
+<img src="corazon.jpg">
+<h3>Corazón Elegante</h3>
+<p class="precio">$3.50</p>
+
+<a class="boton" href="producto-corazon.html">Ver detalles</a>
+
+<a class="boton"
+href="https://wa.me/593982126368?text=Hola quiero pedir Corazón Elegante $3.50">
+Pedir por WhatsApp
+</a>
+</div>
+
+<!-- 7 OZ -->
+
+<div class="producto">
+<img src="fresas7oz.jpg">
+<h3>Fresas con Chocolate (7oz)</h3>
+<p class="precio">$1.50</p>
+
+<a class="boton" href="producto-7oz.html">Ver detalles</a>
+
+<a class="boton"
+href="https://wa.me/593982126368?text=Hola quiero pedir Fresas 7oz $1.50">
+Pedir por WhatsApp
+</a>
+</div>
+
+<!-- 12 OZ -->
+
+<div class="producto">
+<img src="fresas12oz.jpg">
+<h3>Fresas con Chocolate (12oz)</h3>
+<p class="precio">$3.00</p>
+
+<a class="boton" href="producto-12oz.html">Ver detalles</a>
+
+<a class="boton"
+href="https://wa.me/593982126368?text=Hola quiero pedir Fresas 12oz $3.00">
+Pedir por WhatsApp
+</a>
+</div>
+
+<!-- NAVIDAD -->
+
+<div class="producto">
+<img src="chocobomba-navidad.jpg">
+<h3>Chocobombas Navidad</h3>
+<p class="precio">$2.50</p>
+
+<a class="boton" href="producto-navidad.html">Ver detalles</a>
+
+<a class="boton"
+href="https://wa.me/593982126368?text=Hola quiero pedir Chocobomba Navidad $2.50">
+Pedir por WhatsApp
+</a>
+</div>
+
+<!-- AÑO NUEVO -->
+
+<div class="producto">
+<img src="chocobomba-ano.jpg">
+<h3>Chocobombas Año Nuevo</h3>
+<p class="precio">$2.50</p>
+
+<a class="boton" href="producto-anonuevo.html">Ver detalles</a>
+
+<a class="boton"
+href="https://wa.me/593982126368?text=Hola quiero pedir Chocobomba Año Nuevo $2.50">
+Pedir por WhatsApp
+</a>
+</div>
+
+<!-- INDIVIDUAL -->
+
+<div class="producto">
+<img src="fresa-individual.jpg">
+<h3>Fresa Individual</h3>
+<p class="precio">$0.75</p>
+
+<a class="boton" href="producto-individual.html">Ver detalles</a>
+
+<a class="boton"
+href="https://wa.me/593982126368?text=Hola quiero pedir Fresa Individual $0.75">
+Pedir por WhatsApp
+</a>
+</div>
 
 </div>
 
 </section>
-
 
 <section class="contacto">
 
@@ -207,13 +337,11 @@ Pedir por WhatsApp
 
 </section>
 
-
 <footer>
 
 <p>© 2026 KrisFresas</p>
 
 </footer>
-
 
 <a class="whatsapp" href="https://wa.me/593982126368">
 💬
