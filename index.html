@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 
@@ -85,7 +86,7 @@ font-size:14px;
 color:#555;
 }
 
-/* SELECTOR CANTIDAD */
+/* SELECTOR */
 
 .cantidad{
 display:flex;
@@ -211,6 +212,21 @@ font-size:16px;
 cursor:pointer;
 }
 
+/* MENSAJE PERSONALIZADO */
+
+.personalizado{
+margin-top:20px;
+}
+
+.personalizado textarea{
+width:100%;
+padding:10px;
+border-radius:10px;
+border:1px solid #ccc;
+margin-top:10px;
+resize:none;
+}
+
 /* BARRA MOVIL */
 
 .barra-movil{
@@ -243,6 +259,48 @@ display:flex;
 }
 }
 
+/* CONTACTO */
+
+.contacto{
+background:#3a0f0f;
+color:white;
+text-align:center;
+padding:40px;
+margin-top:40px;
+animation:aparecer 2s ease;
+}
+
+footer{
+background:#220808;
+color:white;
+text-align:center;
+padding:15px;
+}
+
+.whatsapp-float{
+position:fixed;
+bottom:80px;
+right:20px;
+background:#25D366;
+color:white;
+font-size:30px;
+padding:15px;
+border-radius:50%;
+text-decoration:none;
+box-shadow:0 5px 15px rgba(0,0,0,.3);
+}
+
+@keyframes aparecer{
+from{
+opacity:0;
+transform:translateY(30px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
 </style>
 </head>
 
@@ -258,14 +316,10 @@ display:flex;
 <p>Hechas con amor y chocolate delicioso</p>
 </section>
 
-<!-- ICONO CARRITO -->
-
 <div class="carrito-icono" onclick="toggleCarrito()">
 🛒
 <span class="contador" id="contador">0</span>
 </div>
-
-<!-- PANEL CARRITO -->
 
 <div class="carrito-panel" id="carritoPanel">
 
@@ -276,6 +330,14 @@ display:flex;
 <div id="carritoItems"></div>
 
 <h3 id="total"></h3>
+
+<div class="personalizado">
+
+<h4>Mensaje o pedido personalizado</h4>
+
+<textarea id="mensajePersonalizado" rows="3" placeholder="Ej: escribir 'Te amo', chocolate blanco, agregar sprinkles..."></textarea>
+
+</div>
 
 <button class="whatsapp" onclick="enviarPedido()">
 Enviar pedido por WhatsApp
@@ -288,8 +350,6 @@ Enviar pedido por WhatsApp
 <h2>Nuestros Productos</h2>
 
 <div class="contenedor-productos">
-
-<!-- PRODUCTO -->
 
 <div class="producto">
 <img src="fresas-blancas.jpg">
@@ -310,7 +370,6 @@ Enviar pedido por WhatsApp
 <img src="corazon.jpg">
 <h3>Corazón Elegante</h3>
 <p class="precio">$3.50</p>
-<p class="descripcion">Presentación elegante en forma de corazón.</p>
 
 <div class="cantidad">
 <button onclick="cambiarCantidad('p2',-1)">-</button>
@@ -325,7 +384,6 @@ Enviar pedido por WhatsApp
 <img src="fresas7oz.jpg">
 <h3>Fresas 7oz</h3>
 <p class="precio">$1.50</p>
-<p class="descripcion">Porción pequeña de fresas con chocolate.</p>
 
 <div class="cantidad">
 <button onclick="cambiarCantidad('p3',-1)">-</button>
@@ -340,7 +398,6 @@ Enviar pedido por WhatsApp
 <img src="fresas12oz.jpg">
 <h3>Fresas 12oz</h3>
 <p class="precio">$3.00</p>
-<p class="descripcion">Porción grande de fresas con chocolate.</p>
 
 <div class="cantidad">
 <button onclick="cambiarCantidad('p4',-1)">-</button>
@@ -355,7 +412,6 @@ Enviar pedido por WhatsApp
 <img src="chocobomba-navidad.jpg">
 <h3>Chocobomba Navidad</h3>
 <p class="precio">$2.50</p>
-<p class="descripcion">Chocobomba especial de temporada.</p>
 
 <div class="cantidad">
 <button onclick="cambiarCantidad('p5',-1)">-</button>
@@ -370,7 +426,6 @@ Enviar pedido por WhatsApp
 <img src="chocobomba-ano.jpg">
 <h3>Chocobomba Año Nuevo</h3>
 <p class="precio">$2.50</p>
-<p class="descripcion">Chocobomba temática de año nuevo.</p>
 
 <div class="cantidad">
 <button onclick="cambiarCantidad('p6',-1)">-</button>
@@ -385,7 +440,6 @@ Enviar pedido por WhatsApp
 <img src="fresa-individual.jpg">
 <h3>Fresa Individual</h3>
 <p class="precio">$0.75</p>
-<p class="descripcion">Fresa cubierta con chocolate.</p>
 
 <div class="cantidad">
 <button onclick="cambiarCantidad('p7',-1)">-</button>
@@ -400,7 +454,6 @@ Enviar pedido por WhatsApp
 <img src="chocobomba-personalizada.jpg">
 <h3>Chocobomba Personalizada</h3>
 <p class="precio">$3.00</p>
-<p class="descripcion">Chocobomba con diseño personalizado.</p>
 
 <div class="cantidad">
 <button onclick="cambiarCantidad('p8',-1)">-</button>
@@ -414,15 +467,25 @@ Enviar pedido por WhatsApp
 </div>
 </section>
 
-<!-- BARRA MOVIL -->
-
 <div class="barra-movil" id="barraMovil">
-
 <span id="barraTotal">0 productos</span>
-
 <button onclick="toggleCarrito()">Ver pedido</button>
-
 </div>
+
+<section class="contacto">
+<h2>Contacto</h2>
+<p>📱 0982126368</p>
+<p>📱 0962000142</p>
+<p>Pedidos por WhatsApp</p>
+</section>
+
+<footer>
+<p>© 2026 KrisFresas</p>
+</footer>
+
+<a class="whatsapp-float" href="https://wa.me/593982126368">
+💬
+</a>
 
 <script>
 
@@ -512,7 +575,7 @@ document.getElementById("carritoPanel").classList.toggle("abierto")
 
 function enviarPedido(){
 
-let mensaje="Hola, quiero hacer el siguiente pedido:%0A%0A"
+let mensaje="Hola quiero hacer el siguiente pedido:%0A%0A"
 
 let total=0
 
@@ -525,6 +588,12 @@ mensaje+=`- ${p.nombre} x${p.cantidad} ($${subtotal.toFixed(2)})%0A`
 total+=subtotal
 
 })
+
+let personalizado=document.getElementById("mensajePersonalizado").value
+
+if(personalizado!=""){
+mensaje+=`%0A📝 Personalización:%0A${personalizado}`
+}
 
 mensaje+=`%0ATotal: $${total.toFixed(2)}`
 
@@ -549,5 +618,4 @@ actualizarCarrito()
 
 </body>
 </html>
-
-
+```
