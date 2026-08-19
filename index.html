@@ -263,9 +263,11 @@ cursor:pointer;
 }
 
 @media(max-width:768px){
+
 .barra-movil{
 display:flex;
 }
+
 }
 
 /* CONTACTO */
@@ -332,7 +334,13 @@ text-decoration:none;
 
 <div class="personalizado">
 <h4>Pedido personalizado</h4>
-<textarea id="mensajePersonalizado" rows="3" placeholder="Ej: escribir 'Te amo', nombre personalizado, agregar dedicatoria..."></textarea>
+
+<textarea
+id="mensajePersonalizado"
+rows="3"
+placeholder="Ej: escribir 'Te amo', nombre personalizado, agregar dedicatoria...">
+</textarea>
+
 </div>
 
 <button class="whatsapp" onclick="enviarPedido()">
@@ -347,260 +355,601 @@ Enviar pedido por WhatsApp
 
 <div class="contenedor-productos">
 
+
+<!-- PRODUCTO 1 -->
+
 <div class="producto">
+
 <img src="fresas-blancas.jpg">
+
 <h3>Fresas Chocolate Blanco</h3>
+
 <p class="precio">$2.99</p>
-<p class="descripcion">Deliciosas fresas frescas cubiertas con chocolate blanco suave y cremoso.</p>
+
+<p class="descripcion">
+Deliciosas fresas frescas cubiertas con chocolate blanco suave y cremoso.
+</p>
 
 <div class="cantidad">
+
 <button onclick="cambiarCantidad('p1',-1)">-</button>
+
 <span id="p1">1</span>
+
 <button onclick="cambiarCantidad('p1',1)">+</button>
+
 </div>
 
-<button class="boton" onclick="agregarProducto('Fresas Chocolate Blanco',2.99,'p1',this)">Agregar</button>
+<button
+class="boton"
+onclick="agregarProducto('Fresas Chocolate Blanco',2.99,'p1',this)">
+Agregar
+</button>
+
 </div>
+
+
+<!-- PRODUCTO 2 -->
 
 <div class="producto">
+
 <img src="corazon.jpg">
+
 <h3>Corazón Elegante</h3>
+
 <p class="precio">$3.50</p>
-<p class="descripcion">Hermosa presentación de fresas con chocolate en forma de corazón.</p>
+
+<p class="descripcion">
+Hermosa presentación de fresas con chocolate en forma de corazón.
+</p>
 
 <div class="cantidad">
+
 <button onclick="cambiarCantidad('p2',-1)">-</button>
+
 <span id="p2">1</span>
+
 <button onclick="cambiarCantidad('p2',1)">+</button>
+
 </div>
 
-<button class="boton" onclick="agregarProducto('Corazón Elegante',3.50,'p2',this)">Agregar</button>
+<button
+class="boton"
+onclick="agregarProducto('Corazón Elegante',3.50,'p2',this)">
+Agregar
+</button>
+
 </div>
+
+
+<!-- PRODUCTO 3 NUEVO -->
 
 <div class="producto">
+
+<img src="GIRASOLES.png">
+
+<h3>Fresas con Girasoles</h3>
+
+<p class="precio">$6.00</p>
+
+<p class="descripcion">
+Hermosos girasoles hechos a mano, ideales para acompañar un dulce detalle.
+</p>
+
+<div class="cantidad">
+
+<button onclick="cambiarCantidad('p9',-1)">-</button>
+
+<span id="p9">1</span>
+
+<button onclick="cambiarCantidad('p9',1)">+</button>
+
+</div>
+
+<button
+class="boton"
+onclick="agregarProducto('Fresas con Girasoles',6.00,'p9',this)">
+Agregar
+</button>
+
+</div>
+
+
+<!-- PRODUCTO 4 -->
+
+<div class="producto">
+
 <img src="fresas7oz.jpg">
+
 <h3>Fresas vaso 7oz</h3>
+
 <p class="precio">$1.50</p>
-<p class="descripcion">Vaso de 3 fresas medianas con chocolate derretido perfecto para un antojo dulce.</p>
+
+<p class="descripcion">
+Vaso de 3 fresas medianas con chocolate derretido perfecto para un antojo dulce.
+</p>
 
 <div class="cantidad">
+
 <button onclick="cambiarCantidad('p3',-1)">-</button>
+
 <span id="p3">1</span>
+
 <button onclick="cambiarCantidad('p3',1)">+</button>
+
 </div>
 
-<button class="boton" onclick="agregarProducto('Fresas vaso 7oz',1.50,'p3',this)">Agregar</button>
+<button
+class="boton"
+onclick="agregarProducto('Fresas vaso 7oz',1.50,'p3',this)">
+Agregar
+</button>
+
 </div>
+
+
+<!-- PRODUCTO 5 -->
 
 <div class="producto">
+
 <img src="fresas12oz.jpg">
+
 <h3>Fresas vaso 12oz</h3>
+
 <p class="precio">$3.00</p>
-<p class="descripcion">Vaso grande de 6 fresas medianas con abundante chocolate delicioso.</p>
+
+<p class="descripcion">
+Vaso grande de 6 fresas medianas con abundante chocolate delicioso.
+</p>
 
 <div class="cantidad">
+
 <button onclick="cambiarCantidad('p4',-1)">-</button>
+
 <span id="p4">1</span>
+
 <button onclick="cambiarCantidad('p4',1)">+</button>
+
 </div>
 
-<button class="boton" onclick="agregarProducto('Fresas vaso 12oz',3.00,'p4',this)">Agregar</button>
+<button
+class="boton"
+onclick="agregarProducto('Fresas vaso 12oz',3.00,'p4',this)">
+Agregar
+</button>
+
 </div>
+
+
+<!-- PRODUCTO 6 -->
 
 <div class="producto">
+
 <img src="fresa-individual.jpg">
+
 <h3>Fresa Individual</h3>
+
 <p class="precio">$0.75</p>
-<p class="descripcion">Fresa fresca cubierta con chocolate, ideal para un pequeño detalle.</p>
+
+<p class="descripcion">
+Fresa fresca cubierta con chocolate, ideal para un pequeño detalle.
+</p>
 
 <div class="cantidad">
+
 <button onclick="cambiarCantidad('p7',-1)">-</button>
+
 <span id="p7">1</span>
+
 <button onclick="cambiarCantidad('p7',1)">+</button>
+
 </div>
 
-<button class="boton" onclick="agregarProducto('Fresa Individual',0.75,'p7',this)">Agregar</button>
+<button
+class="boton"
+onclick="agregarProducto('Fresa Individual',0.75,'p7',this)">
+Agregar
+</button>
+
 </div>
+
+
+<!-- PRODUCTO 7 -->
 
 <div class="producto">
+
 <img src="chocobomba-navidad.jpg">
+
 <h3>Chocobombas Navideñas</h3>
+
 <p class="precio">$2.50</p>
-<p class="descripcion">Chocobombas perfectas para preparar chocolate caliente en época navideña.</p>
+
+<p class="descripcion">
+Chocobombas perfectas para preparar chocolate caliente en época navideña.
+</p>
 
 <div class="cantidad">
+
 <button onclick="cambiarCantidad('p5',-1)">-</button>
+
 <span id="p5">1</span>
+
 <button onclick="cambiarCantidad('p5',1)">+</button>
+
 </div>
 
-<button class="boton" onclick="agregarProducto('Chocobombas Navideñas',2.50,'p5',this)">Agregar</button>
+<button
+class="boton"
+onclick="agregarProducto('Chocobombas Navideñas',2.50,'p5',this)">
+Agregar
+</button>
+
 </div>
+
+
+<!-- PRODUCTO 8 -->
 
 <div class="producto">
+
 <img src="chocobomba-ano.jpg">
+
 <h3>Chocobombas de Año Nuevo</h3>
+
 <p class="precio">$2.50</p>
-<p class="descripcion">Deliciosas chocobombas ideales para celebrar el inicio de un nuevo año.</p>
+
+<p class="descripcion">
+Deliciosas chocobombas ideales para celebrar el inicio de un nuevo año.
+</p>
 
 <div class="cantidad">
+
 <button onclick="cambiarCantidad('p6',-1)">-</button>
+
 <span id="p6">1</span>
+
 <button onclick="cambiarCantidad('p6',1)">+</button>
+
 </div>
 
-<button class="boton" onclick="agregarProducto('Chocobombas de Año Nuevo',2.50,'p6',this)">Agregar</button>
+<button
+class="boton"
+onclick="agregarProducto('Chocobombas de Año Nuevo',2.50,'p6',this)">
+Agregar
+</button>
+
 </div>
+
+
+<!-- PRODUCTO 9 -->
 
 <div class="producto">
+
 <img src="chocobomba-personalizada.jpg">
+
 <h3>Chocobombas Personalizadas</h3>
+
 <p class="precio">$3.00</p>
-<p class="descripcion">Chocobomba especial con decoración personalizada para regalos únicos.</p>
+
+<p class="descripcion">
+Chocobomba especial con decoración personalizada para regalos únicos.
+</p>
 
 <div class="cantidad">
+
 <button onclick="cambiarCantidad('p8',-1)">-</button>
+
 <span id="p8">1</span>
+
 <button onclick="cambiarCantidad('p8',1)">+</button>
-</div>
-
-<button class="boton" onclick="agregarProducto('Chocobombas Personalizadas',3.00,'p8',this)">Agregar</button>
-</div>
 
 </div>
+
+<button
+class="boton"
+onclick="agregarProducto('Chocobombas Personalizadas',3.00,'p8',this)">
+Agregar
+</button>
+
+</div>
+
+
+</div>
+
 </section>
+
 
 <div class="barra-movil">
-<span id="barraTotal">0 productos</span>
-<button onclick="abrirCarrito()">Ver pedido</button>
+
+<span id="barraTotal">
+0 productos
+</span>
+
+<button onclick="abrirCarrito()">
+Ver pedido
+</button>
+
 </div>
 
+
 <section class="contacto">
+
 <h2>Contacto</h2>
+
 <p>📱 0982126368</p>
+
 <p>📱 0962000142</p>
+
 <p>Pedidos por WhatsApp</p>
+
 </section>
 
+
 <footer>
+
 <p>© 2026 KrisFresas</p>
+
 </footer>
 
-<a class="whatsapp-float" href="https://wa.me/593982126368">💬</a>
+
+<a
+class="whatsapp-float"
+href="https://wa.me/593982126368">
+💬
+</a>
+
 
 <script>
 
-let carrito = JSON.parse(localStorage.getItem("carrito")) || []
+let carrito =
+JSON.parse(localStorage.getItem("carrito")) || [];
+
 
 function guardar(){
-localStorage.setItem("carrito",JSON.stringify(carrito))
+
+localStorage.setItem(
+"carrito",
+JSON.stringify(carrito)
+);
+
 }
+
 
 function mostrarToast(){
-let toast=document.getElementById("toast")
-toast.style.display="block"
-setTimeout(()=>{toast.style.display="none"},2000)
+
+let toast =
+document.getElementById("toast");
+
+toast.style.display="block";
+
+setTimeout(()=>{
+
+toast.style.display="none";
+
+},2000);
+
 }
+
 
 function cambiarCantidad(id,valor){
-let elemento=document.getElementById(id)
-let cantidad=parseInt(elemento.innerText)
-cantidad+=valor
-if(cantidad<1) cantidad=1
-elemento.innerText=cantidad
+
+let elemento =
+document.getElementById(id);
+
+let cantidad =
+parseInt(elemento.innerText);
+
+cantidad += valor;
+
+if(cantidad < 1)
+cantidad = 1;
+
+elemento.innerText =
+cantidad;
+
 }
+
 
 function agregarProducto(nombre,precio,id,boton){
-let cantidad=parseInt(document.getElementById(id).innerText)
-carrito.push({nombre,precio,cantidad})
-guardar()
-actualizarCarrito()
-mostrarToast()
-boton.classList.add("animar")
-setTimeout(()=>{boton.classList.remove("animar")},400)
+
+let cantidad =
+parseInt(
+document.getElementById(id).innerText
+);
+
+carrito.push({
+
+nombre,
+precio,
+cantidad
+
+});
+
+guardar();
+
+actualizarCarrito();
+
+mostrarToast();
+
+boton.classList.add("animar");
+
+setTimeout(()=>{
+
+boton.classList.remove("animar");
+
+},400);
+
 }
 
+
 function eliminarProducto(index){
-carrito.splice(index,1)
-guardar()
-actualizarCarrito()
+
+carrito.splice(index,1);
+
+guardar();
+
+actualizarCarrito();
+
 }
+
 
 function actualizarCarrito(){
 
-let contenedor=document.getElementById("carritoItems")
-contenedor.innerHTML=""
+let contenedor =
+document.getElementById("carritoItems");
 
-let total=0
-let contador=0
+contenedor.innerHTML="";
+
+let total=0;
+
+let contador=0;
+
 
 carrito.forEach((p,i)=>{
 
-let subtotal=p.precio*p.cantidad
+let subtotal =
+p.precio * p.cantidad;
 
-total+=subtotal
-contador+=p.cantidad
+total += subtotal;
 
-contenedor.innerHTML+=`
+contador += p.cantidad;
+
+
+contenedor.innerHTML += `
+
 <div class="item-carrito">
-${p.nombre} x${p.cantidad} - $${subtotal.toFixed(2)}
-<span class="eliminar" onclick="eliminarProducto(${i})">❌</span>
+
+${p.nombre} x${p.cantidad}
+- $${subtotal.toFixed(2)}
+
+<span
+class="eliminar"
+onclick="eliminarProducto(${i})">
+❌
+</span>
+
 </div>
-`
 
-})
+`;
 
-document.getElementById("total").innerText="Total: $"+total.toFixed(2)
-document.getElementById("contador").innerText=contador
-document.getElementById("barraTotal").innerText=contador+" productos - $"+total.toFixed(2)
+});
+
+
+document.getElementById("total").innerText =
+"Total: $" + total.toFixed(2);
+
+
+document.getElementById("contador").innerText =
+contador;
+
+
+document.getElementById("barraTotal").innerText =
+contador +
+" productos - $" +
+total.toFixed(2);
 
 }
+
 
 function toggleCarrito(){
-document.getElementById("carritoPanel").classList.toggle("abierto")
+
+document
+.getElementById("carritoPanel")
+.classList
+.toggle("abierto");
+
 }
 
+
 function abrirCarrito(){
-document.getElementById("carritoPanel").classList.add("abierto")
+
+document
+.getElementById("carritoPanel")
+.classList
+.add("abierto");
+
 }
+
 
 function enviarPedido(){
 
-let mensaje="Hola, quiero hacer el siguiente pedido:%0A%0A"
-let total=0
+let mensaje =
+"Hola, quiero hacer el siguiente pedido:%0A%0A";
+
+let total=0;
+
 
 carrito.forEach(p=>{
-let subtotal=p.precio*p.cantidad
-mensaje+=`- ${p.nombre} x${p.cantidad} ($${subtotal.toFixed(2)})%0A`
-total+=subtotal
-})
 
-let personalizado=document.getElementById("mensajePersonalizado").value
+let subtotal =
+p.precio * p.cantidad;
+
+mensaje +=
+`- ${p.nombre} x${p.cantidad} ($${subtotal.toFixed(2)})%0A`;
+
+total += subtotal;
+
+});
+
+
+let personalizado =
+document.getElementById(
+"mensajePersonalizado"
+).value;
+
 
 if(personalizado!=""){
-mensaje+=`%0A📝 Personalización:%0A${personalizado}`
-}
 
-mensaje+=`%0ATotal: $${total.toFixed(2)}`
-
-window.open("https://wa.me/593982126368?text="+mensaje)
+mensaje +=
+`%0A📝 Personalización:%0A${personalizado}`;
 
 }
 
-document.addEventListener("click",function(e){
-let carritoPanel=document.getElementById("carritoPanel")
-let icono=document.querySelector(".carrito-icono")
 
-if(!carritoPanel.contains(e.target) && !icono.contains(e.target)){
-carritoPanel.classList.remove("abierto")
+mensaje +=
+`%0ATotal: $${total.toFixed(2)}`;
+
+
+window.open(
+"https://wa.me/593982126368?text="
++ mensaje
+);
+
 }
-})
 
-actualizarCarrito()
+
+document.addEventListener(
+"click",
+function(e){
+
+let carritoPanel =
+document.getElementById(
+"carritoPanel"
+);
+
+let icono =
+document.querySelector(
+".carrito-icono"
+);
+
+
+if(
+!carritoPanel.contains(e.target)
+&&
+!icono.contains(e.target)
+){
+
+carritoPanel
+.classList
+.remove("abierto");
+
+}
+
+});
+
+
+actualizarCarrito();
 
 </script>
 
 </body>
 </html>
-
-
