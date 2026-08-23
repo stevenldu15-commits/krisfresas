@@ -1,10 +1,9 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="es">
 
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>KrisFresas</title>
@@ -103,11 +102,11 @@ body{
 
 
 /* =========================
-   TARJETA PRODUCTO
+   TARJETAS
 ========================= */
 
 .producto{
-    background:#fff;
+    background:white;
     padding:15px 15px 22px;
     border-radius:18px;
     box-shadow:0 8px 25px rgba(0,0,0,0.10);
@@ -139,15 +138,13 @@ body{
     transition:transform .35s ease;
 }
 
-/* Zoom suave */
-
 .producto:hover img{
     transform:scale(1.04);
 }
 
 
 /* =========================
-   INFORMACIÓN PRODUCTO
+   INFORMACIÓN
 ========================= */
 
 .producto h3{
@@ -178,7 +175,7 @@ body{
 
 
 /* =========================
-   SELECTOR DE CANTIDAD
+   CANTIDAD
 ========================= */
 
 .cantidad{
@@ -239,7 +236,7 @@ body{
 
 
 /* =========================
-   ANIMACIÓN BOTÓN
+   ANIMACIÓN
 ========================= */
 
 @keyframes agregado{
@@ -284,7 +281,7 @@ body{
 
 
 /* =========================
-   ICONO CARRITO
+   CARRITO ICONO
 ========================= */
 
 .carrito-icono{
@@ -301,7 +298,7 @@ body{
     border-radius:50%;
     font-size:23px;
     cursor:pointer;
-    z-index:1000;
+    z-index:1001;
     box-shadow:0 5px 15px rgba(0,0,0,.25);
     transition:.25s;
 }
@@ -344,7 +341,7 @@ body{
     padding:25px;
     transition:.4s;
     overflow-y:auto;
-    z-index:999;
+    z-index:1000;
 }
 
 .carrito-panel.abierto{
@@ -371,7 +368,7 @@ body{
 
 
 /* =========================
-   ITEMS CARRITO
+   ITEMS DEL CARRITO
 ========================= */
 
 .item-carrito{
@@ -383,6 +380,10 @@ body{
     padding-bottom:10px;
     border-bottom:1px solid #eee;
     font-size:14px;
+}
+
+.item-carrito span:first-child{
+    flex:1;
 }
 
 .eliminar{
@@ -461,7 +462,7 @@ body{
     padding:12px 15px;
     font-weight:bold;
     display:none;
-    z-index:900;
+    z-index:1100;
     box-shadow:0 -4px 15px rgba(0,0,0,.2);
 }
 
@@ -538,7 +539,7 @@ footer{
 
 
 /* =========================
-   TABLETS
+   TABLET
 ========================= */
 
 @media(max-width:1000px){
@@ -556,12 +557,12 @@ footer{
 
 @media(max-width:768px){
 
-    .barra-movil{
-        display:flex;
+    body{
+        padding-bottom:65px;
     }
 
-    body{
-        padding-bottom:60px;
+    .barra-movil{
+        display:flex;
     }
 
     .productos{
@@ -712,7 +713,7 @@ footer{
 
 
 <!-- =========================
-     MENSAJE
+     TOAST
 ========================= -->
 
 <div class="toast" id="toast">
@@ -738,7 +739,7 @@ footer{
 
 
 <!-- =========================
-     PRESENTACIÓN
+     HERO
 ========================= -->
 
 <section class="hero">
@@ -755,12 +756,12 @@ footer{
 
 
 <!-- =========================
-     CARRITO ICONO
+     ICONO CARRITO
 ========================= -->
 
 <div
     class="carrito-icono"
-    onclick="toggleCarrito()">
+    onclick="toggleCarrito(event)">
 
     🛒
 
@@ -783,12 +784,12 @@ footer{
 
     <div
         class="cerrar-carrito"
-        onclick="toggleCarrito()">
+        onclick="cerrarCarrito(event)">
         ✖
     </div>
 
     <h2>
-        Tu pedido
+        🛒 Tu pedido
     </h2>
 
     <br>
@@ -811,8 +812,7 @@ footer{
         <textarea
             id="mensajePersonalizado"
             rows="3"
-            placeholder="Ej: escribir 'Te amo', nombre personalizado, agregar dedicatoria...">
-        </textarea>
+            placeholder="Ej: escribir 'Te amo', nombre personalizado, agregar dedicatoria..."></textarea>
 
     </div>
 
@@ -848,7 +848,9 @@ footer{
 
         <div class="producto">
 
-            <img src="fresas-blancas.jpg" alt="Fresas Chocolate Blanco">
+            <img
+                src="fresas-blancas.jpg"
+                alt="Fresas Chocolate Blanco">
 
             <h3>
                 Fresas Chocolate Blanco
@@ -891,7 +893,9 @@ footer{
 
         <div class="producto">
 
-            <img src="corazon.jpg" alt="Corazón Elegante">
+            <img
+                src="corazon.jpg"
+                alt="Corazón Elegante">
 
             <h3>
                 Corazón Elegante
@@ -934,7 +938,9 @@ footer{
 
         <div class="producto">
 
-            <img src="GIRASOLES.png" alt="Ramo de Girasoles">
+            <img
+                src="GIRASOLES.png"
+                alt="Ramo de Girasoles">
 
             <h3>
                 Ramo de Girasoles
@@ -977,7 +983,9 @@ footer{
 
         <div class="producto">
 
-            <img src="DIADELMAESTRO-CAJA.jpeg" alt="Caja Día del Maestro Dulce Brindis">
+            <img
+                src="DIADELMAESTRO-CAJA.jpeg"
+                alt="Caja Día del Maestro Dulce Brindis">
 
             <h3>
                 Caja Día del Maestro – Dulce Brindis
@@ -1020,7 +1028,9 @@ footer{
 
         <div class="producto">
 
-            <img src="DIADELMAESTRO-CORAZON.jpeg" alt="Caja Día del Maestro Corazón Dulce">
+            <img
+                src="DIADELMAESTRO-CORAZON.jpeg"
+                alt="Caja Día del Maestro Corazón Dulce">
 
             <h3>
                 Caja Día del Maestro – Corazón Dulce
@@ -1031,7 +1041,7 @@ footer{
             </p>
 
             <p class="descripcion">
-                Hermosa caja en forma de corazón con una galleta decorada y dos deliciosos chocolates en forma de girasol.
+                Hermosa caja en forma de corazón con una galleta decorada y dos deliciosos chocolates en forma de girasol, perfecta para sorprender a un maestro.
             </p>
 
             <div class="cantidad">
@@ -1063,7 +1073,9 @@ footer{
 
         <div class="producto">
 
-            <img src="fresas7oz.jpg" alt="Fresas vaso 7oz">
+            <img
+                src="fresas7oz.jpg"
+                alt="Fresas vaso 7oz">
 
             <h3>
                 Fresas vaso 7oz
@@ -1074,7 +1086,7 @@ footer{
             </p>
 
             <p class="descripcion">
-                Vaso de 3 fresas medianas con chocolate derretido perfecto para un antojo dulce.
+                Vaso de 3 fresas medianas con chocolate derretido, perfecto para un antojo dulce.
             </p>
 
             <div class="cantidad">
@@ -1106,7 +1118,9 @@ footer{
 
         <div class="producto">
 
-            <img src="fresas12oz.jpg" alt="Fresas vaso 12oz">
+            <img
+                src="fresas12oz.jpg"
+                alt="Fresas vaso 12oz">
 
             <h3>
                 Fresas vaso 12oz
@@ -1149,7 +1163,9 @@ footer{
 
         <div class="producto">
 
-            <img src="fresa-individual.jpg" alt="Fresa Individual">
+            <img
+                src="fresa-individual.jpg"
+                alt="Fresa Individual">
 
             <h3>
                 Fresa Individual
@@ -1188,11 +1204,58 @@ footer{
         </div>
 
 
-        <!-- PRODUCTO 9 -->
+        <!-- PRODUCTO 9 - MALVAVISCOS -->
 
         <div class="producto">
 
-            <img src="chocobomba-navidad.jpg" alt="Chocobombas Navideñas">
+            <img
+                src="DIADELPADREMASHMELLOWS.jpeg"
+                alt="Malvaviscos Gigantes con Chocolate">
+
+            <h3>
+                Malvaviscos Gigantes con Chocolate
+            </h3>
+
+            <p class="precio">
+                $1.00
+            </p>
+
+            <p class="descripcion">
+                Un malvavisco gigante, suave y esponjoso, cubierto con una irresistible capa de chocolate y decorado con detalles dulces. Un bocado grande, delicioso y perfecto para regalar o darte un gustito. 🍫🤍
+            </p>
+
+            <div class="cantidad">
+
+                <button onclick="cambiarCantidad('p12',-1)">
+                    -
+                </button>
+
+                <span id="p12">
+                    1
+                </span>
+
+                <button onclick="cambiarCantidad('p12',1)">
+                    +
+                </button>
+
+            </div>
+
+            <button
+                class="boton"
+                onclick="agregarProducto('Malvaviscos Gigantes con Chocolate',1.00,'p12',this)">
+                Agregar
+            </button>
+
+        </div>
+
+
+        <!-- PRODUCTO 10 -->
+
+        <div class="producto">
+
+            <img
+                src="chocobomba-navidad.jpg"
+                alt="Chocobombas Navideñas">
 
             <h3>
                 Chocobombas Navideñas
@@ -1231,11 +1294,13 @@ footer{
         </div>
 
 
-        <!-- PRODUCTO 10 -->
+        <!-- PRODUCTO 11 -->
 
         <div class="producto">
 
-            <img src="chocobomba-ano.jpg" alt="Chocobombas de Año Nuevo">
+            <img
+                src="chocobomba-ano.jpg"
+                alt="Chocobombas de Año Nuevo">
 
             <h3>
                 Chocobombas de Año Nuevo
@@ -1274,11 +1339,13 @@ footer{
         </div>
 
 
-        <!-- PRODUCTO 11 -->
+        <!-- PRODUCTO 12 -->
 
         <div class="producto">
 
-            <img src="chocobomba-personalizada.jpg" alt="Chocobombas Personalizadas">
+            <img
+                src="chocobomba-personalizada.jpg"
+                alt="Chocobombas Personalizadas">
 
             <h3>
                 Chocobombas Personalizadas
@@ -1332,7 +1399,7 @@ footer{
         0 productos
     </span>
 
-    <button onclick="abrirCarrito()">
+    <button onclick="abrirCarrito(event)">
         Ver pedido
     </button>
 
@@ -1402,7 +1469,7 @@ JSON.parse(localStorage.getItem("carrito")) || [];
 
 
 /* =========================
-   GUARDAR CARRITO
+   GUARDAR
 ========================= */
 
 function guardar(){
@@ -1450,9 +1517,7 @@ function cambiarCantidad(id,valor){
     cantidad += valor;
 
     if(cantidad < 1){
-
         cantidad = 1;
-
     }
 
     elemento.innerText =
@@ -1581,7 +1646,7 @@ function actualizarCarrito(){
 
     document.getElementById("barraTotal").innerText =
     contador +
-    " productos - $" +
+    (contador === 1 ? " producto - $" : " productos - $") +
     total.toFixed(2);
 
 }
@@ -1591,7 +1656,11 @@ function actualizarCarrito(){
    ABRIR / CERRAR CARRITO
 ========================= */
 
-function toggleCarrito(){
+function toggleCarrito(event){
+
+    if(event){
+        event.stopPropagation();
+    }
 
     document
     .getElementById("carritoPanel")
@@ -1605,12 +1674,34 @@ function toggleCarrito(){
    ABRIR CARRITO
 ========================= */
 
-function abrirCarrito(){
+function abrirCarrito(event){
+
+    if(event){
+        event.stopPropagation();
+    }
 
     document
     .getElementById("carritoPanel")
     .classList
     .add("abierto");
+
+}
+
+
+/* =========================
+   CERRAR CARRITO
+========================= */
+
+function cerrarCarrito(event){
+
+    if(event){
+        event.stopPropagation();
+    }
+
+    document
+    .getElementById("carritoPanel")
+    .classList
+    .remove("abierto");
 
 }
 
@@ -1658,7 +1749,8 @@ function enviarPedido(){
     if(personalizado.trim() !== ""){
 
         mensaje +=
-        `%0A📝 Personalización:%0A${encodeURIComponent(personalizado)}`;
+        `%0A📝 Personalización:%0A` +
+        encodeURIComponent(personalizado);
 
     }
 
@@ -1695,11 +1787,18 @@ document.addEventListener(
             ".carrito-icono"
         );
 
+        let barraMovil =
+        document.querySelector(
+            ".barra-movil"
+        );
+
 
         if(
             !carritoPanel.contains(e.target)
             &&
             !icono.contains(e.target)
+            &&
+            !barraMovil.contains(e.target)
         ){
 
             carritoPanel
