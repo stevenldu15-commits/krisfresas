@@ -40,6 +40,10 @@ text-align:center;
 padding:40px;
 }
 
+.hero h2{
+margin-bottom:10px;
+}
+
 /* PRODUCTOS */
 
 .productos{
@@ -69,6 +73,8 @@ transform:translateY(-8px);
 
 .producto img{
 width:100%;
+height:220px;
+object-fit:cover;
 border-radius:10px;
 }
 
@@ -84,9 +90,10 @@ font-size:14px;
 color:#555;
 margin-bottom:10px;
 padding:0 5px;
+line-height:1.4;
 }
 
-/* SELECTOR */
+/* SELECTOR DE CANTIDAD */
 
 .cantidad{
 display:flex;
@@ -109,6 +116,7 @@ border-radius:5px;
 
 .cantidad span{
 font-size:18px;
+font-weight:bold;
 }
 
 /* BOTON */
@@ -121,14 +129,27 @@ border-radius:25px;
 border:none;
 cursor:pointer;
 margin-top:10px;
+transition:.2s;
+}
+
+.boton:hover{
+background:#8b0000;
 }
 
 /* ANIMACION BOTON */
 
 @keyframes agregado{
-0%{transform:scale(1)}
-50%{transform:scale(1.2)}
-100%{transform:scale(1)}
+0%{
+transform:scale(1)
+}
+
+50%{
+transform:scale(1.2)
+}
+
+100%{
+transform:scale(1)
+}
 }
 
 .animar{
@@ -207,13 +228,19 @@ cursor:pointer;
 .item-carrito{
 display:flex;
 justify-content:space-between;
+align-items:center;
+gap:10px;
 margin:10px 0;
+padding-bottom:8px;
+border-bottom:1px solid #eee;
 }
 
 .eliminar{
 color:red;
 cursor:pointer;
 }
+
+/* WHATSAPP */
 
 .whatsapp{
 background:#25D366;
@@ -227,13 +254,19 @@ font-size:16px;
 cursor:pointer;
 }
 
-/* MENSAJE PERSONALIZADO */
+/* PERSONALIZACION */
+
+.personalizado{
+margin-top:20px;
+}
 
 .personalizado textarea{
 width:100%;
 padding:10px;
 border-radius:10px;
 margin-top:10px;
+border:1px solid #ccc;
+resize:none;
 }
 
 /* BARRA MOVIL */
@@ -245,12 +278,12 @@ left:0;
 width:100%;
 background:#8b0000;
 color:white;
-display:flex;
 justify-content:space-between;
 align-items:center;
 padding:15px;
 font-weight:bold;
 display:none;
+z-index:900;
 }
 
 .barra-movil button{
@@ -260,14 +293,7 @@ border:none;
 padding:10px 15px;
 border-radius:20px;
 cursor:pointer;
-}
-
-@media(max-width:768px){
-
-.barra-movil{
-display:flex;
-}
-
+font-weight:bold;
 }
 
 /* CONTACTO */
@@ -280,12 +306,18 @@ padding:40px;
 margin-top:40px;
 }
 
+.contacto p{
+margin-top:8px;
+}
+
 footer{
 background:#220808;
 color:white;
 text-align:center;
 padding:15px;
 }
+
+/* WHATSAPP FLOTANTE */
 
 .whatsapp-float{
 position:fixed;
@@ -297,43 +329,124 @@ font-size:30px;
 padding:15px;
 border-radius:50%;
 text-decoration:none;
+z-index:800;
+}
+
+/* MOVIL */
+
+@media(max-width:768px){
+
+.barra-movil{
+display:flex;
+}
+
+.productos{
+padding:30px 15px;
+}
+
+.producto{
+width:100%;
+max-width:320px;
+}
+
+.carrito-panel{
+width:90%;
+}
+
+.logo{
+font-size:35px;
+}
+
+.hero{
+padding:30px 15px;
+}
+
 }
 
 </style>
 </head>
 
+
 <body>
+
+<!-- MENSAJE -->
 
 <div class="toast" id="toast">
 🍓 Producto agregado al carrito
 </div>
 
+
+<!-- HEADER -->
+
 <header class="logo-header">
-<div class="logo">🍓🍫 KrisFresas</div>
-<p>Fresas con chocolate irresistibles</p>
+
+<div class="logo">
+🍓🍫 KrisFresas
+</div>
+
+<p>
+Fresas con chocolate irresistibles
+</p>
+
 </header>
 
+
+<!-- PRESENTACION -->
+
 <section class="hero">
-<h2>Las mejores fresas con chocolate</h2>
+
+<h2>
+Las mejores fresas con chocolate
+</h2>
+
+<p>
+Detalles dulces hechos con amor ❤️
+</p>
+
 </section>
 
+
+<!-- CARRITO -->
+
 <div class="carrito-icono" onclick="toggleCarrito()">
+
 🛒
-<span class="contador" id="contador">0</span>
+
+<span class="contador" id="contador">
+0
+</span>
+
 </div>
+
+
+<!-- PANEL CARRITO -->
 
 <div class="carrito-panel" id="carritoPanel">
 
-<div class="cerrar-carrito" onclick="toggleCarrito()">✖</div>
+<div class="cerrar-carrito" onclick="toggleCarrito()">
+✖
+</div>
 
-<h2>Tu pedido</h2>
+<h2>
+Tu pedido
+</h2>
+
+<br>
 
 <div id="carritoItems"></div>
 
-<h3 id="total"></h3>
+<h3 id="total">
+Total: $0.00
+</h3>
+
+
+<!-- PERSONALIZACION -->
 
 <div class="personalizado">
-<h4>Pedido personalizado</h4>
+
+<h4>
+Pedido personalizado
+</h4>
 
 <textarea
 id="mensajePersonalizado"
@@ -343,15 +456,26 @@ placeholder="Ej: escribir 'Te amo', nombre personalizado, agregar dedicatoria...
 
 </div>
 
+
 <button class="whatsapp" onclick="enviarPedido()">
-Enviar pedido por WhatsApp
+
+📱 Enviar pedido por WhatsApp
+
 </button>
 
 </div>
 
+
+<!-- PRODUCTOS -->
+
 <section class="productos">
 
-<h2>Nuestros Productos</h2>
+<h2>
+Nuestros Productos
+</h2>
+
+<br>
+
 
 <div class="contenedor-productos">
 
@@ -362,9 +486,13 @@ Enviar pedido por WhatsApp
 
 <img src="fresas-blancas.jpg">
 
-<h3>Fresas Chocolate Blanco</h3>
+<h3>
+Fresas Chocolate Blanco
+</h3>
 
-<p class="precio">$2.99</p>
+<p class="precio">
+$2.99
+</p>
 
 <p class="descripcion">
 Deliciosas fresas frescas cubiertas con chocolate blanco suave y cremoso.
@@ -372,11 +500,17 @@ Deliciosas fresas frescas cubiertas con chocolate blanco suave y cremoso.
 
 <div class="cantidad">
 
-<button onclick="cambiarCantidad('p1',-1)">-</button>
+<button onclick="cambiarCantidad('p1',-1)">
+-
+</button>
 
-<span id="p1">1</span>
+<span id="p1">
+1
+</span>
 
-<button onclick="cambiarCantidad('p1',1)">+</button>
+<button onclick="cambiarCantidad('p1',1)">
++
+</button>
 
 </div>
 
@@ -395,9 +529,13 @@ Agregar
 
 <img src="corazon.jpg">
 
-<h3>Corazón Elegante</h3>
+<h3>
+Corazón Elegante
+</h3>
 
-<p class="precio">$3.50</p>
+<p class="precio">
+$3.50
+</p>
 
 <p class="descripcion">
 Hermosa presentación de fresas con chocolate en forma de corazón.
@@ -405,11 +543,17 @@ Hermosa presentación de fresas con chocolate en forma de corazón.
 
 <div class="cantidad">
 
-<button onclick="cambiarCantidad('p2',-1)">-</button>
+<button onclick="cambiarCantidad('p2',-1)">
+-
+</button>
 
-<span id="p2">1</span>
+<span id="p2">
+1
+</span>
 
-<button onclick="cambiarCantidad('p2',1)">+</button>
+<button onclick="cambiarCantidad('p2',1)">
++
+</button>
 
 </div>
 
@@ -422,27 +566,37 @@ Agregar
 </div>
 
 
-<!-- PRODUCTO 3 NUEVO -->
+<!-- PRODUCTO 3 -->
 
 <div class="producto">
 
 <img src="GIRASOLES.png">
 
-<h3>Ramo de Girasoles</h3>
+<h3>
+Ramo de Girasoles
+</h3>
 
-<p class="precio">$6.00</p>
+<p class="precio">
+$6.00
+</p>
 
 <p class="descripcion">
-Hermosos girasoles hechos a mano, ideales para acompañar un dulce detalle.
+Hermoso ramo de girasoles hechos a mano, un detalle dulce y especial para regalar en cualquier ocasión.
 </p>
 
 <div class="cantidad">
 
-<button onclick="cambiarCantidad('p9',-1)">-</button>
+<button onclick="cambiarCantidad('p9',-1)">
+-
+</button>
 
-<span id="p9">1</span>
+<span id="p9">
+1
+</span>
 
-<button onclick="cambiarCantidad('p9',1)">+</button>
+<button onclick="cambiarCantidad('p9',1)">
++
+</button>
 
 </div>
 
@@ -455,15 +609,105 @@ Agregar
 </div>
 
 
-<!-- PRODUCTO 4 -->
+<!-- PRODUCTO 4 - DIA DEL MAESTRO -->
+
+<div class="producto">
+
+<img src="DIADELMAESTRO-CAJA.jpeg">
+
+<h3>
+Caja Día del Maestro – Dulce Brindis
+</h3>
+
+<p class="precio">
+$10.00
+</p>
+
+<p class="descripcion">
+Una caja especial para celebrar al maestro: cerveza, Oreo Cookie Pops decorados y deliciosos chocolates en forma de girasol.
+</p>
+
+<div class="cantidad">
+
+<button onclick="cambiarCantidad('p10',-1)">
+-
+</button>
+
+<span id="p10">
+1
+</span>
+
+<button onclick="cambiarCantidad('p10',1)">
++
+</button>
+
+</div>
+
+<button
+class="boton"
+onclick="agregarProducto('Caja Día del Maestro - Dulce Brindis',10.00,'p10',this)">
+Agregar
+</button>
+
+</div>
+
+
+<!-- PRODUCTO 5 - DIA DEL MAESTRO CORAZON -->
+
+<div class="producto">
+
+<img src="DIADELMAESTRO-CORAZON.jpeg">
+
+<h3>
+Caja Día del Maestro – Corazón Dulce
+</h3>
+
+<p class="precio">
+$6.00
+</p>
+
+<p class="descripcion">
+Hermosa caja en forma de corazón con una galleta decorada y dos deliciosos chocolates en forma de girasol, perfecta para sorprender a un maestro.
+</p>
+
+<div class="cantidad">
+
+<button onclick="cambiarCantidad('p11',-1)">
+-
+</button>
+
+<span id="p11">
+1
+</span>
+
+<button onclick="cambiarCantidad('p11',1)">
++
+</button>
+
+</div>
+
+<button
+class="boton"
+onclick="agregarProducto('Caja Día del Maestro - Corazón Dulce',6.00,'p11',this)">
+Agregar
+</button>
+
+</div>
+
+
+<!-- PRODUCTO 6 -->
 
 <div class="producto">
 
 <img src="fresas7oz.jpg">
 
-<h3>Fresas vaso 7oz</h3>
+<h3>
+Fresas vaso 7oz
+</h3>
 
-<p class="precio">$1.50</p>
+<p class="precio">
+$1.50
+</p>
 
 <p class="descripcion">
 Vaso de 3 fresas medianas con chocolate derretido perfecto para un antojo dulce.
@@ -471,11 +715,17 @@ Vaso de 3 fresas medianas con chocolate derretido perfecto para un antojo dulce.
 
 <div class="cantidad">
 
-<button onclick="cambiarCantidad('p3',-1)">-</button>
+<button onclick="cambiarCantidad('p3',-1)">
+-
+</button>
 
-<span id="p3">1</span>
+<span id="p3">
+1
+</span>
 
-<button onclick="cambiarCantidad('p3',1)">+</button>
+<button onclick="cambiarCantidad('p3',1)">
++
+</button>
 
 </div>
 
@@ -488,15 +738,19 @@ Agregar
 </div>
 
 
-<!-- PRODUCTO 5 -->
+<!-- PRODUCTO 7 -->
 
 <div class="producto">
 
 <img src="fresas12oz.jpg">
 
-<h3>Fresas vaso 12oz</h3>
+<h3>
+Fresas vaso 12oz
+</h3>
 
-<p class="precio">$3.00</p>
+<p class="precio">
+$3.00
+</p>
 
 <p class="descripcion">
 Vaso grande de 6 fresas medianas con abundante chocolate delicioso.
@@ -504,11 +758,17 @@ Vaso grande de 6 fresas medianas con abundante chocolate delicioso.
 
 <div class="cantidad">
 
-<button onclick="cambiarCantidad('p4',-1)">-</button>
+<button onclick="cambiarCantidad('p4',-1)">
+-
+</button>
 
-<span id="p4">1</span>
+<span id="p4">
+1
+</span>
 
-<button onclick="cambiarCantidad('p4',1)">+</button>
+<button onclick="cambiarCantidad('p4',1)">
++
+</button>
 
 </div>
 
@@ -521,15 +781,19 @@ Agregar
 </div>
 
 
-<!-- PRODUCTO 6 -->
+<!-- PRODUCTO 8 -->
 
 <div class="producto">
 
 <img src="fresa-individual.jpg">
 
-<h3>Fresa Individual</h3>
+<h3>
+Fresa Individual
+</h3>
 
-<p class="precio">$0.75</p>
+<p class="precio">
+$0.75
+</p>
 
 <p class="descripcion">
 Fresa fresca cubierta con chocolate, ideal para un pequeño detalle.
@@ -537,11 +801,17 @@ Fresa fresca cubierta con chocolate, ideal para un pequeño detalle.
 
 <div class="cantidad">
 
-<button onclick="cambiarCantidad('p7',-1)">-</button>
+<button onclick="cambiarCantidad('p7',-1)">
+-
+</button>
 
-<span id="p7">1</span>
+<span id="p7">
+1
+</span>
 
-<button onclick="cambiarCantidad('p7',1)">+</button>
+<button onclick="cambiarCantidad('p7',1)">
++
+</button>
 
 </div>
 
@@ -554,15 +824,19 @@ Agregar
 </div>
 
 
-<!-- PRODUCTO 7 -->
+<!-- PRODUCTO 9 -->
 
 <div class="producto">
 
 <img src="chocobomba-navidad.jpg">
 
-<h3>Chocobombas Navideñas</h3>
+<h3>
+Chocobombas Navideñas
+</h3>
 
-<p class="precio">$2.50</p>
+<p class="precio">
+$2.50
+</p>
 
 <p class="descripcion">
 Chocobombas perfectas para preparar chocolate caliente en época navideña.
@@ -570,11 +844,17 @@ Chocobombas perfectas para preparar chocolate caliente en época navideña.
 
 <div class="cantidad">
 
-<button onclick="cambiarCantidad('p5',-1)">-</button>
+<button onclick="cambiarCantidad('p5',-1)">
+-
+</button>
 
-<span id="p5">1</span>
+<span id="p5">
+1
+</span>
 
-<button onclick="cambiarCantidad('p5',1)">+</button>
+<button onclick="cambiarCantidad('p5',1)">
++
+</button>
 
 </div>
 
@@ -587,15 +867,19 @@ Agregar
 </div>
 
 
-<!-- PRODUCTO 8 -->
+<!-- PRODUCTO 10 -->
 
 <div class="producto">
 
 <img src="chocobomba-ano.jpg">
 
-<h3>Chocobombas de Año Nuevo</h3>
+<h3>
+Chocobombas de Año Nuevo
+</h3>
 
-<p class="precio">$2.50</p>
+<p class="precio">
+$2.50
+</p>
 
 <p class="descripcion">
 Deliciosas chocobombas ideales para celebrar el inicio de un nuevo año.
@@ -603,11 +887,17 @@ Deliciosas chocobombas ideales para celebrar el inicio de un nuevo año.
 
 <div class="cantidad">
 
-<button onclick="cambiarCantidad('p6',-1)">-</button>
+<button onclick="cambiarCantidad('p6',-1)">
+-
+</button>
 
-<span id="p6">1</span>
+<span id="p6">
+1
+</span>
 
-<button onclick="cambiarCantidad('p6',1)">+</button>
+<button onclick="cambiarCantidad('p6',1)">
++
+</button>
 
 </div>
 
@@ -620,15 +910,19 @@ Agregar
 </div>
 
 
-<!-- PRODUCTO 9 -->
+<!-- PRODUCTO 11 -->
 
 <div class="producto">
 
 <img src="chocobomba-personalizada.jpg">
 
-<h3>Chocobombas Personalizadas</h3>
+<h3>
+Chocobombas Personalizadas
+</h3>
 
-<p class="precio">$3.00</p>
+<p class="precio">
+$3.00
+</p>
 
 <p class="descripcion">
 Chocobomba especial con decoración personalizada para regalos únicos.
@@ -636,11 +930,17 @@ Chocobomba especial con decoración personalizada para regalos únicos.
 
 <div class="cantidad">
 
-<button onclick="cambiarCantidad('p8',-1)">-</button>
+<button onclick="cambiarCantidad('p8',-1)">
+-
+</button>
 
-<span id="p8">1</span>
+<span id="p8">
+1
+</span>
 
-<button onclick="cambiarCantidad('p8',1)">+</button>
+<button onclick="cambiarCantidad('p8',1)">
++
+</button>
 
 </div>
 
@@ -658,6 +958,8 @@ Agregar
 </section>
 
 
+<!-- BARRA MOVIL -->
+
 <div class="barra-movil">
 
 <span id="barraTotal">
@@ -671,25 +973,41 @@ Ver pedido
 </div>
 
 
+<!-- CONTACTO -->
+
 <section class="contacto">
 
-<h2>Contacto</h2>
+<h2>
+Contacto
+</h2>
 
-<p>📱 0982126368</p>
+<p>
+📱 0982126368
+</p>
 
-<p>📱 0962000142</p>
+<p>
+📱 0962000142
+</p>
 
-<p>Pedidos por WhatsApp</p>
+<p>
+Pedidos por WhatsApp
+</p>
 
 </section>
 
 
+<!-- FOOTER -->
+
 <footer>
 
-<p>© 2026 KrisFresas</p>
+<p>
+© 2026 KrisFresas
+</p>
 
 </footer>
 
+
+<!-- WHATSAPP -->
 
 <a
 class="whatsapp-float"
@@ -700,9 +1018,13 @@ href="https://wa.me/593982126368">
 
 <script>
 
+/* CARRITO */
+
 let carrito =
 JSON.parse(localStorage.getItem("carrito")) || [];
 
+
+/* GUARDAR */
 
 function guardar(){
 
@@ -713,6 +1035,8 @@ JSON.stringify(carrito)
 
 }
 
+
+/* TOAST */
 
 function mostrarToast(){
 
@@ -729,6 +1053,8 @@ toast.style.display="none";
 
 }
 
+
+/* CANTIDAD */
 
 function cambiarCantidad(id,valor){
 
@@ -749,7 +1075,14 @@ cantidad;
 }
 
 
-function agregarProducto(nombre,precio,id,boton){
+/* AGREGAR PRODUCTO */
+
+function agregarProducto(
+nombre,
+precio,
+id,
+boton
+){
 
 let cantidad =
 parseInt(
@@ -758,9 +1091,9 @@ document.getElementById(id).innerText
 
 carrito.push({
 
-nombre,
-precio,
-cantidad
+nombre:nombre,
+precio:precio,
+cantidad:cantidad
 
 });
 
@@ -781,6 +1114,8 @@ boton.classList.remove("animar");
 }
 
 
+/* ELIMINAR */
+
 function eliminarProducto(index){
 
 carrito.splice(index,1);
@@ -791,6 +1126,8 @@ actualizarCarrito();
 
 }
 
+
+/* ACTUALIZAR CARRITO */
 
 function actualizarCarrito(){
 
@@ -818,8 +1155,13 @@ contenedor.innerHTML += `
 
 <div class="item-carrito">
 
+<span>
 ${p.nombre} x${p.cantidad}
-- $${subtotal.toFixed(2)}
+</span>
+
+<span>
+$${subtotal.toFixed(2)}
+</span>
 
 <span
 class="eliminar"
@@ -835,7 +1177,8 @@ onclick="eliminarProducto(${i})">
 
 
 document.getElementById("total").innerText =
-"Total: $" + total.toFixed(2);
+"Total: $" +
+total.toFixed(2);
 
 
 document.getElementById("contador").innerText =
@@ -850,6 +1193,8 @@ total.toFixed(2);
 }
 
 
+/* ABRIR / CERRAR CARRITO */
+
 function toggleCarrito(){
 
 document
@@ -859,6 +1204,8 @@ document
 
 }
 
+
+/* ABRIR CARRITO */
 
 function abrirCarrito(){
 
@@ -870,7 +1217,18 @@ document
 }
 
 
+/* ENVIAR PEDIDO */
+
 function enviarPedido(){
+
+if(carrito.length === 0){
+
+alert("Tu carrito está vacío.");
+
+return;
+
+}
+
 
 let mensaje =
 "Hola, quiero hacer el siguiente pedido:%0A%0A";
@@ -910,12 +1268,15 @@ mensaje +=
 
 
 window.open(
-"https://wa.me/593982126368?text="
-+ mensaje
+"https://wa.me/593982126368?text=" +
+mensaje,
+"_blank"
 );
 
 }
 
+
+/* CERRAR CARRITO AL HACER CLICK AFUERA */
 
 document.addEventListener(
 "click",
@@ -947,9 +1308,12 @@ carritoPanel
 });
 
 
+/* INICIAR */
+
 actualizarCarrito();
 
 </script>
 
 </body>
+
 </html>
