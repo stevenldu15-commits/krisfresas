@@ -1,2069 +1,1586 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>KrisFresas</title>
-
-<style>
-
-/* =========================
-   CONFIGURACIÓN GENERAL
-========================= */
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
-}
-
-html{
-    scroll-behavior:smooth;
-}
-
-body{
-    background:#fff0f3;
-    color:#333;
-}
-
-
-/* =========================
-   HEADER
-========================= */
-
-.logo-header{
-    background:linear-gradient(90deg,#3a0f0f,#8b0000);
-    text-align:center;
-    padding:30px 20px;
-    color:white;
-    box-shadow:0 4px 15px rgba(0,0,0,0.15);
-}
-
-.logo{
-    font-size:45px;
-    font-weight:bold;
-    letter-spacing:1px;
-}
-
-.logo-header p{
-    margin-top:8px;
-    font-size:16px;
-}
-
-
-/* =========================
-   HERO
-========================= */
-
-.hero{
-    text-align:center;
-    padding:45px 20px 30px;
-}
-
-.hero h2{
-    color:#5c1010;
-    font-size:30px;
-    margin-bottom:12px;
-}
-
-.hero p{
-    color:#666;
-    font-size:17px;
-}
-
-
-/* =========================
-   PRODUCTOS
-========================= */
-
-.productos{
-    text-align:center;
-    padding:35px 30px 60px;
-}
-
-.productos > h2{
-    color:#5c1010;
-    font-size:30px;
-    margin-bottom:5px;
-}
-
-.contenedor-productos{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:28px;
-    max-width:1400px;
-    margin:auto;
-    align-items:stretch;
-}
-
-
-/* =========================
-   TARJETAS
-========================= */
-
-.producto{
-    background:white;
-    padding:15px 15px 22px;
-    border-radius:18px;
-    box-shadow:0 8px 25px rgba(0,0,0,0.10);
-    transition:all .3s ease;
-    display:flex;
-    flex-direction:column;
-    overflow:hidden;
-    border:1px solid rgba(196,0,47,0.06);
-}
-
-.producto:hover{
-    transform:translateY(-7px);
-    box-shadow:0 15px 30px rgba(0,0,0,0.15);
-}
-
-
-/* =========================
-   IMÁGENES
-========================= */
-
-.producto img{
-    width:100%;
-    height:235px;
-    object-fit:contain;
-    display:block;
-    border-radius:14px;
-    background:#fff;
-    padding:5px;
-    transition:transform .35s ease;
-}
-
-.producto:hover img{
-    transform:scale(1.04);
-}
-
-
-/* =========================
-   INFORMACIÓN
-========================= */
-
-.producto h3{
-    font-size:19px;
-    color:#4a1111;
-    margin:14px 5px 5px;
-    min-height:44px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-.precio{
-    color:#c4002f;
-    font-size:25px;
-    font-weight:bold;
-    margin:7px 0;
-}
-
-.descripcion{
-    font-size:14px;
-    color:#666;
-    margin:5px 5px 10px;
-    padding:0 5px;
-    line-height:1.45;
-    min-height:61px;
-}
-
-
-/* =========================
-   CANTIDAD
-========================= */
-
-.cantidad{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    margin-top:auto;
-    padding-top:8px;
-    gap:10px;
-}
-
-.cantidad button{
-    width:32px;
-    height:32px;
-    border:none;
-    background:#c4002f;
-    color:white;
-    font-size:19px;
-    cursor:pointer;
-    border-radius:7px;
-    transition:.2s;
-}
-
-.cantidad button:hover{
-    background:#8b0000;
-    transform:scale(1.08);
-}
-
-.cantidad span{
-    min-width:25px;
-    font-size:18px;
-    font-weight:bold;
-}
-
-
-/* =========================
-   BOTÓN AGREGAR
-========================= */
-
-.boton{
-    background:#c4002f;
-    color:white;
-    padding:11px 22px;
-    border-radius:25px;
-    border:none;
-    cursor:pointer;
-    margin:12px auto 0;
-    transition:.25s;
-    font-size:15px;
-    font-weight:bold;
-    display:block;
-}
-
-.boton:hover{
-    background:#8b0000;
-    transform:scale(1.04);
-}
-
-
-/* =========================
-   ANIMACIÓN
-========================= */
-
-@keyframes agregado{
-
-    0%{
-        transform:scale(1);
-    }
-
-    50%{
-        transform:scale(1.18);
-    }
-
-    100%{
-        transform:scale(1);
-    }
-
-}
-
-.animar{
-    animation:agregado .4s;
-}
-
-
-/* =========================
-   TOAST
-========================= */
-
-.toast{
-    position:fixed;
-    top:80px;
-    left:50%;
-    transform:translateX(-50%);
-    background:#8b0000;
-    color:white;
-    padding:13px 22px;
-    border-radius:25px;
-    display:none;
-    z-index:2000;
-    box-shadow:0 5px 20px rgba(0,0,0,.25);
-    font-size:15px;
-}
-
-
-/* =========================
-   CARRITO ICONO
-========================= */
-
-.carrito-icono{
-    position:fixed;
-    top:20px;
-    right:20px;
-    background:#c4002f;
-    color:white;
-    width:55px;
-    height:55px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:50%;
-    font-size:23px;
-    cursor:pointer;
-    z-index:1001;
-    box-shadow:0 5px 15px rgba(0,0,0,.25);
-    transition:.25s;
-}
-
-.carrito-icono:hover{
-    transform:scale(1.08);
-    background:#8b0000;
-}
-
-.contador{
-    position:absolute;
-    top:-5px;
-    right:-5px;
-    background:black;
-    color:white;
-    border-radius:50%;
-    min-width:21px;
-    height:21px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:2px 5px;
-    font-size:11px;
-    font-weight:bold;
-}
-
-
-/* =========================
-   PANEL CARRITO
-========================= */
-
-.carrito-panel{
-    position:fixed;
-    right:-400px;
-    top:0;
-    width:370px;
-    height:100%;
-    background:white;
-    box-shadow:-5px 0 25px rgba(0,0,0,.25);
-    padding:25px;
-    transition:.4s;
-    overflow-y:auto;
-    z-index:1000;
-}
-
-.carrito-panel.abierto{
-    right:0;
-}
-
-.carrito-panel h2{
-    color:#8b0000;
-    margin-bottom:10px;
-}
-
-.cerrar-carrito{
-    position:absolute;
-    top:15px;
-    right:20px;
-    font-size:22px;
-    cursor:pointer;
-    color:#777;
-}
-
-.cerrar-carrito:hover{
-    color:#c4002f;
-}
-
-
-/* =========================
-   ITEMS DEL CARRITO
-========================= */
-
-.item-carrito{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:8px;
-    margin:12px 0;
-    padding-bottom:10px;
-    border-bottom:1px solid #eee;
-    font-size:14px;
-}
-
-.item-carrito span:first-child{
-    flex:1;
-}
-
-.eliminar{
-    color:red;
-    cursor:pointer;
-    font-size:16px;
-}
-
-
-/* =========================
-   WHATSAPP
-========================= */
-
-.whatsapp{
-    background:#25D366;
-    color:white;
-    padding:13px;
-    border:none;
-    border-radius:25px;
-    width:100%;
-    margin-top:20px;
-    font-size:16px;
-    cursor:pointer;
-    font-weight:bold;
-    transition:.2s;
-}
-
-.whatsapp:hover{
-    background:#1ebe5d;
-    transform:scale(1.02);
-}
-
-
-/* =========================
-   PERSONALIZACIÓN
-========================= */
-
-.personalizado{
-    margin-top:25px;
-}
-
-.personalizado h4{
-    color:#5c1010;
-    margin-bottom:5px;
-}
-
-.personalizado textarea{
-    width:100%;
-    padding:11px;
-    border-radius:10px;
-    margin-top:8px;
-    border:1px solid #ccc;
-    resize:none;
-    font-size:14px;
-    outline:none;
-}
-
-.personalizado textarea:focus{
-    border-color:#c4002f;
-}
-
-
-/* =========================
-   BARRA MÓVIL
-========================= */
-
-.barra-movil{
-    position:fixed;
-    bottom:0;
-    left:0;
-    width:100%;
-    background:#8b0000;
-    color:white;
-    justify-content:space-between;
-    align-items:center;
-    padding:12px 15px;
-    font-weight:bold;
-    display:none;
-    z-index:1100;
-    box-shadow:0 -4px 15px rgba(0,0,0,.2);
-}
-
-.barra-movil button{
-    background:white;
-    color:#8b0000;
-    border:none;
-    padding:10px 17px;
-    border-radius:20px;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-
-/* =========================
-   CONTACTO
-========================= */
-
-.contacto{
-    background:#3a0f0f;
-    color:white;
-    text-align:center;
-    padding:45px 20px;
-    margin-top:20px;
-}
-
-.contacto h2{
-    margin-bottom:12px;
-}
-
-.contacto p{
-    margin-top:8px;
-}
-
-
-/* =========================
-   FOOTER
-========================= */
-
-footer{
-    background:#220808;
-    color:white;
-    text-align:center;
-    padding:18px;
-}
-
-
-/* =========================
-   WHATSAPP FLOTANTE
-========================= */
-
-.whatsapp-float{
-    position:fixed;
-    bottom:80px;
-    right:20px;
-    background:#25D366;
-    color:white;
-    font-size:27px;
-    width:55px;
-    height:55px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:50%;
-    text-decoration:none;
-    z-index:800;
-    box-shadow:0 5px 15px rgba(0,0,0,.25);
-    transition:.25s;
-}
-
-.whatsapp-float:hover{
-    transform:scale(1.1);
-}
-
-
-/* =========================
-   TABLET
-========================= */
-
-@media(max-width:1000px){
-
-    .contenedor-productos{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-}
-
-
-/* =========================
-   MÓVIL
-========================= */
-
-@media(max-width:768px){
-
-    body{
-        padding-bottom:65px;
-    }
-
-    .barra-movil{
-        display:flex;
-    }
-
-    .productos{
-        padding:30px 15px 45px;
-    }
-
-    .contenedor-productos{
-        grid-template-columns:repeat(2,1fr);
-        gap:15px;
-    }
-
-    .producto{
-        width:100%;
-        padding:10px 10px 16px;
-        border-radius:14px;
-    }
-
-    .producto img{
-        height:180px;
-        object-fit:contain;
-        padding:3px;
-    }
-
-    .producto h3{
-        font-size:15px;
-        min-height:40px;
-        margin-top:9px;
-    }
-
-    .precio{
-        font-size:21px;
-        margin:5px 0;
-    }
-
-    .descripcion{
-        font-size:12px;
-        min-height:60px;
-        padding:0;
-        line-height:1.35;
-    }
-
-    .cantidad{
-        gap:6px;
-    }
-
-    .cantidad button{
-        width:28px;
-        height:28px;
-        font-size:17px;
-    }
-
-    .cantidad span{
-        font-size:16px;
-    }
-
-    .boton{
-        font-size:13px;
-        padding:9px 15px;
-        margin-top:10px;
-    }
-
-    .logo{
-        font-size:34px;
-    }
-
-    .logo-header{
-        padding:25px 15px;
-    }
-
-    .hero{
-        padding:30px 15px 20px;
-    }
-
-    .hero h2{
-        font-size:24px;
-    }
-
-    .hero p{
-        font-size:15px;
-    }
-
-    .productos > h2{
-        font-size:25px;
-    }
-
-    .carrito-panel{
-        width:92%;
-    }
-
-    .whatsapp-float{
-        bottom:75px;
-        right:15px;
-    }
-
-}
-
-
-/* =========================
-   TELÉFONOS PEQUEÑOS
-========================= */
-
-@media(max-width:430px){
-
-    .contenedor-productos{
-        grid-template-columns:1fr;
-        gap:20px;
-    }
-
-    .producto img{
-        height:230px;
-    }
-
-    .producto h3{
-        font-size:18px;
-        min-height:auto;
-    }
-
-    .precio{
-        font-size:24px;
-    }
-
-    .descripcion{
-        font-size:13px;
-        min-height:auto;
-    }
-
-}
-
-
-/* =========================
-   PANTALLAS GRANDES
-========================= */
-
-@media(min-width:1400px){
-
-    .contenedor-productos{
-        grid-template-columns:repeat(4,1fr);
-    }
-
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>KRISFRESAS | Fresas y Chocolates</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #fff0f3;
+            color: #3a0f0f;
+            padding-bottom: 80px;
+        }
+
+        /* =========================
+           HEADER
+        ========================== */
+
+        header {
+            background: linear-gradient(90deg, #3a0f0f, #8b0000);
+            color: white;
+            padding: 18px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 3px 12px rgba(0,0,0,.25);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: #ffb6c8;
+        }
+
+        .cart-button {
+            background: white;
+            color: #8b0000;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 18px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .cart-button:hover {
+            transform: scale(1.05);
+        }
+
+        /* =========================
+           HERO
+        ========================== */
+
+        .hero {
+            text-align: center;
+            padding: 45px 20px 30px;
+        }
+
+        .hero h1 {
+            font-size: 36px;
+            color: #8b0000;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 17px;
+            color: #633;
+            max-width: 700px;
+            margin: auto;
+            line-height: 1.6;
+        }
+
+        /* =========================
+           CATEGORÍAS
+        ========================== */
+
+        .categoria {
+            max-width: 1200px;
+            margin: 35px auto 15px;
+            padding: 0 20px;
+        }
+
+        .categoria h2 {
+            color: #8b0000;
+            font-size: 25px;
+            border-bottom: 2px solid #e8a0ae;
+            padding-bottom: 8px;
+        }
+
+        /* =========================
+           PRODUCTOS
+        ========================== */
+
+        .productos {
+            max-width: 1200px;
+            margin: auto;
+            padding: 15px 20px 35px;
+
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .producto {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 5px 18px rgba(90, 20, 20, .15);
+            transition: .3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .producto:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 25px rgba(90, 20, 20, .22);
+        }
+
+        .producto img {
+            width: 100%;
+            height: 270px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .producto-info {
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .producto h3 {
+            color: #8b0000;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .precio {
+            font-size: 22px;
+            font-weight: bold;
+            color: #c2185b;
+            margin-bottom: 10px;
+        }
+
+        .descripcion {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.55;
+            margin-bottom: 15px;
+            flex: 1;
+        }
+
+        .nota-precio {
+            background: #fff0f3;
+            border-radius: 10px;
+            padding: 9px;
+            font-size: 13px;
+            color: #7a3030;
+            margin-bottom: 12px;
+        }
+
+        .cantidad-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .cantidad-box label {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .cantidad-box input {
+            width: 65px;
+            padding: 8px;
+            border: 1px solid #d9a0aa;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .btn-agregar {
+            border: none;
+            background: #8b0000;
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            transition: .2s;
+        }
+
+        .btn-agregar:hover {
+            background: #b30000;
+            transform: scale(1.02);
+        }
+
+        /* =========================
+           CARRITO
+        ========================== */
+
+        .carrito-panel {
+            position: fixed;
+            top: 0;
+            right: -420px;
+            width: 400px;
+            max-width: 95%;
+            height: 100vh;
+            background: white;
+            z-index: 2000;
+            box-shadow: -5px 0 20px rgba(0,0,0,.25);
+            transition: right .35s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .carrito-panel.activo {
+            right: 0;
+        }
+
+        .carrito-header {
+            background: linear-gradient(90deg, #3a0f0f, #8b0000);
+            color: white;
+            padding: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .carrito-header h2 {
+            font-size: 20px;
+        }
+
+        .cerrar {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .carrito-items {
+            padding: 15px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .carrito-item {
+            border-bottom: 1px solid #eee;
+            padding: 12px 0;
+        }
+
+        .carrito-item h4 {
+            color: #8b0000;
+            margin-bottom: 5px;
+        }
+
+        .carrito-item p {
+            font-size: 14px;
+            margin: 3px 0;
+        }
+
+        .item-controls {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 7px;
+        }
+
+        .item-controls button {
+            border: none;
+            width: 27px;
+            height: 27px;
+            border-radius: 50%;
+            background: #8b0000;
+            color: white;
+            cursor: pointer;
+        }
+
+        .eliminar {
+            background: #777 !important;
+            border-radius: 6px !important;
+            width: auto !important;
+            padding: 0 8px;
+        }
+
+        .carrito-footer {
+            padding: 18px;
+            border-top: 1px solid #ddd;
+        }
+
+        .total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 20px;
+            font-weight: bold;
+            color: #8b0000;
+            margin-bottom: 15px;
+        }
+
+        .btn-whatsapp {
+            width: 100%;
+            padding: 14px;
+            background: #25D366;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn-vaciar {
+            width: 100%;
+            margin-top: 8px;
+            padding: 10px;
+            border: 1px solid #8b0000;
+            background: white;
+            color: #8b0000;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        /* =========================
+           BARRA MOBILE
+        ========================== */
+
+        .barra-mobile {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 -3px 15px rgba(0,0,0,.2);
+            padding: 10px 15px;
+            z-index: 1500;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .barra-mobile strong {
+            color: #8b0000;
+        }
+
+        .barra-mobile button {
+            background: #8b0000;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 14px 15px;
+            }
+
+            .logo {
+                font-size: 23px;
+            }
+
+            .cart-button {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+
+            .hero {
+                padding: 30px 15px 20px;
+            }
+
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .hero p {
+                font-size: 15px;
+            }
+
+            .productos {
+                grid-template-columns: 1fr;
+                padding: 12px 15px 30px;
+            }
+
+            .producto img {
+                height: 290px;
+            }
+
+            .categoria {
+                padding: 0 15px;
+            }
+
+            .categoria h2 {
+                font-size: 22px;
+            }
+
+            .barra-mobile {
+                display: flex;
+            }
+        }
+    </style>
 </head>
-
 
 <body>
 
-
-<!-- =========================
-     TOAST
-========================= -->
-
-<div class="toast" id="toast">
-🍓 Producto agregado al carrito
-</div>
-
-
 <!-- =========================
      HEADER
-========================= -->
+========================== -->
 
-<header class="logo-header">
-
+<header>
     <div class="logo">
-        🍓🍫 KrisFresas
+        KRIS<span>FRESAS</span> 🍓
     </div>
 
-    <p>
-        Fresas con chocolate irresistibles
-    </p>
-
+    <button class="cart-button" onclick="abrirCarrito()">
+        🛒 Ver pedido
+        <span id="contador">0</span>
+    </button>
 </header>
 
 
 <!-- =========================
-     HERO
-========================= -->
+     PRESENTACIÓN
+========================== -->
 
 <section class="hero">
 
-    <h2>
-        Las mejores fresas con chocolate
-    </h2>
+    <h1>🍓 Dulces momentos con KRISFRESAS 🍫</h1>
 
     <p>
-        Detalles dulces hechos con amor ❤️
+        Endulza tus momentos especiales con nuestras fresas, malvaviscos
+        y deliciosas creaciones cubiertas de chocolate. 💕
+        Elige tus favoritos, agrega la cantidad que deseas y arma tu pedido.
     </p>
 
 </section>
 
 
-<!-- =========================
-     ICONO CARRITO
-========================= -->
-
-<div
-    class="carrito-icono"
-    onclick="toggleCarrito(event)">
-
-    🛒
-
-    <span
-        class="contador"
-        id="contador">
-        0
-    </span>
-
-</div>
-
-
-<!-- =========================
-     PANEL CARRITO
-========================= -->
-
-<div
-    class="carrito-panel"
-    id="carritoPanel">
-
-    <div
-        class="cerrar-carrito"
-        onclick="cerrarCarrito(event)">
-        ✖
-    </div>
-
-    <h2>
-        🛒 Tu pedido
-    </h2>
-
-    <br>
-
-    <div id="carritoItems"></div>
-
-    <h3 id="total">
-        Total: $0.00
-    </h3>
-
-
-    <!-- PERSONALIZACIÓN -->
-
-    <div class="personalizado">
-
-        <h4>
-            Pedido personalizado
-        </h4>
-
-        <textarea
-            id="mensajePersonalizado"
-            rows="3"
-            placeholder="Ej: escribir 'Te amo', nombre personalizado, agregar dedicatoria..."></textarea>
-
-    </div>
-
-
-    <button
-        class="whatsapp"
-        onclick="enviarPedido()">
-
-        📱 Enviar pedido por WhatsApp
-
-    </button>
-
-</div>
-
-
-<!-- =========================
+<!-- =====================================================
      PRODUCTOS
-========================= -->
+====================================================== -->
+
+
+<!-- =========================
+     PRODUCTOS CLÁSICOS
+========================== -->
+
+<div class="categoria">
+    <h2>🍓 Nuestros favoritos</h2>
+</div>
 
 <section class="productos">
 
-    <h2>
-        Nuestros Productos
-    </h2>
 
-    <br>
+    <!-- FRESAS BLANCAS -->
 
+    <div class="producto">
 
-    <div class="contenedor-productos">
+        <img src="FRESASBLANCAS.jpeg" alt="Fresas con chocolate blanco">
 
+        <div class="producto-info">
 
-        <!-- PRODUCTO 1 -->
+            <h3>🤍 Fresas con Chocolate Blanco</h3>
 
-        <div class="producto">
-
-            <img
-                src="fresas-blancas.jpg"
-                alt="Fresas Chocolate Blanco">
-
-            <h3>
-                Fresas Chocolate Blanco
-            </h3>
-
-            <p class="precio">
+            <div class="precio">
                 $2.99
-            </p>
-
-            <p class="descripcion">
-                🍓 Deliciosas fresas frescas cubiertas con chocolate blanco suave y cremoso, un detalle dulce y delicado perfecto para cualquier ocasión. 🤍🍫
-            </p>
-
-            <div class="cantidad">
-
-                <button onclick="cambiarCantidad('p1',-1)">-</button>
-
-                <span id="p1">1</span>
-
-                <button onclick="cambiarCantidad('p1',1)">+</button>
-
             </div>
 
-            <button
-                class="boton"
-                onclick="agregarProducto('Fresas Chocolate Blanco',2.99,'p1',this)">
-                Agregar
+            <p class="descripcion">
+                🍓 Fresas frescas cuidadosamente seleccionadas y cubiertas
+                con delicioso chocolate blanco. 🤍 Un detalle dulce,
+                delicado y perfecto para consentirte o sorprender a alguien especial. ✨
+            </p>
+
+            <div class="cantidad-box">
+                <label>Cantidad:</label>
+                <input type="number" id="cantidad-fresas-blancas"
+                       value="1" min="1">
+            </div>
+
+            <button class="btn-agregar"
+                onclick="agregarProducto(
+                    'Fresas con Chocolate Blanco',
+                    2.99,
+                    document.getElementById('cantidad-fresas-blancas').value
+                )">
+                🛒 Agregar al pedido
             </button>
 
         </div>
+    </div>
 
 
-        <!-- PRODUCTO 2 -->
+    <!-- CORAZÓN ELEGANTE -->
 
-        <div class="producto">
+    <div class="producto">
 
-            <img
-                src="corazon.jpg"
-                alt="Corazón Elegante">
+        <img src="CORAZONELEGANTE.jpeg" alt="Corazón elegante de chocolate">
 
-            <h3>
-                Corazón Elegante
-            </h3>
+        <div class="producto-info">
 
-            <p class="precio">
+            <h3>❤️ Corazón Elegante</h3>
+
+            <div class="precio">
                 $3.50
-            </p>
-
-            <p class="descripcion">
-                ❤️ Hermosa presentación de fresas con chocolate en forma de corazón, ideal para expresar cariño y regalar un momento lleno de dulzura. 🍓🍫
-            </p>
-
-            <div class="cantidad">
-
-                <button onclick="cambiarCantidad('p2',-1)">-</button>
-
-                <span id="p2">1</span>
-
-                <button onclick="cambiarCantidad('p2',1)">+</button>
-
             </div>
 
-            <button
-                class="boton"
-                onclick="agregarProducto('Corazón Elegante',3.50,'p2',this)">
-                Agregar
+            <p class="descripcion">
+                🍫 Un hermoso corazón elaborado con chocolate y decorado
+                con mucho detalle. ❤️ Ideal para regalar en aniversarios,
+                cumpleaños, fechas especiales o simplemente para demostrar cariño. ✨
+            </p>
+
+            <div class="cantidad-box">
+                <label>Cantidad:</label>
+                <input type="number" id="cantidad-corazon"
+                       value="1" min="1">
+            </div>
+
+            <button class="btn-agregar"
+                onclick="agregarProducto(
+                    'Corazón Elegante',
+                    3.50,
+                    document.getElementById('cantidad-corazon').value
+                )">
+                🛒 Agregar al pedido
             </button>
 
         </div>
+    </div>
 
 
-        <!-- PRODUCTO 3 -->
+    <!-- FRESAS 7 OZ -->
 
-        <div class="producto">
+    <div class="producto">
 
-            <img
-                src="GIRASOLES.png"
-                alt="Ramo de Girasoles">
+        <img src="FRESAS7OZ.jpeg" alt="Fresas con chocolate 7 oz">
 
-            <h3>
-                Ramo de Girasoles
-            </h3>
+        <div class="producto-info">
 
-            <p class="precio">
-                $8.00
-            </p>
+            <h3>🍓 Fresas con Chocolate 7 oz</h3>
 
-            <p class="descripcion">
-                🌻 Hermoso ramo de girasoles hechos a mano, un detalle dulce, alegre y especial para sorprender a esa persona importante en cualquier ocasión. 💛✨
-            </p>
-
-            <div class="cantidad">
-
-                <button onclick="cambiarCantidad('p9',-1)">-</button>
-
-                <span id="p9">1</span>
-
-                <button onclick="cambiarCantidad('p9',1)">+</button>
-
-            </div>
-
-            <button
-                class="boton"
-                onclick="agregarProducto('Ramo de Girasoles',8.00,'p9',this)">
-                Agregar
-            </button>
-
-        </div>
-
-
-        <!-- PRODUCTO 4 -->
-
-        <div class="producto">
-
-            <img
-                src="DIADELMAESTRO-CAJA.jpeg"
-                alt="Caja Día del Maestro Dulce Brindis">
-
-            <h3>
-                Caja Día del Maestro – Dulce Brindis
-            </h3>
-
-            <p class="precio">
-                $10.00
-            </p>
-
-            <p class="descripcion">
-                🎁 Una caja especial para celebrar al maestro, con cerveza, Oreo Cookie Pops decorados y deliciosos chocolates en forma de girasol. Un detalle diferente, divertido y lleno de sabor. 🌻🍫
-            </p>
-
-            <div class="cantidad">
-
-                <button onclick="cambiarCantidad('p10',-1)">-</button>
-
-                <span id="p10">1</span>
-
-                <button onclick="cambiarCantidad('p10',1)">+</button>
-
-            </div>
-
-            <button
-                class="boton"
-                onclick="agregarProducto('Caja Día del Maestro - Dulce Brindis',10.00,'p10',this)">
-                Agregar
-            </button>
-
-        </div>
-
-
-        <!-- PRODUCTO 5 -->
-
-        <div class="producto">
-
-            <img
-                src="DIADELMAESTRO-CORAZON.jpeg"
-                alt="Caja Día del Maestro Corazón Dulce">
-
-            <h3>
-                Caja Día del Maestro – Corazón Dulce
-            </h3>
-
-            <p class="precio">
-                $5.00
-            </p>
-
-            <p class="descripcion">
-                ❤️ Hermosa caja en forma de corazón con una galleta decorada y dos deliciosos chocolates en forma de girasol, perfecta para sorprender a un maestro con un detalle especial. 🍪🌻
-            </p>
-
-            <div class="cantidad">
-
-                <button onclick="cambiarCantidad('p11',-1)">-</button>
-
-                <span id="p11">1</span>
-
-                <button onclick="cambiarCantidad('p11',1)">+</button>
-
-            </div>
-
-            <button
-                class="boton"
-                onclick="agregarProducto('Caja Día del Maestro - Corazón Dulce',5.00,'p11',this)">
-                Agregar
-            </button>
-
-        </div>
-
-
-        <!-- PRODUCTO 6 -->
-
-        <div class="producto">
-
-            <img
-                src="fresas7oz.jpg"
-                alt="Fresas vaso 7oz">
-
-            <h3>
-                Fresas vaso 7oz
-            </h3>
-
-            <p class="precio">
+            <div class="precio">
                 $1.50
-            </p>
-
-            <p class="descripcion">
-                🍓 Vaso de 3 fresas medianas con chocolate derretido, perfecto para disfrutar de un antojo dulce, sencillo y delicioso. 🍫😋
-            </p>
-
-            <div class="cantidad">
-
-                <button onclick="cambiarCantidad('p3',-1)">-</button>
-
-                <span id="p3">1</span>
-
-                <button onclick="cambiarCantidad('p3',1)">+</button>
-
             </div>
 
-            <button
-                class="boton"
-                onclick="agregarProducto('Fresas vaso 7oz',1.50,'p3',this)">
-                Agregar
+            <p class="descripcion">
+                🍓 Deliciosas fresas cubiertas con chocolate, preparadas
+                para disfrutar de un pequeño pero irresistible antojo. 🍫
+                Perfectas para regalar, compartir o darte un gustito dulce. 😋
+            </p>
+
+            <div class="cantidad-box">
+                <label>Cantidad:</label>
+                <input type="number" id="cantidad-7oz"
+                       value="1" min="1">
+            </div>
+
+            <button class="btn-agregar"
+                onclick="agregarProducto(
+                    'Fresas con Chocolate 7 oz',
+                    1.50,
+                    document.getElementById('cantidad-7oz').value
+                )">
+                🛒 Agregar al pedido
             </button>
 
         </div>
+    </div>
 
 
-        <!-- PRODUCTO 7 -->
+    <!-- FRESAS 12 OZ -->
 
-        <div class="producto">
+    <div class="producto">
 
-            <img
-                src="fresas12oz.jpg"
-                alt="Fresas vaso 12oz">
+        <img src="FRESAS12OZ.jpeg" alt="Fresas con chocolate 12 oz">
 
-            <h3>
-                Fresas vaso 12oz
-            </h3>
+        <div class="producto-info">
 
-            <p class="precio">
+            <h3>🍓 Fresas con Chocolate 12 oz</h3>
+
+            <div class="precio">
                 $3.00
-            </p>
-
-            <p class="descripcion">
-                🍓 Vaso grande con 6 fresas medianas y abundante chocolate delicioso, ideal para compartir o darte un gustito especial. 🍫🤎
-            </p>
-
-            <div class="cantidad">
-
-                <button onclick="cambiarCantidad('p4',-1)">-</button>
-
-                <span id="p4">1</span>
-
-                <button onclick="cambiarCantidad('p4',1)">+</button>
-
             </div>
 
-            <button
-                class="boton"
-                onclick="agregarProducto('Fresas vaso 12oz',3.00,'p4',this)">
-                Agregar
+            <p class="descripcion">
+                🍓 Una porción más grande de nuestras deliciosas fresas
+                cubiertas con chocolate. 🍫 Perfecta para compartir,
+                celebrar o simplemente disfrutar mucho más de tu dulce favorito. 💕
+            </p>
+
+            <div class="cantidad-box">
+                <label>Cantidad:</label>
+                <input type="number" id="cantidad-12oz"
+                       value="1" min="1">
+            </div>
+
+            <button class="btn-agregar"
+                onclick="agregarProducto(
+                    'Fresas con Chocolate 12 oz',
+                    3.00,
+                    document.getElementById('cantidad-12oz').value
+                )">
+                🛒 Agregar al pedido
             </button>
 
         </div>
+    </div>
 
 
-        <!-- PRODUCTO 8 -->
+    <!-- FRESA INDIVIDUAL -->
 
-        <div class="producto">
+    <div class="producto">
 
-            <img
-                src="fresa-individual.jpg"
-                alt="Fresa Individual">
+        <img src="FRESAINDIVIDUAL.jpeg" alt="Fresa individual con chocolate">
 
-            <h3>
-                Fresa Individual
-            </h3>
+        <div class="producto-info">
 
-            <p class="precio">
+            <h3>🍓 Fresa Individual</h3>
+
+            <div class="precio">
                 $0.75
-            </p>
-
-            <p class="descripcion">
-                🍓 Fresa fresca cubierta con delicioso chocolate, ideal para un pequeño detalle o para disfrutar de un antojo dulce en cualquier momento. 🍫✨
-            </p>
-
-            <div class="cantidad">
-
-                <button onclick="cambiarCantidad('p7',-1)">-</button>
-
-                <span id="p7">1</span>
-
-                <button onclick="cambiarCantidad('p7',1)">+</button>
-
             </div>
 
-            <button
-                class="boton"
-                onclick="agregarProducto('Fresa Individual',0.75,'p7',this)">
-                Agregar
+            <p class="descripcion">
+                🍓 Una deliciosa fresa cubierta con chocolate, perfecta
+                como pequeño detalle, recuerdo o simplemente para quitarte
+                el antojo. 🍫💕
+            </p>
+
+            <div class="cantidad-box">
+                <label>Cantidad:</label>
+                <input type="number" id="cantidad-individual"
+                       value="1" min="1">
+            </div>
+
+            <button class="btn-agregar"
+                onclick="agregarProducto(
+                    'Fresa Individual',
+                    0.75,
+                    document.getElementById('cantidad-individual').value
+                )">
+                🛒 Agregar al pedido
             </button>
 
         </div>
-
-
-        <!-- PRODUCTO 9 -->
-
-        <div class="producto">
-
-            <img
-                src="DIADELPADREMASHMELLOWS.jpeg"
-                alt="Malvaviscos Día del Padre">
-
-            <h3>
-                Malvaviscos Día del Padre
-            </h3>
-
-            <p class="precio">
-                $1.00
-            </p>
-
-            <p class="descripcion">
-                🍫 Un malvavisco gigante, suave y esponjoso, cubierto con una irresistible capa de chocolate y decorado con detalles dulces. Un bocado grande, delicioso y perfecto para regalar. 🤍✨
-            </p>
-
-            <div class="cantidad">
-
-                <button onclick="cambiarCantidad('p12',-1)">-</button>
-
-                <span id="p12">1</span>
-
-                <button onclick="cambiarCantidad('p12',1)">+</button>
-
-            </div>
-
-            <button
-                class="boton"
-                onclick="agregarProducto('Malvaviscos Día del Padre',1.00,'p12',this)">
-                Agregar
-            </button>
-
-        </div>
-
-
-        <!-- PRODUCTO 10 -->
-
-        <div class="producto">
-
-            <img
-                src="chocobomba-navidad.jpg"
-                alt="Chocobombas Navideñas">
-
-            <h3>
-                Chocobombas Navideñas
-            </h3>
-
-            <p class="precio">
-                $2.50
-            </p>
-
-            <p class="descripcion">
-                🎄 Deliciosas chocobombas perfectas para preparar una taza de chocolate caliente y disfrutar de un momento cálido y dulce en época navideña. 🍫☕
-            </p>
-
-            <div class="cantidad">
-
-                <button onclick="cambiarCantidad('p5',-1)">-</button>
-
-                <span id="p5">1</span>
-
-                <button onclick="cambiarCantidad('p5',1)">+</button>
-
-            </div>
-
-            <button
-                class="boton"
-                onclick="agregarProducto('Chocobombas Navideñas',2.50,'p5',this)">
-                Agregar
-            </button>
-
-        </div>
-
-
-        <!-- PRODUCTO 11 -->
-
-        <div class="producto">
-
-            <img
-                src="chocobomba-ano.jpg"
-                alt="Chocobombas de Año Nuevo">
-
-            <h3>
-                Chocobombas de Año Nuevo
-            </h3>
-
-            <p class="precio">
-                $2.50
-            </p>
-
-            <p class="descripcion">
-                🎉 Deliciosas chocobombas ideales para celebrar el inicio de un nuevo año con una bebida caliente, chocolate y un toque especial de dulzura. 🍫☕✨
-            </p>
-
-            <div class="cantidad">
-
-                <button onclick="cambiarCantidad('p6',-1)">-</button>
-
-                <span id="p6">1</span>
-
-                <button onclick="cambiarCantidad('p6',1)">+</button>
-
-            </div>
-
-            <button
-                class="boton"
-                onclick="agregarProducto('Chocobombas de Año Nuevo',2.50,'p6',this)">
-                Agregar
-            </button>
-
-        </div>
-
-
-        <!-- PRODUCTO 12 -->
-
-        <div class="producto">
-
-            <img
-                src="chocobomba-personalizada.jpg"
-                alt="Chocobombas Personalizadas">
-
-            <h3>
-                Chocobombas Personalizadas
-            </h3>
-
-            <p class="precio">
-                $3.00
-            </p>
-
-            <p class="descripcion">
-                🎨 Chocobomba especial con decoración personalizada para crear un regalo único y lleno de detalles, perfecta para sorprender a alguien especial. 🍫🎁
-            </p>
-
-            <div class="cantidad">
-
-                <button onclick="cambiarCantidad('p8',-1)">-</button>
-
-                <span id="p8">1</span>
-
-                <button onclick="cambiarCantidad('p8',1)">+</button>
-
-            </div>
-
-            <button
-                class="boton"
-                onclick="agregarProducto('Chocobombas Personalizadas',3.00,'p8',this)">
-                Agregar
-            </button>
-
-        </div>
-
-
-        <!-- PRODUCTO 13 -->
-
-        <div class="producto">
-
-            <img
-                src="HUEVOSDEPASCUA.jpeg"
-                alt="Huevos de Pascua">
-
-            <h3>
-                Huevos de Pascua
-            </h3>
-
-            <p class="precio">
-                $1.00
-            </p>
-
-            <p class="descripcion">
-                🐰 Deliciosos huevos de Pascua de chocolate, con un irresistible relleno de dulce de leche en su interior y un detalle especial en la parte frontal, decorado con un conejito o una zanahoria de chocolate. 🍫🥚✨
-            </p>
-
-            <div class="cantidad">
-
-                <button onclick="cambiarCantidad('p13',-1)">-</button>
-
-                <span id="p13">1</span>
-
-                <button onclick="cambiarCantidad('p13',1)">+</button>
-
-            </div>
-
-            <button
-                class="boton"
-                onclick="agregarProducto('Huevos de Pascua',1.00,'p13',this)">
-                Agregar
-            </button>
-
-        </div>
-
-
-        <!-- PRODUCTO 14 -->
-
-        <div class="producto">
-
-            <img
-                src="FRESASMUNDIALISTAS.jpeg"
-                alt="Fresas Arcoíris de Chocolate">
-
-            <h3>
-                Fresas Arcoíris de Chocolate
-            </h3>
-
-            <p class="precio">
-                $10.00
-            </p>
-
-            <p class="descripcion">
-                🍓✨ Bandeja circular con 12 deliciosas fresas cubiertas de chocolate y decoradas en diferentes colores como amarillo, azul y rojo. Algunas llevan un solo color y otras combinan líneas de chocolate para crear una presentación alegre, colorida y diferente. 🍫🌈
-            </p>
-
-            <div class="cantidad">
-
-                <button onclick="cambiarCantidad('p14',-1)">-</button>
-
-                <span id="p14">1</span>
-
-                <button onclick="cambiarCantidad('p14',1)">+</button>
-
-            </div>
-
-            <button
-                class="boton"
-                onclick="agregarProducto('Fresas Arcoíris de Chocolate',10.00,'p14',this)">
-                Agregar
-            </button>
-
-        </div>
-
-
-        <!-- PRODUCTO 15 -->
-
-        <div class="producto">
-
-            <img
-                src="DIADELPADREREGALO.jpeg"
-                alt="Regalo Especial para Papá">
-
-            <h3>
-                Regalo Especial para Papá
-            </h3>
-
-            <p class="precio">
-                $10.00
-            </p>
-
-            <p class="descripcion">
-                👨‍👧‍👦 Un detalle pensado para consentir a papá, con deliciosos snacks, una bebida en lata a elección y 4 enormes malvaviscos cubiertos de chocolate. 🎁🍫 Un regalo completo, divertido y lleno de sabor para celebrar a ese papá especial. 💙
-            </p>
-
-            <div class="cantidad">
-
-                <button onclick="cambiarCantidad('p15',-1)">-</button>
-
-                <span id="p15">1</span>
-
-                <button onclick="cambiarCantidad('p15',1)">+</button>
-
-            </div>
-
-            <button
-                class="boton"
-                onclick="agregarProducto('Regalo Especial para Papá',10.00,'p15',this)">
-                Agregar
-            </button>
-
-        </div>
-
-
-        <!-- PRODUCTO 16 -->
-
-        <div class="producto">
-
-            <img
-                src="DIADELAMUJER.jpeg"
-                alt="Dulce Detalle para Mujer">
-
-            <h3>
-                Dulce Detalle para Mujer
-            </h3>
-
-            <p class="precio">
-                $20.00
-            </p>
-
-            <p class="descripcion">
-                💐 Un hermoso detalle que combina un tierno peluche con un ramo de 12 fresas cubiertas de delicioso chocolate. 🍓🍫 Un regalo dulce, especial y lleno de cariño para sorprender a una mujer importante. 💕
-            </p>
-
-            <div class="cantidad">
-
-                <button onclick="cambiarCantidad('p16',-1)">-</button>
-
-                <span id="p16">1</span>
-
-                <button onclick="cambiarCantidad('p16',1)">+</button>
-
-            </div>
-
-            <button
-                class="boton"
-                onclick="agregarProducto('Dulce Detalle para Mujer',20.00,'p16',this)">
-                Agregar
-            </button>
-
-        </div>
-
-
-        <!-- PRODUCTO 17 -->
-
-        <div class="producto">
-
-            <img
-                src="ESFEROGIRASOL.jpeg"
-                alt="Esfero Girasol Artesanal">
-
-            <h3>
-                Esfero Girasol Artesanal
-            </h3>
-
-            <p class="precio">
-                $10.00
-            </p>
-
-            <p class="descripcion">
-                🌻 Un hermoso esfero decorado a mano como un delicado girasol, con su tallo y base en color verde y una pequeña mariposa como detalle especial en el centro. 🦋💚 Un regalo original, bonito y perfecto para acompañar tus momentos de escritura. ✨
-            </p>
-
-            <div class="cantidad">
-
-                <button onclick="cambiarCantidad('p17',-1)">-</button>
-
-                <span id="p17">1</span>
-
-                <button onclick="cambiarCantidad('p17',1)">+</button>
-
-            </div>
-
-            <button
-                class="boton"
-                onclick="agregarProducto('Esfero Girasol Artesanal',10.00,'p17',this)">
-                Agregar
-            </button>
-
-        </div>
-
-
-        <!-- PRODUCTO 18 -->
-
-        <div class="producto">
-
-            <img
-                src="ROSASCHOCOLATE.jpeg"
-                alt="Ramo de Rosas de Chocolate">
-
-            <h3>
-                Ramo de Rosas de Chocolate
-            </h3>
-
-            <p class="precio">
-                $7.00
-            </p>
-
-            <p class="descripcion">
-                🌹🍫 Un delicado ramo formado por 3 hermosas rosas de chocolate, elaboradas sobre una base de suave malvavisco y decoradas con detalles que dan vida a cada pétalo. Un detalle dulce, original y perfecto para regalar. 💕✨
-            </p>
-
-            <div class="cantidad">
-
-                <button onclick="cambiarCantidad('p18',-1)">-</button>
-
-                <span id="p18">1</span>
-
-                <button onclick="cambiarCantidad('p18',1)">+</button>
-
-            </div>
-
-            <button
-                class="boton"
-                onclick="agregarProducto('Ramo de Rosas de Chocolate',7.00,'p18',this)">
-                Agregar
-            </button>
-
-        </div>
-
-
-        <!-- =========================
-             PRODUCTO 19 - MALVAVISCOS DULCE ENCANTO
-        ========================= -->
-
-        <div class="producto">
-
-            <img
-                src="MALVAVISCOMUJER.jpeg"
-                alt="Malvaviscos Dulce Encanto">
-
-            <h3>
-                Malvaviscos Dulce Encanto
-            </h3>
-
-            <p class="precio">
-                $1.00
-            </p>
-
-            <p class="descripcion">
-                💕 Suave y esponjoso malvavisco cubierto con delicioso chocolate y decorado cuidadosamente con figuras hechas de chocolate. Puedes encontrar diseños encantadores como girasoles, labiales o mariposas, convirtiendo cada uno en un pequeño detalle dulce, femenino y lleno de encanto. 🌻💄🦋🍫
-            </p>
-
-            <div class="cantidad">
-
-                <button onclick="cambiarCantidad('p19',-1)">-</button>
-
-                <span id="p19">1</span>
-
-                <button onclick="cambiarCantidad('p19',1)">+</button>
-
-            </div>
-
-            <button
-                class="boton"
-                onclick="agregarProducto('Malvaviscos Dulce Encanto',1.00,'p19',this)">
-                Agregar
-            </button>
-
-        </div>
-
-
-        <!-- =========================
-             PRODUCTO 20 - MALVAVISCOS DÍA DEL NIÑO
-        ========================= -->
-
-        <div class="producto">
-
-            <img
-                src="MALVAVISCODIADELNIÑO.jpeg"
-                alt="Malvaviscos Día del Niño">
-
-            <h3>
-                Malvaviscos Día del Niño
-            </h3>
-
-            <p class="precio">
-                $0.75
-            </p>
-
-            <p class="descripcion">
-                🎈🍫 Un divertido y delicioso malvavisco preparado especialmente para celebrar a los más pequeños. Cubierto con chocolate y decorado con coloridos detalles y un toque de confitería, incluyendo deliciosos chocolates tipo M&M. 🌈🍬 Un pequeño detalle lleno de color, alegría y mucho sabor. 🥳✨
-            </p>
-
-            <div class="cantidad">
-
-                <button onclick="cambiarCantidad('p20',-1)">-</button>
-
-                <span id="p20">1</span>
-
-                <button onclick="cambiarCantidad('p20',1)">+</button>
-
-            </div>
-
-            <button
-                class="boton"
-                onclick="agregarProducto('Malvaviscos Día del Niño',0.75,'p20',this)">
-                Agregar
-            </button>
-
-        </div>
-
-
     </div>
 
 </section>
 
 
 <!-- =========================
-     BARRA MÓVIL
-========================= -->
+     CHOCOBOMBAS
+========================== -->
 
-<div class="barra-movil">
+<div class="categoria">
+    <h2>🍫 Chocobombas</h2>
+</div>
 
-    <span id="barraTotal">
-        0 productos
-    </span>
+<section class="productos">
 
-    <button onclick="abrirCarrito(event)">
+
+    <!-- CHOCOBOMBA NAVIDAD -->
+
+    <div class="producto">
+
+        <img src="CHOCOBOMBANAVIDAD.jpeg" alt="Chocobomba de Navidad">
+
+        <div class="producto-info">
+
+            <h3>🎄 Chocobomba Navidad</h3>
+
+            <div class="precio">
+                $2.50
+            </div>
+
+            <p class="descripcion">
+                🎄 Una deliciosa sorpresa navideña hecha de chocolate.
+                🍫 Ideal para preparar una bebida caliente y disfrutar
+                de un momento lleno de sabor y espíritu navideño. ❤️✨
+            </p>
+
+            <div class="cantidad-box">
+                <label>Cantidad:</label>
+                <input type="number" id="cantidad-navidad"
+                       value="1" min="1">
+            </div>
+
+            <button class="btn-agregar"
+                onclick="agregarProducto(
+                    'Chocobomba Navidad',
+                    2.50,
+                    document.getElementById('cantidad-navidad').value
+                )">
+                🛒 Agregar al pedido
+            </button>
+
+        </div>
+    </div>
+
+
+    <!-- CHOCOBOMBA AÑO NUEVO -->
+
+    <div class="producto">
+
+        <img src="CHOCOBOMBAANONUEVO.jpeg" alt="Chocobomba Año Nuevo">
+
+        <div class="producto-info">
+
+            <h3>🎆 Chocobomba Año Nuevo</h3>
+
+            <div class="precio">
+                $2.50
+            </div>
+
+            <p class="descripcion">
+                🎆 Celebra el Año Nuevo de una manera deliciosa con nuestra
+                chocobomba especial. 🍫 Una dulce experiencia para compartir,
+                brindar y comenzar el nuevo año con mucho sabor. ✨🥂
+            </p>
+
+            <div class="cantidad-box">
+                <label>Cantidad:</label>
+                <input type="number" id="cantidad-anonuevo"
+                       value="1" min="1">
+            </div>
+
+            <button class="btn-agregar"
+                onclick="agregarProducto(
+                    'Chocobomba Año Nuevo',
+                    2.50,
+                    document.getElementById('cantidad-anonuevo').value
+                )">
+                🛒 Agregar al pedido
+            </button>
+
+        </div>
+    </div>
+
+
+    <!-- CHOCOBOMBA PERSONALIZADA -->
+
+    <div class="producto">
+
+        <img src="CHOCOBOMBAPERSONALIZADA.jpeg"
+             alt="Chocobomba personalizada">
+
+        <div class="producto-info">
+
+            <h3>🎁 Chocobomba Personalizada</h3>
+
+            <div class="precio">
+                $2.50
+            </div>
+
+            <p class="descripcion">
+                🎁 Una chocobomba preparada especialmente para ti. 🍫
+                Puedes personalizar su decoración para convertirla en
+                un detalle único y especial para cualquier ocasión. ✨💕
+            </p>
+
+            <div class="cantidad-box">
+                <label>Cantidad:</label>
+                <input type="number" id="cantidad-personalizada"
+                       value="1" min="1">
+            </div>
+
+            <button class="btn-agregar"
+                onclick="agregarProducto(
+                    'Chocobomba Personalizada',
+                    2.50,
+                    document.getElementById('cantidad-personalizada').value
+                )">
+                🛒 Agregar al pedido
+            </button>
+
+        </div>
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     NUEVOS PRODUCTOS
+====================================================== -->
+
+<div class="categoria">
+    <h2>🌸 Ocasiones Especiales</h2>
+</div>
+
+<section class="productos">
+
+
+    <!-- =================================================
+         FLOR MALVAVISCO
+    ================================================== -->
+
+    <div class="producto">
+
+        <img src="FLORMALVAVISCO.jpeg"
+             alt="Flor de malvavisco con chocolate">
+
+        <div class="producto-info">
+
+            <h3>🌸 Flor de Malvavisco con Chocolate</h3>
+
+            <div class="precio">
+                $1.00 c/u
+            </div>
+
+            <p class="descripcion">
+                🌸 Deliciosos malvaviscos en forma de flor, cubiertos
+                con chocolate y decorados con una colorida bolita
+                de grajeas en el centro. 🍫✨
+                Un detalle dulce, divertido y perfecto para regalar
+                o sorprender en cualquier ocasión. 💕
+            </p>
+
+            <div class="cantidad-box">
+                <label>Cantidad:</label>
+                <input type="number" id="cantidad-flor"
+                       value="1" min="1">
+            </div>
+
+            <button class="btn-agregar"
+                onclick="agregarProducto(
+                    'Flor de Malvavisco con Chocolate',
+                    1.00,
+                    document.getElementById('cantidad-flor').value
+                )">
+                🛒 Agregar al pedido
+            </button>
+
+        </div>
+    </div>
+
+
+    <!-- =================================================
+         FRESAS OCASIÓN ESPECIAL
+    ================================================== -->
+
+    <div class="producto">
+
+        <img src="FRESASOCASIONESPECIAL.jpeg"
+             alt="Fresas elegantes para ocasiones especiales">
+
+        <div class="producto-info">
+
+            <h3>✨ Fresas Elegantes para Ocasiones Especiales</h3>
+
+            <div class="precio">
+                $1.00 c/u
+            </div>
+
+            <div class="nota-precio">
+                💕 10 o más unidades: <strong>$0.75 c/u</strong>
+            </div>
+
+            <p class="descripcion">
+                🍓 Fresas frescas cuidadosamente seleccionadas,
+                cubiertas con chocolate y decoradas con elegantes
+                detalles. ✨
+                Ideales para bautizos, bodas, cumpleaños, aniversarios
+                y otros momentos importantes. 💕
+                Un detalle dulce y sofisticado que puede adaptarse
+                al estilo de tu celebración. 🎀
+            </p>
+
+            <div class="cantidad-box">
+                <label>Cantidad:</label>
+                <input type="number" id="cantidad-fresas-especial"
+                       value="1" min="1"
+                       onchange="actualizarPrecioEspecial()">
+            </div>
+
+            <button class="btn-agregar"
+                onclick="agregarEspecial(
+                    'Fresas Elegantes para Ocasiones Especiales',
+                    document.getElementById('cantidad-fresas-especial').value
+                )">
+                🛒 Agregar al pedido
+            </button>
+
+        </div>
+    </div>
+
+
+    <!-- =================================================
+         COMBINADO
+    ================================================== -->
+
+    <div class="producto">
+
+        <img src="COMBINADOOCASIONESPECIAL.jpeg"
+             alt="Combinado de fresas y malvaviscos">
+
+        <div class="producto-info">
+
+            <h3>💕 Combinado Especial de Fresas y Malvaviscos</h3>
+
+            <div class="precio">
+                $1.00 c/u
+            </div>
+
+            <div class="nota-precio">
+                💕 10 o más unidades: <strong>$0.75 c/u</strong>
+            </div>
+
+            <p class="descripcion">
+                🍓🍫 Una deliciosa combinación de fresas y malvaviscos
+                cubiertos de chocolate y decorados especialmente
+                para darle un toque elegante a tu celebración. ✨
+                Ideal para bautizos, bodas, cumpleaños, aniversarios,
+                baby showers y cualquier ocasión que quieras hacer
+                aún más especial. 💕🎀
+            </p>
+
+            <div class="cantidad-box">
+                <label>Cantidad:</label>
+                <input type="number" id="cantidad-combinado"
+                       value="1" min="1">
+            </div>
+
+            <button class="btn-agregar"
+                onclick="agregarEspecial(
+                    'Combinado Especial de Fresas y Malvaviscos',
+                    document.getElementById('cantidad-combinado').value
+                )">
+                🛒 Agregar al pedido
+            </button>
+
+        </div>
+    </div>
+
+
+    <!-- =================================================
+         MALVAVISCOS OCASIÓN ESPECIAL
+    ================================================== -->
+
+    <div class="producto">
+
+        <img src="MALVAVISCOSOCASIONESPECIAL.jpeg"
+             alt="Malvaviscos elegantes para ocasiones especiales">
+
+        <div class="producto-info">
+
+            <h3>🤍 Malvaviscos Elegantes para Ocasiones Especiales</h3>
+
+            <div class="precio">
+                $1.00 c/u
+            </div>
+
+            <div class="nota-precio">
+                💕 10 o más unidades: <strong>$0.75 c/u</strong><br>
+                🎁 Bandeja de 15 unidades: <strong>$11.00</strong>
+            </div>
+
+            <p class="descripcion">
+                🤍 Suaves malvaviscos cubiertos con chocolate blanco
+                y decorados con delicados detalles según la ocasión. ✨
+                Podemos adaptar su diseño para bautizos, bodas,
+                comuniones, cumpleaños, baby showers y otras
+                celebraciones. 🎀
+                Un detalle dulce y elegante pensado especialmente
+                para tu evento. 💕
+            </p>
+
+            <div class="cantidad-box">
+                <label>Cantidad:</label>
+                <input type="number" id="cantidad-malvaviscos-especial"
+                       value="1" min="1">
+            </div>
+
+            <button class="btn-agregar"
+                onclick="agregarMalvaviscoEspecial()">
+                🛒 Agregar al pedido
+            </button>
+
+        </div>
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CARRITO
+====================================================== -->
+
+<div class="carrito-panel" id="carrito">
+
+    <div class="carrito-header">
+
+        <h2>🛒 Mi pedido</h2>
+
+        <button class="cerrar" onclick="cerrarCarrito()">
+            ×
+        </button>
+
+    </div>
+
+    <div class="carrito-items" id="carrito-items">
+
+        <p style="text-align:center; padding:30px;">
+            Tu pedido está vacío 🛒
+        </p>
+
+    </div>
+
+    <div class="carrito-footer">
+
+        <div class="total">
+
+            <span>Total:</span>
+
+            <span id="total">
+                $0.00
+            </span>
+
+        </div>
+
+        <button class="btn-whatsapp"
+                onclick="enviarWhatsApp()">
+            📲 Pedir por WhatsApp
+        </button>
+
+        <button class="btn-vaciar"
+                onclick="vaciarCarrito()">
+            🗑️ Vaciar pedido
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     BARRA MOBILE
+====================================================== -->
+
+<div class="barra-mobile">
+
+    <div>
+        🛒 <strong id="total-mobile">$0.00</strong>
+    </div>
+
+    <button onclick="abrirCarrito()">
         Ver pedido
     </button>
 
 </div>
 
 
-<!-- =========================
-     CONTACTO
-========================= -->
-
-<section class="contacto">
-
-    <h2>
-        Contacto
-    </h2>
-
-    <p>
-        📱 0982126368
-    </p>
-
-    <p>
-        📱 0962000142
-    </p>
-
-    <p>
-        Pedidos por WhatsApp
-    </p>
-
-</section>
-
-
-<!-- =========================
-     FOOTER
-========================= -->
-
-<footer>
-
-    <p>
-        © 2026 KrisFresas
-    </p>
-
-</footer>
-
-
-<!-- =========================
-     WHATSAPP FLOTANTE
-========================= -->
-
-<a
-    class="whatsapp-float"
-    href="https://wa.me/593982126368">
-
-    💬
-
-</a>
-
-
 <script>
 
+    /* =====================================================
+       CONFIGURACIÓN
+    ====================================================== */
 
-/* =========================
-   CARRITO
-========================= */
+    let carrito = [];
 
-let carrito =
-JSON.parse(localStorage.getItem("carrito")) || [];
+    /*
+       IMPORTANTE:
+       Cambia este número por el número de WhatsApp
+       de KRISFRESAS.
 
+       Ecuador:
+       593 + número sin el 0 inicial.
 
-/* =========================
-   GUARDAR
-========================= */
+       Ejemplo:
+       593999999999
+    */
 
-function guardar(){
+    const numeroWhatsApp = "593XXXXXXXXX";
 
-    localStorage.setItem(
-        "carrito",
-        JSON.stringify(carrito)
-    );
 
-}
+    /* =====================================================
+       AGREGAR PRODUCTO NORMAL
+    ====================================================== */
 
+    function agregarProducto(nombre, precio, cantidad) {
 
-/* =========================
-   TOAST
-========================= */
+        cantidad = parseInt(cantidad);
 
-function mostrarToast(){
+        if (cantidad < 1 || isNaN(cantidad)) {
+            alert("Ingresa una cantidad válida.");
+            return;
+        }
 
-    let toast =
-    document.getElementById("toast");
-
-    toast.style.display = "block";
-
-    setTimeout(()=>{
-
-        toast.style.display = "none";
-
-    },2000);
-
-}
-
-
-/* =========================
-   CAMBIAR CANTIDAD
-========================= */
-
-function cambiarCantidad(id,valor){
-
-    let elemento =
-    document.getElementById(id);
-
-    let cantidad =
-    parseInt(elemento.innerText);
-
-    cantidad += valor;
-
-    if(cantidad < 1){
-        cantidad = 1;
-    }
-
-    elemento.innerText =
-    cantidad;
-
-}
-
-
-/* =========================
-   AGREGAR PRODUCTO
-========================= */
-
-function agregarProducto(
-    nombre,
-    precio,
-    id,
-    boton
-){
-
-    let cantidad =
-    parseInt(
-        document.getElementById(id).innerText
-    );
-
-    carrito.push({
-
-        nombre:nombre,
-        precio:precio,
-        cantidad:cantidad
-
-    });
-
-    guardar();
-
-    actualizarCarrito();
-
-    mostrarToast();
-
-    boton.classList.add("animar");
-
-    setTimeout(()=>{
-
-        boton.classList.remove("animar");
-
-    },400);
-
-}
-
-
-/* =========================
-   ELIMINAR PRODUCTO
-========================= */
-
-function eliminarProducto(index){
-
-    carrito.splice(index,1);
-
-    guardar();
-
-    actualizarCarrito();
-
-}
-
-
-/* =========================
-   ACTUALIZAR CARRITO
-========================= */
-
-function actualizarCarrito(){
-
-    let contenedor =
-    document.getElementById("carritoItems");
-
-    contenedor.innerHTML = "";
-
-    let total = 0;
-
-    let contador = 0;
-
-
-    carrito.forEach((p,i)=>{
-
-        let subtotal =
-        p.precio * p.cantidad;
-
-        total += subtotal;
-
-        contador += p.cantidad;
-
-
-        contenedor.innerHTML += `
-
-        <div class="item-carrito">
-
-            <span>
-                ${p.nombre} x${p.cantidad}
-            </span>
-
-            <span>
-                $${subtotal.toFixed(2)}
-            </span>
-
-            <span
-                class="eliminar"
-                onclick="eliminarProducto(${i})">
-
-                ❌
-
-            </span>
-
-        </div>
-
-        `;
-
-    });
-
-
-    document.getElementById("total").innerText =
-    "Total: $" +
-    total.toFixed(2);
-
-
-    document.getElementById("contador").innerText =
-    contador;
-
-
-    document.getElementById("barraTotal").innerText =
-    contador +
-    (contador === 1 ? " producto - $" : " productos - $") +
-    total.toFixed(2);
-
-}
-
-
-/* =========================
-   ABRIR / CERRAR CARRITO
-========================= */
-
-function toggleCarrito(event){
-
-    if(event){
-        event.stopPropagation();
-    }
-
-    document
-    .getElementById("carritoPanel")
-    .classList
-    .toggle("abierto");
-
-}
-
-
-/* =========================
-   ABRIR CARRITO
-========================= */
-
-function abrirCarrito(event){
-
-    if(event){
-        event.stopPropagation();
-    }
-
-    document
-    .getElementById("carritoPanel")
-    .classList
-    .add("abierto");
-
-}
-
-
-/* =========================
-   CERRAR CARRITO
-========================= */
-
-function cerrarCarrito(event){
-
-    if(event){
-        event.stopPropagation();
-    }
-
-    document
-    .getElementById("carritoPanel")
-    .classList
-    .remove("abierto");
-
-}
-
-
-/* =========================
-   ENVIAR PEDIDO WHATSAPP
-========================= */
-
-function enviarPedido(){
-
-    if(carrito.length === 0){
-
-        alert("Tu carrito está vacío.");
-
-        return;
-
-    }
-
-
-    let mensaje =
-    "Hola, quiero hacer el siguiente pedido:%0A%0A";
-
-    let total = 0;
-
-
-    carrito.forEach(p=>{
-
-        let subtotal =
-        p.precio * p.cantidad;
-
-        mensaje +=
-        `- ${p.nombre} x${p.cantidad} ($${subtotal.toFixed(2)})%0A`;
-
-        total += subtotal;
-
-    });
-
-
-    let personalizado =
-    document.getElementById(
-        "mensajePersonalizado"
-    ).value;
-
-
-    if(personalizado.trim() !== ""){
-
-        mensaje +=
-        `%0A📝 Personalización:%0A` +
-        encodeURIComponent(personalizado);
-
-    }
-
-
-    mensaje +=
-    `%0ATotal: $${total.toFixed(2)}`;
-
-
-    window.open(
-        "https://wa.me/593982126368?text=" +
-        mensaje,
-        "_blank"
-    );
-
-}
-
-
-/* =========================
-   CERRAR CARRITO AL HACER
-   CLICK AFUERA
-========================= */
-
-document.addEventListener(
-    "click",
-    function(e){
-
-        let carritoPanel =
-        document.getElementById(
-            "carritoPanel"
+        const existente = carrito.find(
+            producto => producto.nombre === nombre
         );
 
-        let icono =
-        document.querySelector(
-            ".carrito-icono"
-        );
+        if (existente) {
 
-        let barraMovil =
-        document.querySelector(
-            ".barra-movil"
-        );
+            existente.cantidad += cantidad;
 
+        } else {
 
-        if(
-            !carritoPanel.contains(e.target)
-            &&
-            !icono.contains(e.target)
-            &&
-            !barraMovil.contains(e.target)
-        ){
-
-            carritoPanel
-            .classList
-            .remove("abierto");
+            carrito.push({
+                nombre: nombre,
+                precio: precio,
+                cantidad: cantidad
+            });
 
         }
 
+        actualizarCarrito();
+
+        abrirCarrito();
     }
-);
 
 
-/* =========================
-   INICIAR
-========================= */
+    /* =====================================================
+       AGREGAR PRODUCTOS DE OCASIÓN ESPECIAL
+       1 unidad = $1
+       10+ = $0.75
+    ====================================================== */
 
-actualizarCarrito();
+    function agregarEspecial(nombre, cantidad) {
 
+        cantidad = parseInt(cantidad);
+
+        if (cantidad < 1 || isNaN(cantidad)) {
+            alert("Ingresa una cantidad válida.");
+            return;
+        }
+
+        let precio;
+
+        if (cantidad >= 10) {
+            precio = 0.75;
+        } else {
+            precio = 1.00;
+        }
+
+        const existente = carrito.find(
+            producto => producto.nombre === nombre
+        );
+
+        if (existente) {
+
+            existente.cantidad += cantidad;
+
+            /*
+              Recalculamos el precio según la cantidad total.
+            */
+
+            existente.precio =
+                existente.cantidad >= 10 ? 0.75 : 1.00;
+
+        } else {
+
+            carrito.push({
+                nombre: nombre,
+                precio: precio,
+                cantidad: cantidad
+            });
+
+        }
+
+        actualizarCarrito();
+
+        abrirCarrito();
+    }
+
+
+    /* =====================================================
+       MALVAVISCOS ESPECIALES
+
+       1-9       = $1 c/u
+       10-14     = $0.75 c/u
+       15        = $11 bandeja
+       16+       = $0.75 c/u
+    ====================================================== */
+
+    function agregarMalvaviscoEspecial() {
+
+        const cantidad = parseInt(
+            document.getElementById(
+                "cantidad-malvaviscos-especial"
+            ).value
+        );
+
+        if (cantidad < 1 || isNaN(cantidad)) {
+            alert("Ingresa una cantidad válida.");
+            return;
+        }
+
+        let precio;
+
+        /*
+           Para exactamente 15 unidades usamos
+           el precio especial de bandeja.
+        */
+
+        if (cantidad === 15) {
+
+            precio = 11 / 15;
+
+        } else if (cantidad >= 10) {
+
+            precio = 0.75;
+
+        } else {
+
+            precio = 1.00;
+
+        }
+
+        const nombre =
+            "Malvaviscos Elegantes para Ocasiones Especiales";
+
+        const existente = carrito.find(
+            producto => producto.nombre === nombre
+        );
+
+        if (existente) {
+
+            existente.cantidad += cantidad;
+
+            if (existente.cantidad === 15) {
+
+                existente.precio = 11 / 15;
+
+            } else if (existente.cantidad >= 10) {
+
+                existente.precio = 0.75;
+
+            } else {
+
+                existente.precio = 1.00;
+
+            }
+
+        } else {
+
+            carrito.push({
+                nombre: nombre,
+                precio: precio,
+                cantidad: cantidad
+            });
+
+        }
+
+        actualizarCarrito();
+
+        abrirCarrito();
+    }
+
+
+    /* =====================================================
+       ACTUALIZAR CARRITO
+    ====================================================== */
+
+    function actualizarCarrito() {
+
+        const contenedor =
+            document.getElementById("carrito-items");
+
+        const contador =
+            document.getElementById("contador");
+
+        const totalElemento =
+            document.getElementById("total");
+
+        const totalMobile =
+            document.getElementById("total-mobile");
+
+
+        contenedor.innerHTML = "";
+
+        let total = 0;
+        let cantidadTotal = 0;
+
+
+        if (carrito.length === 0) {
+
+            contenedor.innerHTML = `
+                <p style="
+                    text-align:center;
+                    padding:30px;
+                    color:#777;
+                ">
+                    Tu pedido está vacío 🛒
+                </p>
+            `;
+
+        } else {
+
+            carrito.forEach((producto, index) => {
+
+                const subtotal =
+                    producto.precio * producto.cantidad;
+
+                total += subtotal;
+
+                cantidadTotal += producto.cantidad;
+
+
+                const div =
+                    document.createElement("div");
+
+                div.className = "carrito-item";
+
+                div.innerHTML = `
+
+                    <h4>
+                        ${producto.nombre}
+                    </h4>
+
+                    <p>
+                        💵 Precio:
+                        $${producto.precio.toFixed(2)}
+                    </p>
+
+                    <p>
+                        📦 Subtotal:
+                        $${subtotal.toFixed(2)}
+                    </p>
+
+                    <div class="item-controls">
+
+                        <button
+                            onclick="cambiarCantidad(${index}, -1)">
+                            −
+                        </button>
+
+                        <strong>
+                            ${producto.cantidad}
+                        </strong>
+
+                        <button
+                            onclick="cambiarCantidad(${index}, 1)">
+                            +
+                        </button>
+
+                        <button
+                            class="eliminar"
+                            onclick="eliminarProducto(${index})">
+                            🗑️
+                        </button>
+
+                    </div>
+                `;
+
+                contenedor.appendChild(div);
+
+            });
+
+        }
+
+
+        contador.textContent = cantidadTotal;
+
+        totalElemento.textContent =
+            "$" + total.toFixed(2);
+
+        totalMobile.textContent =
+            "$" + total.toFixed(2);
+    }
+
+
+    /* =====================================================
+       CAMBIAR CANTIDAD
+    ====================================================== */
+
+    function cambiarCantidad(index, cambio) {
+
+        carrito[index].cantidad += cambio;
+
+        if (carrito[index].cantidad <= 0) {
+
+            carrito.splice(index, 1);
+
+        } else {
+
+            /*
+              Actualizar precios especiales.
+            */
+
+            const nombre = carrito[index].nombre;
+
+            if (
+                nombre ===
+                "Fresas Elegantes para Ocasiones Especiales" ||
+
+                nombre ===
+                "Combinado Especial de Fresas y Malvaviscos"
+            ) {
+
+                carrito[index].precio =
+                    carrito[index].cantidad >= 10
+                    ? 0.75
+                    : 1.00;
+            }
+
+
+            if (
+                nombre ===
+                "Malvaviscos Elegantes para Ocasiones Especiales"
+            ) {
+
+                if (carrito[index].cantidad === 15) {
+
+                    carrito[index].precio = 11 / 15;
+
+                } else if (carrito[index].cantidad >= 10) {
+
+                    carrito[index].precio = 0.75;
+
+                } else {
+
+                    carrito[index].precio = 1.00;
+
+                }
+
+            }
+
+        }
+
+        actualizarCarrito();
+    }
+
+
+    /* =====================================================
+       ELIMINAR PRODUCTO
+    ====================================================== */
+
+    function eliminarProducto(index) {
+
+        carrito.splice(index, 1);
+
+        actualizarCarrito();
+    }
+
+
+    /* =====================================================
+       VACIAR CARRITO
+    ====================================================== */
+
+    function vaciarCarrito() {
+
+        if (carrito.length === 0) {
+            return;
+        }
+
+        if (
+            confirm(
+                "¿Seguro que deseas vaciar tu pedido?"
+            )
+        ) {
+
+            carrito = [];
+
+            actualizarCarrito();
+        }
+    }
+
+
+    /* =====================================================
+       ABRIR CARRITO
+    ====================================================== */
+
+    function abrirCarrito() {
+
+        document
+            .getElementById("carrito")
+            .classList.add("activo");
+    }
+
+
+    /* =====================================================
+       CERRAR CARRITO
+    ====================================================== */
+
+    function cerrarCarrito() {
+
+        document
+            .getElementById("carrito")
+            .classList.remove("activo");
+    }
+
+
+    /* =====================================================
+       ENVIAR PEDIDO A WHATSAPP
+    ====================================================== */
+
+    function enviarWhatsApp() {
+
+        if (carrito.length === 0) {
+
+            alert(
+                "Agrega al menos un producto a tu pedido."
+            );
+
+            return;
+        }
+
+
+        let mensaje =
+            "🍓 *PEDIDO KRISFRESAS* 🍓\n\n";
+
+
+        let total = 0;
+
+
+        carrito.forEach(producto => {
+
+            const subtotal =
+                producto.precio *
+                producto.cantidad;
+
+            total += subtotal;
+
+
+            mensaje +=
+                "🍫 " +
+                producto.nombre +
+                "\n";
+
+            mensaje +=
+                "📦 Cantidad: " +
+                producto.cantidad +
+                "\n";
+
+            mensaje +=
+                "💵 Subtotal: $" +
+                subtotal.toFixed(2) +
+                "\n\n";
+
+        });
+
+
+        mensaje +=
+            "💰 *TOTAL: $" +
+            total.toFixed(2) +
+            "*\n\n";
+
+        mensaje +=
+            "💕 ¡Hola KRISFRESAS! Quisiera realizar este pedido. 😊";
+
+
+        const url =
+            "https://wa.me/" +
+            numeroWhatsApp +
+            "?text=" +
+            encodeURIComponent(mensaje);
+
+
+        window.open(url, "_blank");
+    }
+
+
+    /* =====================================================
+       INICIAR
+    ====================================================== */
+
+    actualizarCarrito();
 
 </script>
 
 </body>
-
 </html>
