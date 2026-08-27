@@ -27,6 +27,23 @@ body.carrito-abierto{overflow:hidden}
 .ver-pedido:hover{transform:translateY(-1px)}
 .ver-pedido .mini-contador{margin-left:4px}
 
+.info-envio{
+    max-width:980px;
+    margin:18px auto 4px;
+    padding:16px 18px;
+    background:#fff;
+    border:1px solid #ead0d4;
+    border-left:5px solid var(--rojo);
+    border-radius:14px;
+    box-shadow:0 4px 14px rgba(80,0,0,.07);
+    display:flex;
+    align-items:flex-start;
+    gap:13px;
+}
+.info-envio-icono{font-size:30px;line-height:1}
+.info-envio-texto h2{color:var(--rojo);font-size:17px;margin-bottom:5px}
+.info-envio-texto p{font-size:12px;line-height:1.5;color:#666;margin-bottom:3px}
+.info-envio-destacado{font-weight:700;color:#7a3030!important}
 .seccion-productos{max-width:980px;margin:0 auto;padding:25px 0 10px}
 .titulo-seccion{border-bottom:2px solid #e6b5bd;padding:0 0 8px;margin:0 0 24px}
 .titulo-seccion h2{color:var(--rojo);font-size:21px;margin-bottom:4px}
@@ -82,6 +99,12 @@ body.carrito-abierto{overflow:hidden}
 footer{background:#260606;color:white;text-align:center;padding:15px;font-size:13px}
 .whatsapp-float{position:fixed;right:18px;bottom:18px;width:52px;height:52px;border-radius:50%;background:var(--verde);color:white;text-decoration:none;display:flex;align-items:center;justify-content:center;font-size:25px;z-index:1100;box-shadow:0 4px 12px rgba(0,0,0,.2)}
 
+@media(max-width:520px){
+    .info-envio{margin:14px 12px 0;padding:14px;gap:10px}
+    .info-envio-icono{font-size:26px}
+    .info-envio-texto h2{font-size:15px}
+    .info-envio-texto p{font-size:11px}
+}
 @media(max-width:1100px){.seccion-productos{padding-left:18px;padding-right:18px}.contenedor-productos{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:800px){.contenedor-productos{grid-template-columns:repeat(2,1fr);gap:14px}.imagen-producto{height:190px}.producto h3{font-size:15px}.descripcion{font-size:11.5px}.carrito-panel{width:min(400px,92vw)}}
 @media(max-width:520px){body{padding-top:60px}.header{height:60px;padding:0 12px}.logo{font-size:20px}.ver-pedido{padding:8px 11px;font-size:12px}.seccion-productos{padding:22px 10px 5px}.contenedor-productos{grid-template-columns:1fr;gap:16px}.imagen-producto{height:240px}.producto h3{font-size:18px;min-height:auto}.descripcion{font-size:13px}.carrito-panel{width:100%}.whatsapp-float{bottom:15px;right:12px}}
@@ -98,7 +121,14 @@ footer{background:#260606;color:white;text-align:center;padding:15px;font-size:1
 
 .favorito{text-decoration:none;background:#fff;border:1px solid #efd8dc;border-radius:11px;padding:11px 12px;color:#4b4b4b;font-size:12px;font-weight:800;box-shadow:0 3px 10px rgba(80,0,0,.05)}.favorito small{display:block;color:#a14a5c;font-size:10px;margin-top:4px;font-weight:600}
 .seccion-productos{scroll-margin-top:125px}.badge-producto{position:absolute;top:10px;left:10px;z-index:5;background:#fff;color:var(--rojo);border:1px solid #edd0d5;border-radius:20px;padding:6px 9px;font-size:10px;font-weight:800;box-shadow:0 3px 8px rgba(0,0,0,.12)}.producto{position:relative}
-.entrega{margin-top:12px;border-top:1px solid #eee;padding-top:12px}.entrega h3{font-size:14px;color:var(--rojo);margin-bottom:7px}.campo-entrega{width:100%;border:1px solid #ddd;border-radius:8px;padding:9px 10px;font-size:12px;margin-bottom:7px;outline:none;background:#fff}.campo-entrega:focus{border-color:#b98a92;box-shadow:0 0 0 2px rgba(185,138,146,.12)}
+.entrega{margin-top:12px;border-top:1px solid #eee;padding-top:12px}.entrega h3{font-size:14px;color:var(--rojo);margin-bottom:7px}.campo-label{
+    display:block;
+    font-size:12px;
+    font-weight:700;
+    color:#555;
+    margin:3px 0 5px;
+}
+.campo-entrega{width:100%;border:1px solid #ddd;border-radius:8px;padding:9px 10px;font-size:12px;margin-bottom:7px;outline:none;background:#fff}.campo-entrega:focus{border-color:#b98a92;box-shadow:0 0 0 2px rgba(185,138,146,.12)}
 @media(max-width:800px){.hero{padding:18px 14px 8px}.hero-contenido{padding:23px;min-height:175px}.hero h1{font-size:31px}.hero p{font-size:13px}.hero-decoracion{font-size:57px}.hero-decoracion span{font-size:40px}
 .categorias{top:60px}.seccion-productos{scroll-margin-top:112px}}
 @media(max-width:520px){.hero{padding:13px 10px 5px}.hero-contenido{padding:21px 18px;min-height:190px}.hero h1{font-size:28px}.hero p{max-width:210px;line-height:1.4}.hero-decoracion{position:absolute;right:-12px;bottom:9px;font-size:54px;opacity:.18}.hero-decoracion span{font-size:38px}
@@ -129,7 +159,8 @@ footer{background:#260606;color:white;text-align:center;padding:15px;font-size:1
         <div class="entrega">
             <h3>📦 Datos para tu pedido</h3>
             <input id="nombreCliente" class="campo-entrega" type="text" placeholder="Tu nombre">
-            <input id="fechaEntrega" class="campo-entrega" type="date">
+            <label class="campo-label" for="fechaEntrega">📅 Fecha de entrega</label>
+            <input id="fechaEntrega" class="campo-entrega" type="date" min="2026-08-26">
             <input id="sectorEntrega" class="campo-entrega" type="text" placeholder="Sector / dirección de entrega">
             <textarea id="mensajePersonalizado" class="campo-entrega" rows="2" placeholder="Mensaje adicional (opcional)"></textarea>
         </div>
@@ -147,7 +178,7 @@ footer{background:#260606;color:white;text-align:center;padding:15px;font-size:1
             <span class="hero-mini">🍓 HECHO CON CARIÑO</span>
             <h1>KrisFresas 🍓</h1>
             <p>Fresas, chocolates y detalles hechos para regalar.</p>
-            <a class="hero-btn" href="#productos">🍓 Ver productos</a>
+            <a class="hero-btn" href="#fresas">🍓 Ver productos</a>
         </div>
         <div class="hero-decoracion" aria-hidden="true">🍓<span>🍫</span>🌸</div>
     </div>
@@ -163,6 +194,21 @@ footer{background:#260606;color:white;text-align:center;padding:15px;font-size:1
         <a href="#temporada">🌸 Temporada</a>
     </div>
 </nav>
+
+<section class="info-envio" aria-label="Información de entrega">
+    <div class="info-envio-icono">🚚</div>
+    <div class="info-envio-texto">
+        <h2>📦 Información de entrega</h2>
+        <p>
+            Los precios de los productos <strong>no incluyen el costo de envío</strong>.
+            El valor del envío depende del sector o dirección de entrega.
+        </p>
+        <p class="info-envio-destacado">
+            📍 Escríbenos tu sector al realizar el pedido y te confirmaremos el valor del envío por WhatsApp.
+        </p>
+    </div>
+</section>
+
 <section class="seccion-productos" id="fresas">
     <div class="titulo-seccion">
         <h2>🍓 Fresas con Chocolate</h2>
@@ -816,7 +862,8 @@ function enviarPedido() {
         total+=subtotal;
         mensaje += "- "+encodeURIComponent(item.nombre)+" x"+item.cantidad+" ($"+subtotal.toFixed(2)+")%0A";
     });
-    mensaje += "%0ATotal: $"+total.toFixed(2);
+    mensaje += "%0ATotal de productos: $"+total.toFixed(2);
+    mensaje += "%0A🚚 Envío: por confirmar según sector / dirección";
     mensaje += "%0A%0A📦 Datos del pedido:";
     mensaje += "%0A👤 Nombre: "+encodeURIComponent(nombre);
     mensaje += "%0A📅 Fecha de entrega: "+encodeURIComponent(fecha);
