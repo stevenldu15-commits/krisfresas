@@ -121,7 +121,8 @@ footer{background:#260606;color:white;text-align:center;padding:15px;font-size:1
 
 .favorito{text-decoration:none;background:#fff;border:1px solid #efd8dc;border-radius:11px;padding:11px 12px;color:#4b4b4b;font-size:12px;font-weight:800;box-shadow:0 3px 10px rgba(80,0,0,.05)}.favorito small{display:block;color:#a14a5c;font-size:10px;margin-top:4px;font-weight:600}
 .seccion-productos{scroll-margin-top:125px}.badge-producto{position:absolute;top:10px;left:10px;z-index:5;background:#fff;color:var(--rojo);border:1px solid #edd0d5;border-radius:20px;padding:6px 9px;font-size:10px;font-weight:800;box-shadow:0 3px 8px rgba(0,0,0,.12)}.producto{position:relative}
-.entrega{margin-top:12px;border-top:1px solid #eee;padding-top:12px}.entrega h3{font-size:14px;color:var(--rojo);margin-bottom:7px}.campo-label{
+.entrega{margin-top:12px;border-top:1px solid #eee;padding-top:12px}.entrega h3{font-size:14px;color:var(--rojo);margin-bottom:7px}.fecha-ayuda{font-size:11px;color:#777;line-height:1.35;margin:0 0 6px;}
+.campo-label{
     display:block;
     font-size:12px;
     font-weight:700;
@@ -160,6 +161,7 @@ footer{background:#260606;color:white;text-align:center;padding:15px;font-size:1
             <h3>📦 Datos para tu pedido</h3>
             <input id="nombreCliente" class="campo-entrega" type="text" placeholder="Tu nombre">
             <label class="campo-label" for="fechaEntrega">📅 Fecha de entrega</label>
+            <p class="fecha-ayuda">Te recomendamos solicitar tu pedido con anticipación para asegurar disponibilidad.</p>
             <input id="fechaEntrega" class="campo-entrega" type="date" min="2026-08-26">
             <input id="sectorEntrega" class="campo-entrega" type="text" placeholder="Sector / dirección de entrega">
             <textarea id="mensajePersonalizado" class="campo-entrega" rows="2" placeholder="Mensaje adicional (opcional)"></textarea>
@@ -191,21 +193,16 @@ footer{background:#260606;color:white;text-align:center;padding:15px;font-size:1
         <a href="#chocobombas">☕ Chocobombas</a>
         <a href="#regalos">🎁 Regalos</a>
         <a href="#especiales">✨ Especiales</a>
-        <a href="#temporada">🌸 Temporada</a>
-    </div>
+</div>
 </nav>
 
-<section class="info-envio" aria-label="Información de entrega">
-    <div class="info-envio-icono">🚚</div>
+<section class="info-envio" aria-label="Información importante antes de realizar tu pedido">
+    <div class="info-envio-icono">📦</div>
     <div class="info-envio-texto">
-        <h2>📦 Información de entrega</h2>
-        <p>
-            Los precios de los productos <strong>no incluyen el costo de envío</strong>.
-            El valor del envío depende del sector o dirección de entrega.
-        </p>
-        <p class="info-envio-destacado">
-            📍 Escríbenos tu sector al realizar el pedido y te confirmaremos el valor del envío por WhatsApp.
-        </p>
+        <h2>📦 Información importante antes de realizar tu pedido</h2>
+        <p>🚚 <strong>Realizamos entregas según el sector.</strong> El costo de envío depende de la ubicación y <strong>no está incluido en el precio de los productos</strong>.</p>
+        <p>📅 <strong>Te recomendamos realizar tu pedido con anticipación.</strong> Nuestros productos son frescos y delicados, y se preparan con cuidado para cada pedido.</p>
+        <p class="info-envio-destacado">💡 Indícanos tu sector, fecha de entrega y los productos que deseas. Te confirmaremos la disponibilidad y el valor del envío por WhatsApp.</p>
     </div>
 </section>
 
@@ -590,6 +587,24 @@ footer{background:#260606;color:white;text-align:center;padding:15px;font-size:1
             </div>
         </article>
     </div>
+<article class="producto" data-product-id="p13" data-name="Huevos de Pascua" data-base-price="1.00">
+            <div class="imagen-producto">
+                <img src="HUEVOSDEPASCUA.jpeg" alt="Huevos de Pascua">
+            </div>
+            <div class="contenido-producto">
+                <h3>Huevos de Pascua</h3>
+                <p class="precio">$1.00</p>
+                
+                <p class="descripcion">🐰 Deliciosos huevos de Pascua de chocolate, con un irresistible relleno de dulce de leche en su interior y un detalle especial en la parte frontal, decorado con un conejito o una zanahoria de chocolate. 🍫🥚✨</p>
+                <div class="cantidad">
+                    <strong>Cantidad:</strong>
+                    <button type="button" onclick="cambiarCantidad('p13',-1)">−</button>
+                    <span id="p13">1</span>
+                    <button type="button" onclick="cambiarCantidad('p13',1)">+</button>
+                </div>
+                <button type="button" class="boton" onclick="agregarDesdeTarjeta('p13', this)">🛒 Agregar al pedido</button>
+            </div>
+        </article>
 </section>
 
 <section class="seccion-productos" id="especiales">
@@ -654,32 +669,7 @@ footer{background:#260606;color:white;text-align:center;padding:15px;font-size:1
     </div>
 </section>
 
-<section class="seccion-productos" id="temporada">
-    <div class="titulo-seccion">
-        <h2>🌸 Temporada</h2>
-        <p>Productos especiales disponibles según la temporada y la celebración.</p>
-    </div>
-    <div class="contenedor-productos">
-        <article class="producto" data-product-id="p13" data-name="Huevos de Pascua" data-base-price="1.00">
-            <div class="imagen-producto">
-                <img src="HUEVOSDEPASCUA.jpeg" alt="Huevos de Pascua">
-            </div>
-            <div class="contenido-producto">
-                <h3>Huevos de Pascua</h3>
-                <p class="precio">$1.00</p>
-                
-                <p class="descripcion">🐰 Deliciosos huevos de Pascua de chocolate, con un irresistible relleno de dulce de leche en su interior y un detalle especial en la parte frontal, decorado con un conejito o una zanahoria de chocolate. 🍫🥚✨</p>
-                <div class="cantidad">
-                    <strong>Cantidad:</strong>
-                    <button type="button" onclick="cambiarCantidad('p13',-1)">−</button>
-                    <span id="p13">1</span>
-                    <button type="button" onclick="cambiarCantidad('p13',1)">+</button>
-                </div>
-                <button type="button" class="boton" onclick="agregarDesdeTarjeta('p13', this)">🛒 Agregar al pedido</button>
-            </div>
-        </article>
-    </div>
-</section>
+
 </main>
 
 <section class="contacto">
