@@ -3331,8 +3331,28 @@ footer{
    CARRITO
 ========================================================= */
 
-let carrito =
-    JSON.parse(localStorage.getItem("carrito")) || [];
+let carrito = [];
+
+try {
+
+    const carritoGuardado =
+        localStorage.getItem("carrito");
+
+    carrito = carritoGuardado
+        ? JSON.parse(carritoGuardado)
+        : [];
+
+    if(!Array.isArray(carrito)){
+        carrito = [];
+    }
+
+}catch(error){
+
+    console.error("Error al cargar el carrito:", error);
+    carrito = [];
+    localStorage.removeItem("carrito");
+
+}
 
 
 carrito = carrito.map((p,i)=>({
@@ -3362,10 +3382,14 @@ carrito = carrito.map((p,i)=>({
 
 function guardar(){
 
-    localStorage.setItem(
-        "carrito",
-        JSON.stringify(carrito)
-    );
+    try{
+        localStorage.setItem(
+            "carrito",
+            JSON.stringify(carrito)
+        );
+    }catch(error){
+        console.error("No se pudo guardar el carrito:", error);
+    }
 
 }
 
@@ -3378,6 +3402,8 @@ function mostrarToast(){
 
     const toast =
         document.getElementById("toast");
+
+    if(!toast)return;
 
     toast.style.display="block";
 
@@ -3392,7 +3418,6 @@ function mostrarToast(){
         );
 
 }
-
 
 /* =========================================================
    PRECIO UNITARIO
@@ -3471,62 +3496,49 @@ function agregarProducto(
     boton
 ){
 
-    const existente =
-        carrito.find(
-            p=>p.id===id
-        );
+    cantidad = Number(cantidad) || 1;
+    basePrice = Number(basePrice);
 
-
-    if(existente){
-
-        existente.cantidad += cantidad;
-
-    }else{
-
-        carrito.push({
-
-            id,
-            nombre,
-            basePrice:Number(basePrice),
-            special:special || "",
-            cantidad
-
+    if(!id || !nombre || !Number.isFinite(basePrice)){
+        console.error("Datos inválidos del producto:", {
+            id, nombre, basePrice, special, cantidad
         });
-
+        return;
     }
 
+    const existente =
+        carrito.find(p => p.id === id);
+
+    if(existente){
+        existente.cantidad =
+            Number(existente.cantidad || 0) + cantidad;
+    }else{
+        carrito.push({
+            id: id,
+            nombre: nombre,
+            basePrice: basePrice,
+            special: special || "",
+            cantidad: cantidad
+        });
+    }
 
     guardar();
-
     actualizarCarrito();
-
     mostrarToast();
 
-
     const botonPedido =
-        document.getElementById(
-            "botonVerPedido"
-        );
+        document.getElementById("botonVerPedido");
 
-    botonPedido.classList.remove(
-        "carrito-activo"
-    );
-
-    void botonPedido.offsetWidth;
-
-    botonPedido.classList.add(
-        "carrito-activo"
-    );
-
+    if(botonPedido){
+        botonPedido.classList.remove("carrito-activo");
+        void botonPedido.offsetWidth;
+        botonPedido.classList.add("carrito-activo");
+    }
 
     if(boton){
-
         boton.classList.remove("animar");
-
         void boton.offsetWidth;
-
         boton.classList.add("animar");
-
     }
 
 }
@@ -3546,27 +3558,35 @@ function agregarDesdeTarjeta(
             `[data-product-id="${id}"]`
         );
 
+    if(!card){
+        console.error("No se encontró la tarjeta del producto:", id);
+        return;
+    }
+
+    const cantidadElemento =
+        document.getElementById(id);
+
+    if(!cantidadElemento){
+        console.error("No se encontró el contador de cantidad:", id);
+        return;
+    }
 
     const cantidad =
-        parseInt(
-            document.getElementById(id).innerText,
-            10
-        ) || 1;
-
+        parseInt(cantidadElemento.innerText, 10) || 1;
 
     const nombre =
-        card.dataset.name;
-
+        card.dataset.name || "Producto";
 
     const basePrice =
-        parseFloat(
-            card.dataset.basePrice
-        );
+        parseFloat(card.dataset.basePrice);
 
+    if(!Number.isFinite(basePrice)){
+        console.error("Precio inválido para el producto:", id, card.dataset.basePrice);
+        return;
+    }
 
     const special =
         card.dataset.special || "";
-
 
     agregarProducto(
         nombre,
@@ -3577,8 +3597,7 @@ function agregarDesdeTarjeta(
         boton
     );
 
-
-    document.getElementById(id).innerText="1";
+    cantidadElemento.innerText = "1";
 
 }
 
