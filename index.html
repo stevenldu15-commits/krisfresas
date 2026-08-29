@@ -4560,15 +4560,16 @@ footer{
 
                 <p class="precio">
 
-                    $1.00 c/u
+                    Desde $7.50
 
                 </p>
 
 
                 <div class="nota-precio">
 
-                    💕 10 o más unidades:
-                    <strong>$0.75 c/u</strong>
+                    📦 Pedido mínimo: <strong>10 unidades</strong>
+                    <br>
+                    💕 $0.75 por unidad
 
                 </div>
 
@@ -4600,7 +4601,7 @@ footer{
 
 
                     <span id="p22">
-                        1
+                        10
                     </span>
 
 
@@ -4659,20 +4660,18 @@ footer{
 
                 <p class="precio">
 
-                    $0.75 c/u
+                    Desde $6.00
 
                 </p>
 
 
                 <div class="nota-precio">
 
-                    💕 10 o más unidades:
-                    <strong>$0.60 c/u</strong>
-
+                    📦 Pedido mínimo: <strong>10 unidades</strong>
                     <br>
-
-                    🎁 Bandeja de 15 unidades:
-                    <strong>$8.00</strong>
+                    💕 10 o más unidades: <strong>$0.60 c/u</strong>
+                    <br>
+                    🎁 Bandeja de 15 unidades: <strong>$8.00</strong>
 
                 </div>
 
@@ -4704,7 +4703,7 @@ footer{
 
 
                     <span id="p23">
-                        1
+                        10
                     </span>
 
 
@@ -4737,7 +4736,7 @@ footer{
             class="producto"
             data-special="bulk075"
             data-product-id="p24"
-            data-name="💕 Combinado Especial de Fresas y Malvaviscos"
+            data-name="💕 Bandeja Especial de Fresas y Malvaviscos"
             data-base-price="1.00">
 
 
@@ -4745,7 +4744,7 @@ footer{
 
                 <img
                     src="COMBINADOOCASIONESPECIAL.jpeg"
-                    alt="Combinado Especial de Fresas y Malvaviscos"
+                    alt="Bandeja Especial de Fresas y Malvaviscos"
                     onclick="abrirZoom(this.src,this.alt)"
                 >
 
@@ -4763,15 +4762,16 @@ footer{
 
                 <p class="precio">
 
-                    $1.00 c/u
+                    Desde $7.50
 
                 </p>
 
 
                 <div class="nota-precio">
 
-                    💕 10 o más unidades:
-                    <strong>$0.75 c/u</strong>
+                    📦 Pedido mínimo: <strong>10 unidades</strong>
+                    <br>
+                    💕 $0.75 por unidad
 
                 </div>
 
@@ -4803,7 +4803,7 @@ footer{
 
 
                     <span id="p24">
-                        1
+                        10
                     </span>
 
 
@@ -4958,6 +4958,25 @@ carrito =
     }));
 
 
+/*
+    Los productos de Ocasiones Especiales
+    tienen un pedido mínimo de 10 unidades.
+    También corregimos carritos antiguos que
+    hayan quedado con una cantidad menor.
+*/
+
+carrito.forEach(item=>{
+
+    if(
+        item.special === "bulk075" ||
+        item.special === "mallow15"
+    ){
+        item.cantidad = Math.max(10, item.cantidad);
+    }
+
+});
+
+
 /* =========================================================
    GUARDAR
 ========================================================= */
@@ -5011,70 +5030,34 @@ function mostrarToast(){
 
 function precioUnitario(item){
 
-
     /*
         PRODUCTOS 22 Y 24
 
-        Desde 10 unidades:
-        $0.75 cada una.
+        Pedido mínimo: 10 unidades.
+        Precio: $0.75 por unidad.
     */
 
-    if(
-
-        item.special === "bulk075" &&
-
-        item.cantidad >= 10
-
-    ){
-
+    if(item.special === "bulk075"){
         return 0.75;
-
     }
 
 
     /*
-        PRODUCTO 23
+        PRODUCTO 23 - MALVAVISCOS
 
-        Exactamente 15:
-        $11 la bandeja.
+        Desde 10 unidades: $0.60 c/u.
+        Cada bandeja completa de 15 unidades: $8.00.
+        Las unidades sobrantes se cobran a $0.60 c/u.
     */
 
-    if(
-
-        item.special === "mallow15" &&
-
-        item.cantidad === 15
-
-    ){
-
-        return 11 / 15;
-
+    if(item.special === "mallow15"){
+        return item.cantidad >= 15
+            ? subtotalItem(item) / item.cantidad
+            : 0.60;
     }
 
 
-    /*
-        PRODUCTO 23
-
-        Desde 10:
-        $0.75 cada uno.
-    */
-
-    if(
-
-        item.special === "mallow15" &&
-
-        item.cantidad >= 10
-
-    ){
-
-        return 0.75;
-
-    }
-
-
-    return Number(
-        item.basePrice
-    );
+    return Number(item.basePrice);
 
 }
 
@@ -5085,32 +5068,64 @@ function precioUnitario(item){
 
 function subtotalItem(item){
 
-
-    /*
-        Bandeja exacta de 15:
-        $11.00
-    */
-
-    if(
-
-        item.special === "mallow15" &&
-
-        item.cantidad === 15
-
-    ){
-
-        return 11;
-
+    /* Fresas elegantes y bandeja combinada */
+    if(item.special === "bulk075"){
+        return 0.75 * item.cantidad;
     }
 
 
-    return (
+    /*
+        Malvaviscos elegantes:
+        10-14 = $0.60 c/u
+        15 = $8.00
+        16 = $8.60
+        30 = $16.00
+        31 = $16.60
+    */
+    if(item.special === "mallow15"){
+        const bandejas = Math.floor(item.cantidad / 15);
+        const sobrantes = item.cantidad % 15;
 
-        precioUnitario(item) *
+        return (bandejas * 8) + (sobrantes * 0.60);
+    }
 
-        item.cantidad
 
-    );
+    return Number(item.basePrice) * item.cantidad;
+
+}
+
+
+/* =========================================================
+   DETALLE DEL PRECIO
+========================================================= */
+
+function detallePrecioItem(item){
+
+    if(item.special === "bulk075"){
+        return "$0.75 c/u";
+    }
+
+    if(item.special === "mallow15"){
+        const bandejas = Math.floor(item.cantidad / 15);
+        const sobrantes = item.cantidad % 15;
+        const partes = [];
+
+        if(bandejas > 0){
+            partes.push(
+                `${bandejas} bandeja${bandejas > 1 ? "s" : ""} de 15: $${(bandejas * 8).toFixed(2)}`
+            );
+        }
+
+        if(sobrantes > 0){
+            partes.push(
+                `${sobrantes} unidad${sobrantes > 1 ? "es" : ""} × $0.60: $${(sobrantes * 0.60).toFixed(2)}`
+            );
+        }
+
+        return partes.join(" + ");
+    }
+
+    return `$${Number(item.basePrice).toFixed(2)} c/u`;
 
 }
 
@@ -5228,6 +5243,19 @@ function agregarProducto(
         );
 
 
+    const minimo =
+        special === "bulk075" ||
+        special === "mallow15"
+            ? 10
+            : 1;
+
+
+    cantidad = Math.max(
+        Number(cantidad) || minimo,
+        minimo
+    );
+
+
     if(existente){
 
         existente.cantidad +=
@@ -5343,7 +5371,7 @@ function agregarDesdeTarjeta(
 
     document
         .getElementById(id)
-        .innerText = "1";
+        .innerText = cantidadMinimaProducto(id);
 
 }
 
@@ -5351,6 +5379,17 @@ function agregarDesdeTarjeta(
 /* =========================================================
    CAMBIAR CANTIDAD TARJETA
 ========================================================= */
+
+function cantidadMinimaProducto(id){
+
+    if(id === "p22" || id === "p23" || id === "p24"){
+        return 10;
+    }
+
+    return 1;
+
+}
+
 
 function cambiarCantidad(
 
@@ -5360,26 +5399,16 @@ function cambiarCantidad(
 
 ){
 
-    const el =
-        document.getElementById(id);
+    const el = document.getElementById(id);
+    const minimo = cantidadMinimaProducto(id);
 
+    let n = parseInt(el.innerText,10) + valor;
 
-    let n =
-        parseInt(
-            el.innerText,
-            10
-        ) + valor;
-
-
-    if(n < 1){
-
-        n = 1;
-
+    if(n < minimo){
+        n = minimo;
     }
 
-
-    el.innerText =
-        n;
+    el.innerText = n;
 
 }
 
@@ -5413,10 +5442,15 @@ function cambiarCantidadCarrito(
         valor;
 
 
-    if(item.cantidad < 1){
+    const minimo =
+        item.special === "bulk075" ||
+        item.special === "mallow15"
+            ? 10
+            : 1;
 
-        item.cantidad = 1;
 
+    if(item.cantidad < minimo){
+        item.cantidad = minimo;
     }
 
 
@@ -5549,7 +5583,7 @@ function actualizarCarrito(){
                     <div class="item-info">
 
                         💵 Precio:
-                        $${unit.toFixed(2)}
+                        ${escapeHtml(detallePrecioItem(item))}
 
                         <br>
 
@@ -5557,6 +5591,12 @@ function actualizarCarrito(){
                         ${item.cantidad}
 
                         <br>
+
+                        ${
+                            item.special === "bulk075" || item.special === "mallow15"
+                                ? "🎁 Pedido mínimo: 10 unidades<br>"
+                                : ""
+                        }
 
                         💰 Subtotal:
                         $${subtotal.toFixed(2)}
@@ -6295,30 +6335,12 @@ function enviarPedido(){
             +
 
             " x"
-
-            +
-
-            item.cantidad
-
-            +
-
-            " | $"
-
-            +
-
-            unit.toFixed(2)
-
-            +
-
-            " c/u | Subtotal: $"
-
-            +
-
-            subtotal.toFixed(2)
-
-            +
-
-            "%0A";
+            + item.cantidad
+            + " | "
+            + encodeURIComponent(detallePrecioItem(item))
+            + " | Subtotal: $"
+            + subtotal.toFixed(2)
+            + "%0A";
 
     });
 
@@ -6463,6 +6485,17 @@ if(campoFechaEntrega){
 }
 
 actualizarCarrito();
+
+
+["p22","p23","p24"].forEach(id=>{
+
+    const el = document.getElementById(id);
+
+    if(el){
+        el.innerText = cantidadMinimaProducto(id);
+    }
+
+});
 
 
 /* =========================================================
