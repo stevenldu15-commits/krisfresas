@@ -4601,16 +4601,16 @@ footer{
 
                 <p class="precio">
 
-                    Desde $7.50
+                    Desde $0.75 c/u
 
                 </p>
 
 
                 <div class="nota-precio">
 
-                    📦 Pedido mínimo: <strong>10 unidades</strong>
+                    🍓 1 a 9 unidades: <strong>$1.00 c/u</strong>
                     <br>
-                    💕 $0.75 por unidad
+                    💕 10 o más unidades: <strong>$0.75 c/u</strong>
 
                 </div>
 
@@ -4673,10 +4673,10 @@ footer{
 
         <article
             class="producto"
-            data-special="mallow15"
+            data-special="bulk060"
             data-product-id="p23"
             data-name="🤍 Malvaviscos Elegantes para Ocasiones Especiales"
-            data-base-price="1.00">
+            data-base-price="0.75">
 
 
             <div class="imagen-producto">
@@ -4701,18 +4701,16 @@ footer{
 
                 <p class="precio">
 
-                    Desde $6.00
+                    Desde $0.60 c/u
 
                 </p>
 
 
                 <div class="nota-precio">
 
-                    📦 Pedido mínimo: <strong>10 unidades</strong>
+                    🤍 1 a 9 unidades: <strong>$0.75 c/u</strong>
                     <br>
                     💕 10 o más unidades: <strong>$0.60 c/u</strong>
-                    <br>
-                    🎁 Bandeja de 15 unidades: <strong>$8.00</strong>
 
                 </div>
 
@@ -4775,10 +4773,10 @@ footer{
 
         <article
             class="producto"
-            data-special="bulk075"
+            data-special="tray8"
             data-product-id="p24"
             data-name="💕 Bandeja Especial de Fresas y Malvaviscos"
-            data-base-price="1.00">
+            data-base-price="8.00">
 
 
             <div class="imagen-producto">
@@ -4803,27 +4801,28 @@ footer{
 
                 <p class="precio">
 
-                    Desde $7.50
+                    $8.00 por bandeja
 
                 </p>
 
 
                 <div class="nota-precio">
 
-                    📦 Pedido mínimo: <strong>10 unidades</strong>
+                    🎁 Cada bandeja incluye <strong>7 fresas + 6 malvaviscos</strong>
                     <br>
-                    💕 $0.75 por unidad
+                    💕 Precio: <strong>$8.00 por bandeja</strong>
 
                 </div>
 
 
                 <p class="descripcion">
 
-                    🍓🍫 Una deliciosa combinación de fresas y
-                    malvaviscos cubiertos de chocolate y decorados
-                    especialmente para darle un toque elegante a
-                    tu celebración. ✨ Ideal para bautizos, bodas,
-                    cumpleaños, aniversarios y baby showers. 🎀
+                    🍓🍫 Una deliciosa bandeja que combina
+                    <strong>7 fresas y 6 malvaviscos</strong>, todos cubiertos
+                    de chocolate y decorados especialmente para darle
+                    un toque elegante a tu celebración. ✨ Ideal para
+                    bautizos, bodas, cumpleaños, aniversarios y
+                    baby showers. 🎀
 
                 </p>
 
@@ -4844,7 +4843,7 @@ footer{
 
 
                     <span id="p24">
-                        10
+                        1
                     </span>
 
 
@@ -5000,20 +4999,28 @@ carrito =
 
 
 /*
-    Los productos de Ocasiones Especiales
-    tienen un pedido mínimo de 10 unidades.
-    También corregimos carritos antiguos que
-    hayan quedado con una cantidad menor.
+    Normalización de productos de Ocasiones Especiales.
+    Se actualizan carritos guardados con la configuración anterior.
 */
 
 carrito.forEach(item=>{
 
-    if(
-        item.special === "bulk075" ||
-        item.special === "mallow15"
-    ){
-        item.cantidad = Math.max(10, item.cantidad);
+    if(item.id === "p22"){
+        item.special = "bulk075";
+        item.basePrice = 1.00;
     }
+
+    if(item.id === "p23"){
+        item.special = "bulk060";
+        item.basePrice = 0.75;
+    }
+
+    if(item.id === "p24"){
+        item.special = "tray8";
+        item.basePrice = 8.00;
+    }
+
+    item.cantidad = Math.max(1, Number(item.cantidad) || 1);
 
 });
 
@@ -5070,29 +5077,28 @@ function mostrarToast(mensajePersonalizado){
 function precioUnitario(item){
 
     /*
-        PRODUCTOS 22 Y 24
-
-        Pedido mínimo: 10 unidades.
-        Precio: $0.75 por unidad.
+        FRESAS ELEGANTES
+        1 a 9 unidades: $1.00 c/u
+        10 o más: $0.75 c/u
     */
-
     if(item.special === "bulk075"){
-        return 0.75;
+        return item.cantidad >= 10 ? 0.75 : 1.00;
     }
 
 
     /*
-        PRODUCTO 23 - MALVAVISCOS
-
-        Desde 10 unidades: $0.60 c/u.
-        Cada bandeja completa de 15 unidades: $8.00.
-        Las unidades sobrantes se cobran a $0.60 c/u.
+        MALVAVISCOS ELEGANTES
+        1 a 9 unidades: $0.75 c/u
+        10 o más: $0.60 c/u
     */
+    if(item.special === "bulk060"){
+        return item.cantidad >= 10 ? 0.60 : 0.75;
+    }
 
-    if(item.special === "mallow15"){
-        return item.cantidad >= 15
-            ? subtotalItem(item) / item.cantidad
-            : 0.60;
+
+    /* BANDEJA ESPECIAL: $8.00 por bandeja */
+    if(item.special === "tray8"){
+        return 8.00;
     }
 
 
@@ -5100,39 +5106,35 @@ function precioUnitario(item){
 
 }
 
-
 /* =========================================================
    SUBTOTAL
 ========================================================= */
 
 function subtotalItem(item){
 
-    /* Fresas elegantes y bandeja combinada */
+    /* Fresas elegantes */
     if(item.special === "bulk075"){
-        return 0.75 * item.cantidad;
+        const precio = item.cantidad >= 10 ? 0.75 : 1.00;
+        return precio * item.cantidad;
     }
 
 
-    /*
-        Malvaviscos elegantes:
-        10-14 = $0.60 c/u
-        15 = $8.00
-        16 = $8.60
-        30 = $16.00
-        31 = $16.60
-    */
-    if(item.special === "mallow15"){
-        const bandejas = Math.floor(item.cantidad / 15);
-        const sobrantes = item.cantidad % 15;
+    /* Malvaviscos elegantes */
+    if(item.special === "bulk060"){
+        const precio = item.cantidad >= 10 ? 0.60 : 0.75;
+        return precio * item.cantidad;
+    }
 
-        return (bandejas * 8) + (sobrantes * 0.60);
+
+    /* Bandeja especial: 7 fresas + 6 malvaviscos = $8.00 */
+    if(item.special === "tray8"){
+        return 8.00 * item.cantidad;
     }
 
 
     return Number(item.basePrice) * item.cantidad;
 
 }
-
 
 /* =========================================================
    DETALLE DEL PRECIO
@@ -5141,33 +5143,25 @@ function subtotalItem(item){
 function detallePrecioItem(item){
 
     if(item.special === "bulk075"){
-        return "$0.75 c/u";
+        const precio = item.cantidad >= 10 ? 0.75 : 1.00;
+        return `$${precio.toFixed(2)} c/u`;
     }
 
-    if(item.special === "mallow15"){
-        const bandejas = Math.floor(item.cantidad / 15);
-        const sobrantes = item.cantidad % 15;
-        const partes = [];
 
-        if(bandejas > 0){
-            partes.push(
-                `${bandejas} bandeja${bandejas > 1 ? "s" : ""} de 15: $${(bandejas * 8).toFixed(2)}`
-            );
-        }
-
-        if(sobrantes > 0){
-            partes.push(
-                `${sobrantes} unidad${sobrantes > 1 ? "es" : ""} × $0.60: $${(sobrantes * 0.60).toFixed(2)}`
-            );
-        }
-
-        return partes.join(" + ");
+    if(item.special === "bulk060"){
+        const precio = item.cantidad >= 10 ? 0.60 : 0.75;
+        return `$${precio.toFixed(2)} c/u`;
     }
+
+
+    if(item.special === "tray8"){
+        return "$8.00 por bandeja (7 fresas + 6 malvaviscos)";
+    }
+
 
     return `$${Number(item.basePrice).toFixed(2)} c/u`;
 
 }
-
 
 /* =========================================================
    CALCULAR RESUMEN
@@ -5259,11 +5253,7 @@ function agregarProducto(
         );
 
 
-    const minimo =
-        special === "bulk075" ||
-        special === "mallow15"
-            ? 10
-            : 1;
+    const minimo = 1;
 
 
     cantidad = Math.max(
@@ -5398,10 +5388,11 @@ function agregarDesdeTarjeta(
 
 function cantidadMinimaProducto(id){
 
-    if(id === "p22" || id === "p23" || id === "p24"){
-        return 10;
-    }
-
+    /*
+        P22 y P23 se pueden pedir desde 1 unidad.
+        El precio cambia automáticamente al llegar a 10 unidades.
+        P24 representa bandejas, por lo que también empieza en 1 bandeja.
+    */
     return 1;
 
 }
@@ -5458,11 +5449,7 @@ function cambiarCantidadCarrito(
         valor;
 
 
-    const minimo =
-        item.special === "bulk075" ||
-        item.special === "mallow15"
-            ? 10
-            : 1;
+    const minimo = 1;
 
 
     if(item.cantidad < minimo){
@@ -5607,14 +5594,18 @@ function actualizarCarrito(){
                         <br>
 
                         📦 Cantidad:
-                        ${item.cantidad}
+                        ${item.cantidad} ${item.special === "tray8" ? (item.cantidad === 1 ? "bandeja" : "bandejas") : (item.cantidad === 1 ? "unidad" : "unidades")}
 
                         <br>
 
                         ${
-                            item.special === "bulk075" || item.special === "mallow15"
-                                ? "🎁 Pedido mínimo: 10 unidades<br>"
-                                : ""
+                            item.special === "bulk075"
+                                ? "📦 Precio por volumen: 10 o más unidades a $0.75 c/u<br>"
+                                : item.special === "bulk060"
+                                    ? "📦 Precio por volumen: 10 o más unidades a $0.60 c/u<br>"
+                                    : item.special === "tray8"
+                                        ? "🎁 Cada bandeja: 7 fresas + 6 malvaviscos<br>"
+                                        : ""
                         }
 
                         💰 Subtotal:
@@ -6234,8 +6225,12 @@ function construirMensajePedido(datos){
         const subtotal = subtotalItem(item);
         const detalle = detallePrecioItem(item);
 
+        const tipoCantidad = item.special === "tray8"
+            ? (item.cantidad === 1 ? "bandeja" : "bandejas")
+            : (item.cantidad === 1 ? "unidad" : "unidades");
+
         mensaje += `${index + 1}. *${item.nombre}*
-   Cantidad: ${item.cantidad} ${item.cantidad === 1 ? "unidad" : "unidades"}
+   Cantidad: ${item.cantidad} ${tipoCantidad}
    Precio: ${detalle}
    Subtotal: $${subtotal.toFixed(2)}
 
