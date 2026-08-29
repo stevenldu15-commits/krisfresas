@@ -118,22 +118,32 @@ body.carrito-abierto{
 
 .logo{
 
-    color:white;
+    display:flex;
 
-    font-size:25px;
+    align-items:center;
 
-    font-weight:800;
+    width:auto;
 
-    letter-spacing:.5px;
+    height:56px;
+
+    text-decoration:none;
 
 }
 
 
-.logo span{
+.logo img{
 
-    font-size:22px;
+    display:block;
 
-    margin-left:5px;
+    width:128px;
+
+    height:54px;
+
+    object-fit:contain;
+
+    object-position:left center;
+
+    filter:drop-shadow(0 2px 4px rgba(0,0,0,.22));
 
 }
 
@@ -224,7 +234,7 @@ body.carrito-abierto{
 
 .hero-contenido{
 
-    min-height:205px;
+    min-height:250px;
 
     border-radius:20px;
 
@@ -260,6 +270,45 @@ body.carrito-abierto{
     position:relative;
 
     z-index:2;
+
+}
+
+
+.hero-texto{
+
+    flex:1;
+
+    max-width:560px;
+
+}
+
+
+.hero-marca{
+
+    flex:0 0 265px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    margin-left:24px;
+
+}
+
+
+.hero-marca img{
+
+    display:block;
+
+    width:265px;
+
+    height:265px;
+
+    object-fit:contain;
+
+    filter:drop-shadow(0 8px 14px rgba(80,0,0,.16));
 
 }
 
@@ -1588,6 +1637,30 @@ body.carrito-abierto{
 }
 
 
+.contacto-logo{
+
+    display:flex;
+
+    justify-content:center;
+
+    margin:0 auto 8px;
+
+}
+
+
+.contacto-logo img{
+
+    width:150px;
+
+    height:95px;
+
+    object-fit:contain;
+
+    filter:drop-shadow(0 4px 8px rgba(0,0,0,.22));
+
+}
+
+
 .contacto p{
 
     margin-top:7px;
@@ -1642,6 +1715,29 @@ footer{
 
     box-shadow:
         0 4px 12px rgba(0,0,0,.2);
+
+}
+
+
+.sr-only{
+
+    position:absolute;
+
+    width:1px;
+
+    height:1px;
+
+    padding:0;
+
+    margin:-1px;
+
+    overflow:hidden;
+
+    clip:rect(0,0,0,0);
+
+    white-space:nowrap;
+
+    border:0;
 
 }
 
@@ -1743,6 +1839,22 @@ footer{
 
     }
 
+    .hero-marca{
+
+        flex-basis:210px;
+
+        margin-left:10px;
+
+    }
+
+    .hero-marca img{
+
+        width:210px;
+
+        height:210px;
+
+    }
+
     .categorias{
 
         top:60px;
@@ -1776,7 +1888,29 @@ footer{
 
     .logo{
 
-        font-size:20px;
+        height:52px;
+
+    }
+
+    .logo img{
+
+        width:106px;
+
+        height:48px;
+
+    }
+
+    .logo{
+
+        height:48px;
+
+    }
+
+    .logo img{
+
+        width:92px;
+
+        height:44px;
 
     }
 
@@ -1798,7 +1932,11 @@ footer{
 
         padding:21px 18px;
 
-        min-height:190px;
+        min-height:285px;
+
+        display:flex;
+
+        align-items:flex-start;
 
     }
 
@@ -1810,9 +1948,35 @@ footer{
 
     .hero p{
 
-        max-width:210px;
+        max-width:205px;
 
         line-height:1.4;
+
+    }
+
+    .hero-marca{
+
+        position:absolute;
+
+        right:-12px;
+
+        bottom:-4px;
+
+        width:175px;
+
+        height:175px;
+
+        margin:0;
+
+        opacity:.98;
+
+    }
+
+    .hero-marca img{
+
+        width:175px;
+
+        height:175px;
 
     }
 
@@ -2048,12 +2212,26 @@ footer{
 
 }
 
+
+
+@media(max-width:520px){
+
+    .contacto-logo img{
+
+        width:125px;
+
+        height:82px;
+
+    }
+
+}
+
 </style>
 
 </head>
 
 
-<body>
+<body id="top">
 
 
 <!-- =====================================================
@@ -2075,12 +2253,13 @@ footer{
 
 <header class="header">
 
-    <div class="logo">
+    <a class="logo" href="#top" aria-label="KrisFresas - inicio">
 
-        KRISFRESAS
-        <span>🍓</span>
+        <img
+            src="LOGOTIPO.png"
+            alt="KrisFresas - Fresas, Malvaviscos y Detalles Especiales">
 
-    </div>
+    </a>
 
 
     <button
@@ -2445,12 +2624,7 @@ footer{
             </span>
 
 
-            <h1>
-
-                KrisFresas 🍓
-
-            </h1>
-
+            <h1 class="sr-only">KrisFresas</h1>
 
             <p>
 
@@ -2471,17 +2645,12 @@ footer{
         </div>
 
 
-        <div
-            class="hero-decoracion"
-            aria-hidden="true">
+        <div class="hero-marca">
 
-            🍓
-
-            <span>
-                🍫
-            </span>
-
-            🌸
+            <img
+                src="LOGOTIPO.png"
+                alt="KrisFresas"
+                loading="eager">
 
         </div>
 
@@ -4880,6 +5049,15 @@ footer{
 ===================================================== -->
 
 <section class="contacto">
+
+    <div class="contacto-logo">
+
+        <img
+            src="LOGOTIPO.png"
+            alt="KrisFresas">
+
+    </div>
+
 
     <h2>
         Contacto
