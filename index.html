@@ -125,7 +125,6 @@ body.carrito-abierto{
     min-width:0;
 }
 
-
 .logo img{
     width:58px;
     height:58px;
@@ -340,7 +339,6 @@ body.carrito-abierto{
     justify-content:center;
 }
 
-
 .hero-logo{
     width:min(360px,100%);
     max-height:350px;
@@ -352,6 +350,13 @@ body.carrito-abierto{
 }
 
 .hero-logo:hover{ transform:rotate(0deg) scale(1.03); }
+
+.hero-tagline{
+    font-family:"Brush Script MT","Segoe Script","Lucida Handwriting",cursive;
+    font-size:28px;
+    color:#7b2b1d;
+    margin:3px 0 12px;
+}
 
 
 /* =========================================================
@@ -1162,11 +1167,20 @@ body.carrito-abierto{
 ========================================================= */
 
 .carrito-footer{
-    background:#260606;
-    color:white;
-    text-align:center;
-    padding:15px;
-    font-size:13px;
+
+    background:#fff;
+
+    border-top:1px solid #ddd;
+
+    padding:13px 18px 15px;
+
+    max-height:50vh;
+
+    overflow-y:auto;
+
+    box-shadow:
+        0 -4px 15px rgba(0,0,0,.06);
+
 }
 
 
@@ -1564,15 +1578,6 @@ body.carrito-abierto{
    CONTACTO
 ========================================================= */
 
-.contacto{
-    background:linear-gradient(135deg,#4b0808,#790000);
-    color:white;
-    text-align:center;
-    margin-top:35px;
-    padding:38px 20px;
-}
-
-
 .contacto-logo{
     width:105px;
     height:105px;
@@ -1582,8 +1587,25 @@ body.carrito-abierto{
     filter:drop-shadow(0 5px 8px rgba(0,0,0,.25));
 }
 
+.contacto{
+
+    background:#4b0808;
+
+    color:white;
+
+    text-align:center;
+
+    margin-top:35px;
+
+    padding:35px 20px;
+
+}
+
+
 .contacto p{
+
     margin-top:7px;
+
 }
 
 
@@ -1663,6 +1685,18 @@ footer{
 
 
 @media(max-width:800px){
+
+    .hero-contenido{
+        padding:28px 30px;
+        min-height:330px;
+    }
+
+    .hero-texto{ width:58%; }
+    .hero h1{ font-size:58px; }
+    .hero-tagline{ font-size:23px; }
+    .hero p{ font-size:14px; }
+    .hero-decoracion{ width:42%; }
+    .hero-logo{ max-height:290px; }
 
     .contenedor-productos{
 
@@ -1751,6 +1785,26 @@ footer{
 
 
 @media(max-width:520px){
+
+    .logo{ gap:6px; }
+    .logo img{ width:49px; height:49px; }
+    .logo-nombre{ font-size:22px; }
+    .logo-frase{ font-size:7px; }
+
+    .hero-contenido{
+        padding:25px 18px 22px;
+        min-height:500px;
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .hero-texto{ width:100%; padding-left:0; }
+    .hero h1{ font-size:52px; letter-spacing:-1.5px; }
+    .hero-tagline{ font-size:22px; margin-top:5px; }
+    .hero p{ max-width:320px; margin:0 auto 18px; font-size:13px; }
+    .hero-decoracion{ width:100%; margin-top:8px; flex:1; }
+    .hero-logo{ width:min(290px,86vw); max-height:270px; }
+    .contacto-logo{ width:88px; height:88px; }
 
     body{
 
@@ -2038,45 +2092,6 @@ footer{
 
     }
 
-}
-
-
-/* =========================================================
-   KRISFRESAS BRANDING - AJUSTES FINALES
-========================================================= */
-@media(max-width:800px){
-    .hero-contenido{
-        padding:28px 30px;
-        min-height:330px;
-    }
-    .hero-texto{ width:58%; }
-    .hero h1{ font-size:58px; }
-    .hero-tagline{ font-size:23px; }
-    .hero p{ font-size:14px; }
-    .hero-decoracion{ width:42%; }
-    .hero-logo{ max-height:290px; }
-}
-
-@media(max-width:520px){
-    .header{ height:60px; padding:0 10px; }
-    .logo{ gap:6px; }
-    .logo img{ width:49px; height:49px; }
-    .logo-nombre{ font-size:22px; }
-    .logo-frase{ font-size:7px; }
-
-    .hero-contenido{
-        padding:25px 18px 22px;
-        min-height:500px;
-        flex-direction:column;
-        text-align:center;
-    }
-    .hero-texto{ width:100%; padding-left:0; }
-    .hero h1{ font-size:52px; letter-spacing:-1.5px; }
-    .hero-tagline{ font-size:22px; margin-top:5px; }
-    .hero p{ max-width:320px; margin:0 auto 18px; font-size:13px; }
-    .hero-decoracion{ width:100%; margin-top:8px; flex:1; }
-    .hero-logo{ width:min(290px,86vw); max-height:270px; }
-    .contacto-logo{ width:88px; height:88px; }
 }
 
 </style>
@@ -4895,7 +4910,9 @@ footer{
 
     <img class="contacto-logo" src="LOGOTIPO.png" alt="KrisFresas">
 
-    <h2>Contacto</h2>
+    <h2>
+        Contacto
+    </h2>
 
 
     <p>
