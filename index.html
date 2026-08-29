@@ -1507,6 +1507,38 @@ body.carrito-abierto{
 }
 
 
+.copiar-btn{
+
+    width:100%;
+
+    border:1px solid #b78a92;
+
+    border-radius:11px;
+
+    background:#fff7f8;
+
+    color:var(--rojo);
+
+    font-weight:700;
+
+    padding:11px;
+
+    font-size:14px;
+
+    cursor:pointer;
+
+    margin-bottom:8px;
+
+}
+
+
+.copiar-btn:hover{
+
+    background:#fff0f3;
+
+}
+
+
 .vaciar-btn{
 
     width:100%;
@@ -2362,6 +2394,15 @@ footer{
             onclick="enviarPedido()">
 
             📱 Confirmar pedido por WhatsApp
+
+        </button>
+
+
+        <button
+            class="copiar-btn"
+            onclick="copiarPedido()">
+
+            📋 Copiar resumen del pedido
 
         </button>
 
@@ -4995,31 +5036,29 @@ function guardar(){
    TOAST
 ========================================================= */
 
-function mostrarToast(){
+function mostrarToast(mensajePersonalizado){
 
     const toast =
         document.getElementById("toast");
 
+    if(!toast){
+        return;
+    }
 
-    toast.style.display =
-        "block";
+    if(mensajePersonalizado){
+        toast.textContent = mensajePersonalizado;
+    }
 
+    toast.style.display = "block";
 
-    clearTimeout(
-        window.toastTimer
+    clearTimeout(window.toastTimer);
+
+    window.toastTimer = setTimeout(
+        ()=>{
+            toast.style.display = "none";
+        },
+        1800
     );
-
-
-    window.toastTimer =
-        setTimeout(
-            ()=>{
-
-                toast.style.display =
-                    "none";
-
-            },
-            1800
-        );
 
 }
 
@@ -5134,6 +5173,13 @@ function detallePrecioItem(item){
    CALCULAR RESUMEN
 ========================================================= */
 
+function redondearCentavos(valor){
+
+    return Math.round((Number(valor) + Number.EPSILON) * 100) / 100;
+
+}
+
+
 function obtenerResumen(){
 
     let total = 0;
@@ -5143,75 +5189,45 @@ function obtenerResumen(){
 
     carrito.forEach(item=>{
 
-        total +=
-            subtotalItem(item);
+        total += subtotalItem(item);
 
-
-        cantidadTotal +=
-            Number(item.cantidad);
+        cantidadTotal += Number(item.cantidad) || 0;
 
     });
 
 
-    /*
-        AQUÍ ESTÁ EL CAMBIO PRINCIPAL:
+    total = redondearCentavos(total);
 
-        Ya NO usamos cantidadTotal >= 10.
-
-        El anticipo se activa ÚNICAMENTE
-        cuando el total llega a $25.
-    */
 
     const esPedidoGrande =
         total >= LIMITE_ANTICIPO;
 
 
-    /*
-        Si llega a $25:
-        anticipo = 50%.
-
-        Si no llega:
-        se paga todo.
-    */
-
     const anticipo =
         esPedidoGrande
-            ? total * PORCENTAJE_ANTICIPO
+            ? redondearCentavos(total * PORCENTAJE_ANTICIPO)
             : total;
 
 
     const saldo =
         esPedidoGrande
-            ? total - anticipo
+            ? redondearCentavos(total - anticipo)
             : 0;
 
 
-    /*
-        Cuánto falta para llegar
-        al límite de $25.
-    */
-
     const faltanteParaAnticipo =
-        Math.max(
-            0,
-            LIMITE_ANTICIPO - total
+        redondearCentavos(
+            Math.max(0, LIMITE_ANTICIPO - total)
         );
 
 
     return {
-
         total,
-
         cantidadTotal,
-
         esPedidoGrande,
-
         anticipo,
-
         saldo,
-
         faltanteParaAnticipo
-
     };
 
 }
@@ -5496,6 +5512,9 @@ function vaciarCarrito(){
 
 
     carrito = [];
+
+
+    localStorage.removeItem("numeroPedidoActual");
 
 
     guardar();
@@ -6103,340 +6122,242 @@ function establecerFechaMinima(){
    ENVIAR PEDIDO WHATSAPP
 ========================================================= */
 
-function enviarPedido(){
+function obtenerNumeroPedido(){
 
-    /*
-        VALIDAR CARRITO
-    */
+    let numero = localStorage.getItem("numeroPedidoActual");
+
+    if(!numero){
+
+        const ahora = new Date();
+        const anio = String(ahora.getFullYear()).slice(-2);
+        const mes = String(ahora.getMonth() + 1).padStart(2,"0");
+        const dia = String(ahora.getDate()).padStart(2,"0");
+        const aleatorio = String(Math.floor(Math.random() * 1000)).padStart(3,"0");
+
+        numero = `KF-${anio}${mes}${dia}-${aleatorio}`;
+
+        localStorage.setItem("numeroPedidoActual", numero);
+
+    }
+
+    return numero;
+
+}
+
+
+function validarDatosPedido(){
 
     if(!carrito.length){
-
-        alert(
-            "Tu pedido está vacío."
-        );
-
-        return;
-
+        alert("Tu pedido está vacío.");
+        return null;
     }
 
+    const campoNombre = document.getElementById("nombreCliente");
+    const campoFecha = document.getElementById("fechaEntrega");
+    const campoSector = document.getElementById("sectorEntrega");
+    const campoAdicional = document.getElementById("mensajePersonalizado");
 
-    /*
-        NOMBRE
-    */
-
-    const nombre =
-        document
-            .getElementById(
-                "nombreCliente"
-            )
-            .value
-            .trim();
-
-
-    /*
-        FECHA
-    */
-
-    const fecha =
-        document
-            .getElementById(
-                "fechaEntrega"
-            )
-            .value;
-
-
-    /*
-        SECTOR
-    */
-
-    const sector =
-        document
-            .getElementById(
-                "sectorEntrega"
-            )
-            .value
-            .trim();
-
-
-    /*
-        MENSAJE
-    */
-
-    const adicional =
-        document
-            .getElementById(
-                "mensajePersonalizado"
-            )
-            .value
-            .trim();
-
-
-    /*
-        VALIDAR NOMBRE
-    */
+    const nombre = campoNombre.value.trim();
+    const fecha = campoFecha.value;
+    const sector = campoSector.value.trim();
+    const adicional = campoAdicional.value.trim();
 
     if(!nombre){
-
-        alert(
-            "Por favor escribe tu nombre."
-        );
-
-
-        document
-            .getElementById(
-                "nombreCliente"
-            )
-            .focus();
-
-
-        return;
-
+        alert("Por favor escribe tu nombre.");
+        campoNombre.focus();
+        return null;
     }
-
-
-    /*
-        VALIDAR FECHA
-    */
 
     if(!fecha){
-
-        alert(
-            "Por favor selecciona la fecha de entrega."
-        );
-
-        document
-            .getElementById(
-                "fechaEntrega"
-            )
-            .focus();
-
-        return;
-
+        alert("Por favor selecciona la fecha de entrega.");
+        campoFecha.focus();
+        return null;
     }
 
-
-    /*
-        VALIDAR ANTICIPACIÓN MÍNIMA
-    */
-
-    const fechaMinima =
-        obtenerFechaMinimaISO();
+    const fechaMinima = obtenerFechaMinimaISO();
 
     if(fecha < fechaMinima){
-
         alert(
             "La fecha de entrega debe solicitarse con un mínimo de " +
             DIAS_MINIMOS_ANTICIPACION +
             " días de anticipación. Por favor selecciona una fecha posterior."
         );
-
-        document
-            .getElementById(
-                "fechaEntrega"
-            )
-            .focus();
-
-        return;
-
+        campoFecha.focus();
+        return null;
     }
-
-
-    /*
-        VALIDAR SECTOR
-    */
 
     if(!sector){
-
-        alert(
-            "Por favor escribe el sector o dirección de entrega."
-        );
-
-
-        document
-            .getElementById(
-                "sectorEntrega"
-            )
-            .focus();
-
-
-        return;
-
+        alert("Por favor escribe el sector o dirección de entrega.");
+        campoSector.focus();
+        return null;
     }
 
+    return {
+        nombre,
+        fecha,
+        sector,
+        adicional,
+        resumen: obtenerResumen()
+    };
+
+}
+
+
+function construirMensajePedido(datos){
+
+    const numeroPedido = obtenerNumeroPedido();
+    const fechaFormateada = formatearFechaLocal(datos.fecha);
+    const resumen = datos.resumen;
 
     /*
-        RESUMEN
+        IMPORTANTE:
+        El mensaje se construye normalmente y SOLO al final
+        se aplica encodeURIComponent() a todo el texto.
+        Esto evita que los emojis aparezcan como "�" en WhatsApp.
     */
+    let mensaje = `🍓 *NUEVO PEDIDO*
+*KrisFresas*
 
-    const resumen =
-        obtenerResumen();
+🧾 *Pedido:* ${numeroPedido}
+👤 *Cliente:* ${datos.nombre}
+📅 *Fecha de entrega:* ${fechaFormateada}
+📍 *Sector / dirección:* ${datos.sector}
 
+━━━━━━━━━━━━━━━━
+🛍️ *PRODUCTOS*
+━━━━━━━━━━━━━━━━
 
-    /*
-        MENSAJE BASE
-    */
+`;
 
-    let mensaje =
-        "🍓 *NUEVO PEDIDO - KRISFRESAS*%0A%0A";
+    carrito.forEach((item,index)=>{
 
+        const subtotal = subtotalItem(item);
+        const detalle = detallePrecioItem(item);
 
-    const fechaFormateada =
-        formatearFechaLocal(fecha);
+        mensaje += `${index + 1}. *${item.nombre}*
+   Cantidad: ${item.cantidad} ${item.cantidad === 1 ? "unidad" : "unidades"}
+   Precio: ${detalle}
+   Subtotal: $${subtotal.toFixed(2)}
 
-
-    /*
-        DATOS DEL CLIENTE
-    */
-
-    mensaje +=
-        "👤 *Cliente:* " +
-        encodeURIComponent(nombre) +
-        "%0A";
-
-    mensaje +=
-        "📅 *Fecha de entrega:* " +
-        encodeURIComponent(fechaFormateada) +
-        "%0A";
-
-    mensaje +=
-        "📍 *Sector / dirección:* " +
-        encodeURIComponent(sector) +
-        "%0A%0A";
-
-
-    /*
-        PRODUCTOS
-    */
-
-    mensaje +=
-        "🛍️ *PRODUCTOS*%0A";
-
-    carrito.forEach(item=>{
-
-
-        const subtotal =
-            subtotalItem(item);
-
-
-        const unit =
-            precioUnitario(item);
-
-
-        mensaje +=
-
-            "▪️ "
-
-            +
-
-            encodeURIComponent(
-                item.nombre
-            )
-
-            +
-
-            " x"
-            + item.cantidad
-            + " | "
-            + encodeURIComponent(detallePrecioItem(item))
-            + " | Subtotal: $"
-            + subtotal.toFixed(2)
-            + "%0A";
+`;
 
     });
 
+    mensaje += `━━━━━━━━━━━━━━━━
+💰 *RESUMEN DEL PEDIDO*
+━━━━━━━━━━━━━━━━
 
-    /*
-        RESUMEN DE PAGO
-    */
-
-    mensaje +=
-        "%0A💰 *RESUMEN DEL PEDIDO*";
-
-    mensaje +=
-        "%0A💵 Total de productos: *$" +
-        resumen.total.toFixed(2) +
-        "*";
-
+📦 Unidades totales: ${resumen.cantidadTotal}
+🛒 Total productos: *$${resumen.total.toFixed(2)}*
+`;
 
     if(resumen.esPedidoGrande){
 
-        mensaje +=
-            "%0A💳 Anticipo requerido (50%): *$" +
-            resumen.anticipo.toFixed(2) +
-            "*";
+        mensaje += `
+💳 Anticipo requerido (50%): *$${resumen.anticipo.toFixed(2)}*
+💵 Saldo pendiente: *$${resumen.saldo.toFixed(2)}*
 
-        mensaje +=
-            "%0A💵 Saldo pendiente: *$" +
-            resumen.saldo.toFixed(2) +
-            "*";
-
-        mensaje +=
-            "%0A📌 El anticipo permite iniciar la preparación del pedido.";
+📌 El anticipo permite iniciar la preparación del pedido.
+`;
 
     }else{
 
-        mensaje +=
-            "%0A💳 Pago requerido: *$" +
-            resumen.anticipo.toFixed(2) +
-            "*";
+        mensaje += `
+💳 Pago requerido: *$${resumen.anticipo.toFixed(2)}*
 
-        mensaje +=
-            "%0A📌 Por ser un pedido menor a $25, se cancela el valor completo de los productos.";
+📌 Por ser un pedido menor a $25, se cancela el valor completo de los productos.
+`;
 
     }
 
-    /*
-        ENVÍO
-    */
+    mensaje += `
+━━━━━━━━━━━━━━━━
+🚚 *ENTREGA*
+━━━━━━━━━━━━━━━━
 
-    mensaje +=
-        "%0A%0A🚚 *Envío:* por confirmar según sector / dirección";
+📍 Sector / dirección: ${datos.sector}
+🚚 Costo de envío: Por confirmar según sector / dirección
 
+━━━━━━━━━━━━━━━━
+💳 *FORMA DE PAGO*
+━━━━━━━━━━━━━━━━
 
-    /*
-        MÉTODO DE PAGO
-    */
+🏦 Transferencia bancaria - Banco Pichincha
+📌 Datos bancarios: confirmar por WhatsApp
+`;
 
-    mensaje +=
-        "%0A🏦 *Método de pago:* Transferencia Banco Pichincha";
+    if(datos.adicional){
 
-    mensaje +=
-        "%0A💳 Datos bancarios: confirmar por WhatsApp";
+        mensaje += `
+━━━━━━━━━━━━━━━━
+💬 *NOTA DEL CLIENTE*
+━━━━━━━━━━━━━━━━
 
-
-    /*
-        DATOS ADICIONALES
-    */
-
-    if(adicional){
-
-        mensaje +=
-            "%0A💬 *Mensaje adicional:* " +
-            encodeURIComponent(adicional);
+${datos.adicional}
+`;
 
     }
 
-    /*
-        MENSAJE OPCIONAL
-    */
+    return mensaje.trim();
 
-    /* El mensaje adicional ya fue incluido arriba. */
+}
 
-    /*
-        ABRIR WHATSAPP
-    */
 
-    window.open(
+function enviarPedido(){
 
-        "https://wa.me/593982126368?text="
+    const datos = validarDatosPedido();
 
-        +
+    if(!datos){
+        return;
+    }
 
-        mensaje,
+    const mensaje = construirMensajePedido(datos);
 
-        "_blank"
+    const url =
+        "https://wa.me/593982126368?text=" +
+        encodeURIComponent(mensaje);
 
-    );
+    window.open(url,"_blank");
+
+}
+
+
+async function copiarPedido(){
+
+    const datos = validarDatosPedido();
+
+    if(!datos){
+        return;
+    }
+
+    const mensaje = construirMensajePedido(datos);
+
+    try{
+
+        await navigator.clipboard.writeText(mensaje);
+        mostrarToast("📋 Pedido copiado correctamente");
+
+    }catch(error){
+
+        const area = document.createElement("textarea");
+        area.value = mensaje;
+        area.style.position = "fixed";
+        area.style.opacity = "0";
+
+        document.body.appendChild(area);
+        area.focus();
+        area.select();
+
+        try{
+            document.execCommand("copy");
+            mostrarToast("📋 Pedido copiado correctamente");
+        }catch(e){
+            alert("No fue posible copiar automáticamente el pedido. Puedes seleccionar y copiar el texto manualmente.");
+        }
+
+        document.body.removeChild(area);
+
+    }
 
 }
 
