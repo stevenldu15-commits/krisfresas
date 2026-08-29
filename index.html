@@ -2318,8 +2318,8 @@ footer{
 
             <p class="fecha-ayuda">
 
-                Te recomendamos solicitar tu pedido
-                con anticipación para asegurar disponibilidad.
+                Los pedidos deben solicitarse con un mínimo de
+                <strong>7 días de anticipación</strong> para asegurar disponibilidad.
 
             </p>
 
@@ -4908,6 +4908,14 @@ const LIMITE_ANTICIPO = 25;
 
 const PORCENTAJE_ANTICIPO = 0.50;
 
+/*
+    MÍNIMO DE ANTICIPACIÓN PARA ENTREGA
+
+    El cliente debe seleccionar una fecha
+    con al menos 7 días de anticipación.
+*/
+const DIAS_MINIMOS_ANTICIPACION = 7;
+
 
 /* =========================================================
    CARRITO
@@ -5949,6 +5957,78 @@ document
    FECHA MÍNIMA AUTOMÁTICA
 ========================================================= */
 
+function obtenerFechaMinimaEntrega(){
+
+    const fecha = new Date();
+
+    fecha.setHours(0,0,0,0);
+
+    fecha.setDate(
+        fecha.getDate() +
+        DIAS_MINIMOS_ANTICIPACION
+    );
+
+    return fecha;
+
+}
+
+
+function formatearFechaLocal(fechaISO){
+
+    if(!fechaISO){
+        return "";
+    }
+
+    const partes = fechaISO.split("-");
+
+    if(partes.length !== 3){
+        return fechaISO;
+    }
+
+    const fecha = new Date(
+        Number(partes[0]),
+        Number(partes[1]) - 1,
+        Number(partes[2])
+    );
+
+    return fecha.toLocaleDateString(
+        "es-EC",
+        {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+        }
+    );
+
+}
+
+
+function obtenerFechaMinimaISO(){
+
+    const fecha =
+        obtenerFechaMinimaEntrega();
+
+    const anio =
+        fecha.getFullYear();
+
+    const mes =
+        String(fecha.getMonth() + 1)
+            .padStart(2,"0");
+
+    const dia =
+        String(fecha.getDate())
+            .padStart(2,"0");
+
+    return `${anio}-${mes}-${dia}`;
+
+}
+
+
+/* =========================================================
+   FECHA MÍNIMA AUTOMÁTICA
+========================================================= */
+
 function establecerFechaMinima(){
 
     const campo =
@@ -5956,38 +6036,27 @@ function establecerFechaMinima(){
             "fechaEntrega"
         );
 
-
     if(!campo){
-
         return;
-
     }
 
-
-    const hoy =
-        new Date();
-
-
-    const anio =
-        hoy.getFullYear();
-
-
-    const mes =
-        String(
-            hoy.getMonth() + 1
-        ).padStart(2,"0");
-
-
-    const dia =
-        String(
-            hoy.getDate()
-        ).padStart(2,"0");
-
+    const fechaMinima =
+        obtenerFechaMinimaISO();
 
     campo.min =
-        `${anio}-${mes}-${dia}`;
+        fechaMinima;
+
+    /*
+        Si existe una fecha guardada anteriormente
+        que ahora ya no cumple los 7 días,
+        se limpia automáticamente.
+    */
+    if(campo.value && campo.value < fechaMinima){
+        campo.value = "";
+    }
 
 }
+
 
 
 /* =========================================================
@@ -6095,13 +6164,37 @@ function enviarPedido(){
             "Por favor selecciona la fecha de entrega."
         );
 
-
         document
             .getElementById(
                 "fechaEntrega"
             )
             .focus();
 
+        return;
+
+    }
+
+
+    /*
+        VALIDAR ANTICIPACIÓN MÍNIMA
+    */
+
+    const fechaMinima =
+        obtenerFechaMinimaISO();
+
+    if(fecha < fechaMinima){
+
+        alert(
+            "La fecha de entrega debe solicitarse con un mínimo de " +
+            DIAS_MINIMOS_ANTICIPACION +
+            " días de anticipación. Por favor selecciona una fecha posterior."
+        );
+
+        document
+            .getElementById(
+                "fechaEntrega"
+            )
+            .focus();
 
         return;
 
@@ -6144,12 +6237,39 @@ function enviarPedido(){
     */
 
     let mensaje =
-        "Hola, quiero hacer el siguiente pedido:%0A%0A";
+        "🍓 *NUEVO PEDIDO - KRISFRESAS*%0A%0A";
+
+
+    const fechaFormateada =
+        formatearFechaLocal(fecha);
+
+
+    /*
+        DATOS DEL CLIENTE
+    */
+
+    mensaje +=
+        "👤 *Cliente:* " +
+        encodeURIComponent(nombre) +
+        "%0A";
+
+    mensaje +=
+        "📅 *Fecha de entrega:* " +
+        encodeURIComponent(fechaFormateada) +
+        "%0A";
+
+    mensaje +=
+        "📍 *Sector / dirección:* " +
+        encodeURIComponent(sector) +
+        "%0A%0A";
 
 
     /*
         PRODUCTOS
     */
+
+    mensaje +=
+        "🛍️ *PRODUCTOS*%0A";
 
     carrito.forEach(item=>{
 
@@ -6164,7 +6284,7 @@ function enviarPedido(){
 
         mensaje +=
 
-            "- "
+            "▪️ "
 
             +
 
@@ -6204,95 +6324,51 @@ function enviarPedido(){
 
 
     /*
-        TOTAL
+        RESUMEN DE PAGO
     */
 
     mensaje +=
+        "%0A💰 *RESUMEN DEL PEDIDO*";
 
-        "%0A💰 Total de productos: $"
+    mensaje +=
+        "%0A💵 Total de productos: *$" +
+        resumen.total.toFixed(2) +
+        "*";
 
-        +
-
-        resumen.total.toFixed(2);
-
-
-    /*
-        PEDIDO DESDE $25
-    */
 
     if(resumen.esPedidoGrande){
 
         mensaje +=
-
-            "%0A%0A📦 PEDIDO DESDE $25";
-
-
-        mensaje +=
-
-            "%0A💰 Total de productos: $"
-
-            +
-
-            resumen.total.toFixed(2);
-
+            "%0A💳 Anticipo requerido (50%): *$" +
+            resumen.anticipo.toFixed(2) +
+            "*";
 
         mensaje +=
-
-            "%0A💳 Anticipo requerido (50%): $"
-
-            +
-
-            resumen.anticipo.toFixed(2);
-
+            "%0A💵 Saldo pendiente: *$" +
+            resumen.saldo.toFixed(2) +
+            "*";
 
         mensaje +=
-
-            "%0A💵 Saldo pendiente: $"
-
-            +
-
-            resumen.saldo.toFixed(2);
-
-
-        mensaje +=
-
-            "%0A📌 El anticipo es necesario para comenzar la preparación.";
+            "%0A📌 El anticipo permite iniciar la preparación del pedido.";
 
     }else{
 
-
-        /*
-            PEDIDO MENOR A $25
-        */
+        mensaje +=
+            "%0A💳 Pago requerido: *$" +
+            resumen.anticipo.toFixed(2) +
+            "*";
 
         mensaje +=
-
-            "%0A%0A💳 PAGO COMPLETO";
-
-
-        mensaje +=
-
-            "%0A💰 Valor a cancelar por productos: $"
-
-            +
-
-            resumen.total.toFixed(2);
-
-
-        mensaje +=
-
-            "%0A📌 Al ser un pedido menor a $25, se cancela el valor completo de los productos.";
+            "%0A📌 Por ser un pedido menor a $25, se cancela el valor completo de los productos.";
 
     }
-
 
     /*
         ENVÍO
     */
 
     mensaje +=
-
-        "%0A🚚 Envío: por confirmar según sector / dirección";
+        "%0A%0A🚚 *Envío:* por confirmar según sector / dirección";
 
 
     /*
@@ -6300,75 +6376,29 @@ function enviarPedido(){
     */
 
     mensaje +=
-
-        "%0A%0A🏦 Método de pago: Transferencia Banco Pichincha";
-
+        "%0A🏦 *Método de pago:* Transferencia Banco Pichincha";
 
     mensaje +=
-
         "%0A💳 Datos bancarios: confirmar por WhatsApp";
 
 
     /*
-        DATOS DEL CLIENTE
-    */
-
-    mensaje +=
-
-        "%0A%0A📦 Datos del pedido:";
-
-
-    mensaje +=
-
-        "%0A👤 Nombre: "
-
-        +
-
-        encodeURIComponent(
-            nombre
-        );
-
-
-    mensaje +=
-
-        "%0A📅 Fecha de entrega: "
-
-        +
-
-        encodeURIComponent(
-            fecha
-        );
-
-
-    mensaje +=
-
-        "%0A📍 Sector / dirección: "
-
-        +
-
-        encodeURIComponent(
-            sector
-        );
-
-
-    /*
-        MENSAJE OPCIONAL
+        DATOS ADICIONALES
     */
 
     if(adicional){
 
         mensaje +=
-
-            "%0A💬 Mensaje: "
-
-            +
-
-            encodeURIComponent(
-                adicional
-            );
+            "%0A💬 *Mensaje adicional:* " +
+            encodeURIComponent(adicional);
 
     }
 
+    /*
+        MENSAJE OPCIONAL
+    */
+
+    /* El mensaje adicional ya fue incluido arriba. */
 
     /*
         ABRIR WHATSAPP
@@ -6394,6 +6424,43 @@ function enviarPedido(){
 ========================================================= */
 
 establecerFechaMinima();
+
+/*
+    Validación inmediata de la fecha.
+    También protege si el usuario escribe
+    manualmente una fecha anterior al mínimo.
+*/
+const campoFechaEntrega =
+    document.getElementById("fechaEntrega");
+
+if(campoFechaEntrega){
+
+    campoFechaEntrega.addEventListener(
+        "change",
+        function(){
+
+            const fechaMinima =
+                obtenerFechaMinimaISO();
+
+            if(
+                this.value &&
+                this.value < fechaMinima
+            ){
+
+                alert(
+                    "La fecha de entrega debe tener un mínimo de " +
+                    DIAS_MINIMOS_ANTICIPACION +
+                    " días de anticipación."
+                );
+
+                this.value = "";
+
+            }
+
+        }
+    );
+
+}
 
 actualizarCarrito();
 
