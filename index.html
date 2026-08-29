@@ -6306,7 +6306,7 @@ function enviarPedido(){
     const mensaje = construirMensajePedido(datos);
 
     const url =
-        "https://wa.me/593982126368?text=" +
+        "https://api.whatsapp.com/send?phone=593982126368&text=" +
         encodeURIComponent(mensaje);
 
     window.open(url,"_blank");
